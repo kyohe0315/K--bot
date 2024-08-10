@@ -22,8 +22,6 @@ function getToken() {
   Logger.log(TOKEN);  // トークンが正しく取得できているか確認
 }
 
-client.login(process.env.DISCORD_TOKEN);
-
 client.on('message', async message => {
     if (message.channel.id === sourceChannelId) {
         const destinationChannel = client.channels.cache.get(destinationChannelId);
