@@ -16,6 +16,8 @@ const sourceChannelId = '1261217940112539714';
 const destinationGuildId = '930348999196676167';
 const destinationChannelId = '932595932464291872';
 
+const token = 'YOUR_BOT_TOKEN_HERE';
+
 client.on('message', async message => {
     if (message.channel.id === sourceChannelId) {
         const destinationChannel = client.channels.cache.get(destinationChannelId);
@@ -1162,14 +1164,6 @@ if (message.content.includes("スニャイヴは")) {
   }
 });
 
-
-if (process.env.DISCORD_BOT_TOKEN == undefined) {
-    console.log('DISCORD_BOT_TOKENが設定されていません。');
-    process.exit(0);
-}
-
-client.login( process.env.DISCORD_BOT_TOKEN );
-
 function lottery(channelId, arr) {
     let random = Math.floor(Math.random() * arr.length);
     sendMsg(channelId, arr[random]);
@@ -1230,3 +1224,4 @@ function dobot(channelId,text1){
   sendMsg(channelId,text1)
 }
 
+client.login(token);
