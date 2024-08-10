@@ -1,28 +1,70 @@
 const { Client, GatewayIntentBits } = require('discord.js');
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
-//const {Client,GatewayIntentBits} = require('discord.js');
+require('dotenv').config();
+
+const client = new Client({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildVoiceStates
+    ]
+});
 
 const noticeChannelId = "954873746857005096";
 const debugChannelId = "1022093564995436594";
-
 const mainChannelId = '932595932464291872';
 const voiceChannelId = '930348999645483111';
-
-// 転送元のギルドIDとチャンネルID
 const sourceGuildId = '851037687577706546';
 const sourceChannelId = '1261217940112539714';
-
-// 転送先のギルドID
 const destinationGuildId = '930348999196676167';
 const destinationChannelId = '932595932464291872';
 
-function getToken() {
-  // 「秘密の箱」からトークンを取り出す
-  var TOKEN = PropertiesService.getScriptProperties().getProperty('DISCORD_TOKEN');
-  Logger.log(TOKEN);  // トークンが正しく取得できているか確認
-}
+client.once('ready', () => {
+    console.log(`Bot準備完了～`);
+    client.user.setPresence({ activity: { name: '第２の人生' } });
 
-client.on('message', async message => {
+    setInterval(async () => {
+        console.log('定期チェック中...');
+        const mainChannel = client.channels.cache.get(mainChannelId);
+        if (!mainChannel) {
+            console.log('メインチャンネルが見つかりません');
+            return;
+        }
+
+        const voiceChannel = client.channels.cache.get(voiceChannelId);
+        if (!voiceChannel) {
+            console.log('ボイスチャンネルが見つかりません');
+            return;
+        }
+
+        if (voiceChannel.members.size === 0) {
+            try {
+                const messages = await mainChannel.messages.fetch({ limit: 100 });
+                const startCallMessage = messages.find(msg => msg.content.includes("chatroom1にて通話が開始されました！"));
+                if (startCallMessage) {
+                    await startCallMessage.delete();
+                    console.log('通話開始メッセージを削除しました');
+                }
+                const endCallMessages = messages.filter(msg => msg.content.includes("お疲れ様でした！:relieved:"));
+                if (endCallMessages.size > 1) {
+                    const messagesToDelete = endCallMessages.array().slice(1);
+                    for (const message of messagesToDelete) {
+                        await message.delete();
+                        console.log('「お疲れ様でした！:relieved:」メッセージを削除しました');
+                    }
+                } else {
+                    console.log('削除対象の「お疲れ様でした！:relieved:」メッセージがありません');
+                }
+            } catch (error) {
+                console.error('メッセージの削除に失敗しました', error);
+            }
+        } else {
+            console.log('ボイスチャンネルにメンバーがいます');
+        }
+    }, 5 * 60 * 1000);
+});
+
+client.on('messageCreate', async message => {
     if (message.channel.id === sourceChannelId) {
         const destinationChannel = client.channels.cache.get(destinationChannelId);
         if (!destinationChannel) {
@@ -39,76 +81,15 @@ client.on('message', async message => {
     }
 });
 
-const EventEmitter = require('events');
-EventEmitter.defaultMaxListeners = 30;
-
-
-const checkInterval = 5 * 60 * 1000; // 5分ごとにチェック
-let VC = null;
-
-client.on('ready', () => {
-    console.log(`Bot準備完了～`);
-    client.user.setPresence({ activity: { name: '第２の人生' } });
-
-    // 定期的なチェック　　　　
-    setInterval(async () => {
-        console.log('定期チェック中...');
-
-        const mainChannel = client.channels.cache.get(mainChannelId);
-        if (!mainChannel) {
-            console.log('メインチャンネルが見つかりません');
-            return;
-        }
-
-        // ボイスチャンネルの状態を取得
-        const voiceChannel = client.channels.cache.get(voiceChannelId);
-        if (!voiceChannel) {
-            console.log('ボイスチャンネルが見つかりません');
-            return;
-        }
-
-        // ボイスチャンネルに誰もいない場合
-        if (voiceChannel.members.size === 0) {
-            try {
-                // メインチャンネルのメッセージ履歴を取得
-                const messages = await mainChannel.messages.fetch({ limit: 100 });
-                
-                // "通話が開始されました！"メッセージを削除
-                const startCallMessage = messages.find(msg => msg.content.includes("chatroom1にて通話が開始されました！"));
-                if (startCallMessage) {
-                    await startCallMessage.delete();
-                    console.log('通話開始メッセージを削除しました');
-                }
-                
-                // "お疲れ様でした！:relieved:"メッセージをフィルタリング
-                const endCallMessages = messages.filter(msg => msg.content.includes("お疲れ様でした！:relieved:"));
-
-                if (endCallMessages.size > 1) {
-                    // 最新のメッセージを除いて削除
-                    const messagesToDelete = endCallMessages.array().slice(1);
-                    for (const message of messagesToDelete) {
-                        await message.delete();
-                        console.log('「お疲れ様でした！:relieved:」メッセージを削除しました');
-                    }
-                } else {
-                    console.log('削除対象の「お疲れ様でした！:relieved:」メッセージがありません');
-                }
-            } catch (error) {
-                console.error('メッセージの削除に失敗しました', error);
-            }
-        } else {
-            console.log('ボイスチャンネルにメンバーがいます');
-        }
-    }, checkInterval);
-});
-
-
 client.on('voiceStateUpdate', async (oldState, newState) => {
     const voiceChannel = client.channels.cache.get(voiceChannelId);
+    if (!voiceChannel) {
+        console.log('ボイスチャンネルが見つかりません');
+        return;
+    }
 
-    // 通話開始
     if (!oldState.channelID && newState.channelID === voiceChannelId) {
-        if (voiceChannel && voiceChannel.members.size === 1) {
+        if (voiceChannel.members.size === 1) {
             const mainChannel = client.channels.cache.get(mainChannelId);
             if (mainChannel) {
                 VC = await mainChannel.send("chatroom1にて通話が開始されました！\nhttps://discord.gg/PpugjHBgDB");
@@ -119,8 +100,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
         }
     }
 
-    // 通話終了
-    if (oldState.channelID === voiceChannelId && voiceChannel && voiceChannel.members.size === 0) {
+    if (oldState.channelID === voiceChannelId && voiceChannel.members.size === 0) {
         if (VC) {
             try {
                 await VC.delete();
@@ -140,6 +120,9 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
         }
     }
 });
+
+client.login(process.env.DISCORD_TOKEN);
+
 
 
 
