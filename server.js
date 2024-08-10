@@ -121,7 +121,6 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
     }
 });
 
-client.login(process.env.DISCORD_TOKEN);
 
 
 
@@ -1211,4 +1210,4 @@ function dobot(channelId,text1){
   sendMsg(channelId,text1)
 }
 
-client.login(TOKEN);
+client.login(process.env.DISCORD_TOKEN);
