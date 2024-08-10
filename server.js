@@ -16,7 +16,11 @@ const sourceChannelId = '1261217940112539714';
 const destinationGuildId = '930348999196676167';
 const destinationChannelId = '932595932464291872';
 
-const TOKEN = "ODY4MzcxOTY1NDE1Njc3OTYz.GIwDav.NrYZSjw8cF5EK8tHIfn_ilF8kFqISLYccKlnBk";
+function getToken() {
+  // 「秘密の箱」からトークンを取り出す
+  var TOKEN = PropertiesService.getScriptProperties().getProperty('DISCORD_TOKEN');
+  Logger.log(TOKEN);  // トークンが正しく取得できているか確認
+}
 
 client.on('message', async message => {
     if (message.channel.id === sourceChannelId) {
