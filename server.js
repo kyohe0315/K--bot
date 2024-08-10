@@ -1,5 +1,5 @@
-const discord = require('discord.js');
-const client = new discord.Client();
+const { Client, GatewayIntentBits } = require('discord.js');
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 //const {Client,GatewayIntentBits} = require('discord.js');
 
 const noticeChannelId = "954873746857005096";
