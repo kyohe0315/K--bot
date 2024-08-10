@@ -16,7 +16,7 @@ const sourceChannelId = '1261217940112539714';
 const destinationGuildId = '930348999196676167';
 const destinationChannelId = '932595932464291872';
 
-const token = 'YOUR_BOT_TOKEN_HERE';
+const token = 'ODY4MzcxOTY1NDE1Njc3OTYz.GcYhnh.1-bq5fi_z2V__hCqxLOxeD962tKnC3wOHkauds';
 
 client.on('message', async message => {
     if (message.channel.id === sourceChannelId) {
