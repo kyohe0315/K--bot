@@ -1,6 +1,10 @@
+// 必要なライブラリを読み込み
 const { Client, GatewayIntentBits, Events } = require("discord.js");
+// 必要なライブラリを読み込み
 const express = require("express");
+// 必要なライブラリを読み込み
 const cron = require("node-cron");
+// 必要なライブラリを読み込み
 const axios = require("axios");
 const app = express();
 
@@ -34,15 +38,17 @@ const client = new Client({
   ]
 });
 
+
+// ========== メッセージ受信時の処理 ==========
 client.on(Events.MessageCreate, async message => {
   if (message.author.bot) return;
-  
+
   for (const { pattern, response } of patterns) {
   if (await handleMatchingMessage(message, pattern, response, message.channel.id)) {
     return;
   }
 }
-  
+
   // ✅ メンションだけの場合はここで即応答（一番最初に書く！）
   if (message.mentions.has(client.user) && !message.content.match(/おみくじ/)) {
     sendReply(message, [
@@ -54,6 +60,8 @@ client.on(Events.MessageCreate, async message => {
 });
 
 // ✅ v14形式のメッセージ受信イベント
+
+// ========== メッセージ受信時の処理 ==========
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
 
@@ -73,6 +81,7 @@ client.on(Events.MessageCreate, async (message) => {
   }
 });
 
+// 必要なライブラリを読み込み
 const EventEmitter = require('events');
 EventEmitter.defaultMaxListeners = 30;
 
@@ -80,6 +89,8 @@ EventEmitter.defaultMaxListeners = 30;
 const checkInterval = 5 * 60 * 1000; // 5分ごとにチェック
 let VC = null;
 
+
+// ========== BOT起動時の処理 ==========
 client.once(Events.ClientReady, () => {
   console.log("🎉 Bot準備完了～");
 
@@ -92,6 +103,7 @@ client.once(Events.ClientReady, () => {
   });
 
   // 定期的なチェック
+// 定期実行処理（例：ボイスチャンネル監視）
   setInterval(async () => {
     console.log('定期チェック中...');
 
@@ -201,7 +213,7 @@ async function postMonthlyEvents() {
 
         // イベント情報をグローバルに保存
         global.monthlyEvents = monthlyEvents;
-        
+
         // イベント情報をログに表示して確認
         console.log(global.monthlyEvents);
 
@@ -231,7 +243,7 @@ async function remindCurrentEvents() {
         const response = await axios.get(ICAL_URL);
         const events = ical.parseICS(response.data);
         now.setHours(0, 0, 0, 0); // 時刻部分を0に設定（現在の日付のみ比較）
-      
+
       　const monthlyEvents = Object.values(events).filter(event => {
             if (event.start && event.start >= start && event.start <= end) {
                 return true;
@@ -241,14 +253,14 @@ async function remindCurrentEvents() {
 
         // イベント情報をグローバルに保存
         global.monthlyEvents = monthlyEvents;
-      
+
         const channel = client.channels.cache.get(IcalChannelId);
-      
+
         if (global.monthlyEvents && global.monthlyEvents.length > 0) {
             const ongoingEvents = global.monthlyEvents.filter(event => {
                 const eventStart = new Date(event.start);
                 const eventEnd = new Date(event.end);
-                
+
                 // 時刻部分を無視して日付だけで比較
                 eventStart.setHours(0, 0, 0, 0);
                 eventEnd.setHours(0, 0, 0, 0);
@@ -326,6 +338,8 @@ const reactionsMap = {
   'mint_': '✨',
 };
 
+
+// ========== メッセージ受信時の処理 ==========
 client.on(Events.MessageCreate, async message => {
   if (message.author.id === client.user.id || message.author.bot){
     return;
@@ -340,6 +354,8 @@ client.on(Events.MessageCreate, async message => {
   }
 });
 
+
+// ========== メッセージパターンと応答の汎用関数 ==========
 async function handleMatchingMessage(message, pattern, response, channelID, deleteDelay = 0) {
   try {
     if (message.content.match(pattern)) {
@@ -367,13 +383,13 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
 }
 
 
-  
+
     const patterns = [
   { pattern: /K-bot|k-bot/,
     response: ["はいはいなんでしょうか？",
                "ちなみに「メンション+質問」の形式で質問すると最新AIが質問の答えを教えてくれるよ！"]},
-      
-      
+
+
 //人の名前
   { pattern: /きょへ。?は/,
     response: ["ピカ知識レート2500　ピカチュウ窓主",
@@ -457,9 +473,9 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
     response: "お風呂RTA世界記録保持者" },
   { pattern: /一縷は/,
     response: "なにわをてんねん！の生みの親…だったような気がしてる" },
-        
-      
-//----------------------------------------------------------------------------------------------------      
+
+
+//----------------------------------------------------------------------------------------------------
 //スマブラ系
   { pattern: /先行入力は/,
     response: "1.通常の先行入力：次の動作が可能になる９F前までに入力されたアクション\n2.押しっぱなし先行入力：次の動作が可能になる3F前までホールドされたアクション" },
@@ -468,9 +484,9 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
   { pattern: /空ダのコツは/,
     response: ["この動画がオススメ！",
                "https://youtu.be/4JAx3ZkWPfs"] },
-        
-      
-//----------------------------------------------------------------------------------------------------      
+
+
+//----------------------------------------------------------------------------------------------------
 //スマブラのピカチュウ関係
   { pattern: /ピカチュウは/,
     response: "かわいい" },
@@ -568,8 +584,8 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
                "https://ultimateframedata.com/ledgehangs/PikachuLedgehang.gif"] },
   { pattern: /ピカチュウのステータス|ピカのステータス|ピカチュウの体重|ピカの体重|ピカチュウの重さ|ピカの重さ/,
     response: "体重：79(79位)　歩行速度：1.302(13位)　走行速度：2.039(20位)　空中速度：0.957(66位)　走行移行前F 12(73位)　落下速度：1.55(53位)　急降下速度：2.48(51位)" },
-      
-//----------------------------------------------------------------------------------------------------      
+
+//----------------------------------------------------------------------------------------------------
 //きょへ系のやつ
   { pattern: /きょへ。?の原罪マップ|きょへ。?原罪マップ|きょへ。?さんの原罪マップ/,
     response: ["https://youtu.be/Ew921TnFoaw?si=Ic79rsavyEZPTokJ",
@@ -608,8 +624,8 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
   { pattern: /あっときょへ/,
     response: ["せめてメンションしろスニャ",
                `はぁ…。さっさと来い<@${`530155393117192203`}>`]},
-      
-//----------------------------------------------------------------------------------------------------      
+
+//----------------------------------------------------------------------------------------------------
 //sky　羽
   { pattern: /孤島の?(羽|翼|光の翼|光の子|枚数)/i,
     response: "９枚\n→(メインエリア➄＋試練➃)" },
@@ -627,8 +643,8 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
     response: "１０枚\n→(第一エリア➀＋第二エリア➈)" },
   { pattern: /光の翼の総数は|羽の総数は|光の羽の総数は|全エリアの羽|全エリアの羽|全エリアの翼|全エリアの光の翼|全エリアの光の子|全ての枚数|全ての翼|全ての光の翼|全ての光の子|全ての枚数|全翼|全光の翼|全光の子|全枚数|光の子の合計は/,
     response: "合計119枚（113枚+追想6枚）\n→(孤島9 + 草原24 + 雨林19 + 峡谷17 + 捨て地18 + 書庫16 + 暴風域10 + 追想6)" },
-      
-//----------------------------------------------------------------------------------------------------      
+
+//----------------------------------------------------------------------------------------------------
 //sky　火種
   { pattern: /(火種|光の(かけら|カケラ|欠片))の(スプレッド|量|一覧|表)/i,
     response: "https://docs.google.com/spreadsheets/d/1Y5nDH81N3rpbvWhwSY_DgvTCA2mXAKeF2-RmorIN2WE/edit#gid=1739335542" },
@@ -672,12 +688,12 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
   }},
   { pattern: /(今|現在|現在進行中|進行中)のイベント/i,
     response: async () => await remindCurrentEvents() }, // リマインド関数を呼び出す
-      
-      
-      
-      
-      
-//----------------------------------------------------------------------------------------------------      
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------
 //古いネタ・ネットネタ系
   { pattern: /今北産業/,
     response: "遅かったね～やっと来たか～。…1行以上喋る事ないよ。" },
@@ -716,8 +732,8 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
   { pattern: /ハッピー|Happy/,
     response: "https://tenor.com/view/happy-happy-happy-happy-happy-cat-happy-dancing-cat-gif-716006509349864265" },
 
-      
-//----------------------------------------------------------------------------------------------------      
+
+//----------------------------------------------------------------------------------------------------
 //特定の文言地雷系
   { pattern: "ｳｵｵｵｵｱｱｱｱ|ｱﾞｱﾞｱﾞｱﾞ",
     response: "うるさいぞズマ" },
@@ -871,8 +887,8 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
   { pattern: /くそかわいい|クソかわいい|くそ可愛い|クソ可愛い/,
     response: "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/389ab7d086cefbef.mp4?v=1702825472889" },
 
-      
-//----------------------------------------------------------------------------------------------------      
+
+//----------------------------------------------------------------------------------------------------
 //オススメの〇〇系
   { pattern: /オ?ススメのキャンマラルート|オ?ススメのキャンマラ/,
     response: "このルートがオススメ！　\nhttps://youtu.be/FA6heQJNHEU?si=5-Ndg5qkGZKvCUIW" },
@@ -907,11 +923,11 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
                "https://omocoro.jp/assets/uploads/2019/04/1554466114d9ein.jpg"]},
   { pattern: /オ?ススメのパソコン|おすすめのパソコン|オ?ススメのPC|おすすめのPC/,
     response:"M2 or M3 チップ搭載してるMacBookPro、メモリは8GB以上。WindowsならCPUがi7、メモリは8GB以上。でもあなたのやりたい事次第。"},
-      
-      
-//----------------------------------------------------------------------------------------------------      
+
+
+//----------------------------------------------------------------------------------------------------
 //sky系
-      
+
   { pattern: /今日の?デイリー|今日の?シーズンキャンドル|今日の?大キャン/,
     response: ["黒沢さんのツイートはこちら\n👇　　　👇　　　👇\nhttps://x.com/sky_box0324?s=20\n",
                "9bitの情報はこちら\n👇　　　👇　　　👇\nhttps://9-bit.jp/skygold/6593"]},
@@ -1001,11 +1017,11 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
   { pattern: /書庫の?精霊一覧|書庫の?全ての精霊|書庫の?全精霊/,
     response: ["こちらをご覧ください。（9-bit様より引用）",
                "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/Syoko-all.png?v=1711574878830"]},
-      
-      
 
-/*      
-//----------------------------------------------------------------------------------------------------     
+
+
+/*
+//----------------------------------------------------------------------------------------------------
 //精霊の場所（各エリア一覧など）
   { pattern: /精霊の?場所|精霊さんの?場所|精霊どこ|精霊さんどこ/,
     response: "知りたい精霊さんの場所は？　\n例→「先導する星読み」「ギタパパ」「指さしエモ」\nもしくは「孤島の精霊一覧」のようなフォーマットで入力してね" },
@@ -1027,8 +1043,8 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
   { pattern: /書庫の?精霊一覧|書庫の?全ての精霊|書庫の?全精霊/,
     response: ["こちらをご覧ください。（9-bit様より引用）",
                "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/Syoko-all.png?v=1711574878830"]},
-      
-//----------------------------------------------------------------------------------------------------      
+
+//----------------------------------------------------------------------------------------------------
 //孤島（恒常）
   { pattern: /先導する星読み|先導精霊|先導エモ|手招き精霊|手招きエモ/,
     response: ["【先導する星読み】\n孤島のジャンプ台？の下",
@@ -1091,8 +1107,8 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
     response: ["【風変わりなひとり好き】\n孤島→ならいの大岩内。右奥、蝶々の丘のふもと、低い位置雲の近く",
                "https://cdn.discordapp.com/attachments/1222143691570024530/1222893003480367165/passage45.jpg",
                "https://9-bit.jp/skygold/30737/"]},
-      
-//----------------------------------------------------------------------------------------------------      
+
+//----------------------------------------------------------------------------------------------------
 //草原（恒常）
   { pattern: /蝶々使い|蝶々の?エモ|ちょうちょの?エモ|オレンジケープの?精霊/,
     response: ["【蝶々使い】\n草原の最初のエリア、中央奥の丸い大岩の中",
@@ -1179,8 +1195,8 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
     response: ["【】\n",
                "",
                ""]},
-      
-//----------------------------------------------------------------------------------------------------      
+
+//----------------------------------------------------------------------------------------------------
 //雨林（恒常）
   { pattern: /あああ|あああ|あああ|あああ|あああ/,
     response: ["【】\n",
@@ -1199,8 +1215,8 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
     response: ["【】\n",
                "",
                ""]},
-      
-//----------------------------------------------------------------------------------------------------      
+
+//----------------------------------------------------------------------------------------------------
 //峡谷（恒常）
   { pattern: /あああ|あああ|あああ|あああ|あああ/,
     response: ["【】\n",
@@ -1219,8 +1235,8 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
     response: ["【】\n",
                "",
                ""]},
-      
-//----------------------------------------------------------------------------------------------------      
+
+//----------------------------------------------------------------------------------------------------
 //捨て地（恒常）
   { pattern: /あああ|あああ|あああ|あああ|あああ/,
     response: ["",
@@ -1239,8 +1255,8 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
     response: ["",
                "",
                ""]},
-      
-//----------------------------------------------------------------------------------------------------      
+
+//----------------------------------------------------------------------------------------------------
 //書庫（恒常）
   { pattern: /あああ|あああ|あああ|あああ|あああ/,
     response: ["",
@@ -1259,8 +1275,8 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
     response: ["",
                "",
                ""]},
-               
-//----------------------------------------------------------------------------------------------------      
+
+//----------------------------------------------------------------------------------------------------
 */
 
 ];
@@ -1294,7 +1310,7 @@ if (message.content.match(/seiは|せいは/)) {
       setTimeout(() => text2.delete().catch(console.error), 3500);
       let text3 = await message.channel.send("結構長くなるので覚悟してくださいね？");
       setTimeout(() => text3.delete().catch(console.error), 3500);
-      let text4 = await message.channel.send("何から話そうかな。"); 
+      let text4 = await message.channel.send("何から話そうかな。");
       setTimeout(() => text4.delete().catch(console.error), 3500);
       let text5 = await message.channel.send("まずは僕と青酸がはじめて出会った日の事ですが、");
       setTimeout(() => text5.delete().catch(console.error), 3500);
@@ -1330,7 +1346,7 @@ if (message.content.match(/seiは|せいは/)) {
   if (message.content.match(/しんどい|疲れた|つかれた|疲れました|つかれました/)){
     let arr = ["https://twitter.com/purinharumaki/status/1236262228581466112?s=20&t=Bg1hXcIolEEil7_xlZLR5w",
                "https://twitter.com/BornAKang/status/1574125489110728705?s=20&t=WDmSSyUE4Rm50mU-staUaQ",
-               "https://twitter.com/aoihk_118/status/1561345302120271872?s=20&t=WDmSSyUE4Rm50mU-staUaQ",  
+               "https://twitter.com/aoihk_118/status/1561345302120271872?s=20&t=WDmSSyUE4Rm50mU-staUaQ",
                "https://twitter.com/neparutennis/status/1574905632380968960?s=20&t=k3C0Dl0NG8mbtwaiK5K5oA",
                "https://twitter.com/shouldhaveaduck/status/1574819532052766720?s=20&t=k3C0Dl0NG8mbtwaiK5K5oA",
                "https://twitter.com/purinharumaki/status/1236262228581466112?s=20&t=WDmSSyUE4Rm50mU-staUaQ",
@@ -1384,14 +1400,14 @@ if (message.content.match(/seiは|せいは/)) {
   setTimeout(() => text4.delete().catch(console.error), 100);
   setTimeout(() => text5.delete().catch(console.error), 100);
   setTimeout(() => text6.delete().catch(console.error), 100);
-  
+
   return;
 }
 
   if (message.content.match(/！おみくじ|!おみくじ/) ||
      (message.mentions.has(client.user) && message.content.match(/おみくじ/))){
     sendReply(message,"");
-    let arr = [ 
+    let arr = [
                "㊗✨🎊すっごーーーい大吉！！🎊✨㊗",
                "✨✨かなり大吉✨✨",
                "✨吉だね！✨",
@@ -1415,7 +1431,7 @@ if (message.content.match(/seiは|せいは/)) {
                  ]
     let weight = [6,9,12,15,9,6,4,3,1];
     lotteryByWeight(message.channel.id, arr, GIFGIF, weight);
-   
+
     try {
     setTimeout(() => {
     message.delete().catch(console.error);
@@ -1424,7 +1440,7 @@ if (message.content.match(/seiは|せいは/)) {
     console.error('メッセージの削除中にエラーが発生しました:', error);
 　　 }
 
-    
+
     return;
   }
 
@@ -1435,6 +1451,8 @@ if (process.env.DISCORD_BOT_TOKEN == undefined) {
 
 client.login(process.env.DISCORD_BOT_TOKEN);
 
+
+// ========== ランダム系の演出関数群 ==========
 function lottery(channelId, arr) {
     let random = Math.floor(Math.random() * arr.length);
     sendMsg(channelId, arr[random]);
@@ -1471,6 +1489,8 @@ function sendReply(message, text){
 }
 
 
+
+// ========== メッセージ送信関連関数 ==========
 function sendMsg(channelId, text, option = {}) {
     const channel = client.channels.cache.get(channelId);
     if (!channel) {
