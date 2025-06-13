@@ -330,7 +330,11 @@ client.on(Events.MessageCreate, async message => {
   if (message.author.id === client.user.id || message.author.bot){
     return;
   }
-
+    for (const { pattern, response } of patterns) {
+    if (await handleMatchingMessage(message, pattern, response, message.channel.id)) {
+      return;
+    }
+  } 
   for (const emoji in reactionsMap) {
     if (message.content.includes(emoji)) {
       message.react(reactionsMap[emoji])
