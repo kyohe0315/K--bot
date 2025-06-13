@@ -23,7 +23,17 @@ const ICAL_URL = process.env.ICAL_URL;
 const IcalChannelId = process.env.ICAL_CHANNEL_ID;
 const DebackChannelId = process.env.DEBACK_CHANNEL_ID;
 
+const { Client, GatewayIntentBits, Events } = require("discord.js");
 
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildVoiceStates
+  ]
+});
 
 
 client.on('message', async message => {
