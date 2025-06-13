@@ -1392,10 +1392,6 @@ if (message.content.includes("スニャイヴは")) {
     
     return;
   }
-  else if (message.mentions.has(client.user)){
-    sendReply(message, ["お金を入れてね！カードが貰えるよ！","あと、最新AIへの質問はスニャボットにメンションしてね。間違えてんじゃないわよ"]);
-    return;
-  }
 });
 
 
