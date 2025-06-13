@@ -331,7 +331,7 @@ client.on(Events.MessageCreate, async message => {
     }
   }
 
-async function handleMatchingMessage(pattern, response, channelID, deleteDelay = 0) {
+async function handleMatchingMessage(message, pattern, response, channelID, deleteDelay = 0) {
   try {
     if (message.content.match(pattern)) {
       if (typeof response === "function") {
