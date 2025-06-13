@@ -21,8 +21,9 @@
     "node": "20.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/hello-express"
-  },
+  "type": "git",
+  "url": "https://github.com/kyohe0315/K--bot"
+　}
   "license": "MIT",
   "keywords": [
     "node",
