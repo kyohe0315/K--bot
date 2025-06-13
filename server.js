@@ -1392,8 +1392,6 @@ if (message.content.includes("スニャイヴは")) {
     
     return;
   }
-});
-
 
 if (process.env.DISCORD_BOT_TOKEN == undefined) {
     console.log('DISCORD_BOT_TOKENが設定されていません。');
