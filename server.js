@@ -56,60 +56,61 @@ EventEmitter.defaultMaxListeners = 30;
 const checkInterval = 5 * 60 * 1000; // 5分ごとにチェック
 let VC = null;
 
-client.on('ready', () => {
-    console.log(`Bot準備完了～`);
-    client.user.setPresence({ activity: { name: '第２の人生' } });
+client.once(Events.ClientReady, () => {
+  console.log("🎉 Bot準備完了～");
 
-    // 定期的なチェック　　　　
-    setInterval(async () => {
-        console.log('定期チェック中...');
+  // presence設定（v14仕様）
+  client.user.setPresence({
+    status: 'online',
+    activities: [
+      { name: '第２の人生', type: 0 } // type: 0 = Playing
+    ]
+  });
 
-        const mainChannel = client.channels.cache.get(mainChannelId);
-        if (!mainChannel) {
-            console.log('メインチャンネルが見つかりません');
-            return;
+  // 定期的なチェック
+  setInterval(async () => {
+    console.log('定期チェック中...');
+
+    const mainChannel = client.channels.cache.get(process.env.MAIN_CHANNEL_ID);
+    const voiceChannel = client.channels.cache.get(process.env.VOICE_CHANNEL_ID);
+
+    if (!mainChannel || !voiceChannel) {
+      console.log('チャンネルが見つかりません');
+      return;
+    }
+
+    if (voiceChannel.members.size === 0) {
+      try {
+        const messages = await mainChannel.messages.fetch({ limit: 100 });
+
+        const startCallMessage = messages.find(msg =>
+          msg.content.includes("chatroom1にて通話が開始されました！")
+        );
+        if (startCallMessage) {
+          await startCallMessage.delete();
+          console.log('通話開始メッセージを削除しました');
         }
 
-        // ボイスチャンネルの状態を取得
-        const voiceChannel = client.channels.cache.get(voiceChannelId);
-        if (!voiceChannel) {
-            console.log('ボイスチャンネルが見つかりません');
-            return;
-        }
+        const endCallMessages = messages.filter(msg =>
+          msg.content.includes("お疲れ様でした！:relieved:")
+        );
 
-        // ボイスチャンネルに誰もいない場合
-        if (voiceChannel.members.size === 0) {
-            try {
-                // メインチャンネルのメッセージ履歴を取得
-                const messages = await mainChannel.messages.fetch({ limit: 100 });
-                
-                // "通話が開始されました！"メッセージを削除
-                const startCallMessage = messages.find(msg => msg.content.includes("chatroom1にて通話が開始されました！"));
-                if (startCallMessage) {
-                    await startCallMessage.delete();
-                    console.log('通話開始メッセージを削除しました');
-                }
-                
-                // "お疲れ様でした！:relieved:"メッセージをフィルタリング
-                const endCallMessages = messages.filter(msg => msg.content.includes("お疲れ様でした！:relieved:"));
-
-                if (endCallMessages.size > 1) {
-                    // 最新のメッセージを除いて削除
-                    const messagesToDelete = endCallMessages.array().slice(1);
-                    for (const message of messagesToDelete) {
-                        await message.delete();
-                        console.log('「お疲れ様でした！:relieved:」メッセージを削除しました');
-                    }
-                } else {
-                    console.log('削除対象の「お疲れ様でした！:relieved:」メッセージがありません');
-                }
-            } catch (error) {
-                console.error('メッセージの削除に失敗しました', error);
-            }
+        if (endCallMessages.size > 1) {
+          const messagesToDelete = Array.from(endCallMessages.values()).slice(1);
+          for (const message of messagesToDelete) {
+            await message.delete();
+            console.log('古い「お疲れ様でした！」メッセージを削除しました');
+          }
         } else {
-            console.log('ボイスチャンネルにメンバーがいます');
+          console.log('削除対象の「お疲れ様でした！」がありません');
         }
-    }, checkInterval);
+      } catch (error) {
+        console.error('メッセージ削除失敗:', error);
+      }
+    } else {
+      console.log('ボイスチャンネルにメンバーがいます');
+    }
+  }, Number(process.env.CHECK_INTERVAL || 300000)); // 5分既定
 });
 
 
