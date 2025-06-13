@@ -36,7 +36,13 @@ const client = new Client({
 
 client.on(Events.MessageCreate, async message => {
   if (message.author.bot) return;
-
+  
+  for (const { pattern, response } of patterns) {
+  if (await handleMatchingMessage(message, pattern, response, message.channel.id)) {
+    return;
+  }
+}
+  
   // ✅ メンションだけの場合はここで即応答（一番最初に書く！）
   if (message.mentions.has(client.user) && !message.content.match(/おみくじ/)) {
     sendReply(message, [
@@ -44,8 +50,8 @@ client.on(Events.MessageCreate, async message => {
       "あと、最新AIへの質問はスニャボットにメンションしてね。間違えてんじゃないわよ"
     ]);
     return;
-  　}
-  });
+  }
+});
 
 // ✅ v14形式のメッセージ受信イベント
 client.on(Events.MessageCreate, async (message) => {
