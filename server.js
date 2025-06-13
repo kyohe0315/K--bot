@@ -3,7 +3,10 @@ const express = require("express");
 const cron = require("node-cron");
 const axios = require("axios");
 const app = express();
-//const {Client,GatewayIntentBits} = require('discord.js');
+
+app.get("/healthz", (req, res) => {
+  res.status(200).send("OK");
+});
 
 const noticeChannelId = "954873746857005096";
 const debugChannelId = "1022093564995436594";
