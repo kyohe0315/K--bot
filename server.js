@@ -319,11 +319,12 @@ const reactionsMap = {
   '😎': '😎',
   'mint_': '✨',
 };
+
 client.on(Events.MessageCreate, async message => {
   if (message.author.id === client.user.id || message.author.bot){
     return;
   }
-  
+
   for (const emoji in reactionsMap) {
     if (message.content.includes(emoji)) {
       message.react(reactionsMap[emoji])
@@ -331,6 +332,7 @@ client.on(Events.MessageCreate, async message => {
         .catch(console.error);
     }
   }
+});
 
 async function handleMatchingMessage(message, pattern, response, channelID, deleteDelay = 0) {
   try {
