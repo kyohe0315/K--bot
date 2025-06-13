@@ -1335,11 +1335,16 @@ if (message.content.includes("スニャイヴは")) {
     await text4.delete({ timeout: 400 });
     return;
   }
-  if (message.content.match("VC開始|ボイチャ開始|VCスタート|ボイチャスタート")){
-    let text1 = await message.channel.send("chatroom1にて通話が開始されました！\nhttps://discord.gg/PpugjHBgDB");
-    await message.delete({ timeout: 200 });
-    return;
-  }
+  if (message.content.match("VC開始|ボイチャ開始|VCスタート|ボイチャスタート")) {
+  let text1 = await message.channel.send("chatroom1にて通話が開始されました！\nhttps://discord.gg/PpugjHBgDB");
+
+  setTimeout(() => {
+    message.delete().catch(console.error);
+  }, 200);
+
+  return;
+}
+
   if (message.content.match("うんこ|💩|ウンコ|ウンチ|うんｔ")){
     let text1 = await message.channel.send("う");
     let text2 = await message.channel.send("ん");
