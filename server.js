@@ -23,6 +23,7 @@ const ICAL_URL = process.env.ICAL_URL;
 const IcalChannelId = process.env.ICAL_CHANNEL_ID;
 const DebackChannelId = process.env.DEBACK_CHANNEL_ID;
 
+// ✅ clientの初期化（v14）
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -33,22 +34,24 @@ const client = new Client({
   ]
 });
 
+// ✅ v14形式のメッセージ受信イベント
+client.on(Events.MessageCreate, async (message) => {
+  if (message.author.bot) return;
 
-client.on('message', async message => {
-    if (message.channel.id === sourceChannelId) {
-        const destinationChannel = client.channels.cache.get(destinationChannelId);
-        if (!destinationChannel) {
-            console.error('Destination channel not found');
-            return;
-        }
-
-        try {
-            const sentMessage = await destinationChannel.send(message.content);
-            console.log(`メッセージが転送されました: ${sentMessage.content}`);
-        } catch (error) {
-            console.error('メッセージの転送に失敗しました:', error);
-        }
+  if (message.channel.id === sourceChannelId) {
+    const destinationChannel = client.channels.cache.get(destinationChannelId);
+    if (!destinationChannel) {
+      console.error('Destination channel not found');
+      return;
     }
+
+    try {
+      const sentMessage = await destinationChannel.send(message.content);
+      console.log(`メッセージが転送されました: ${sentMessage.content}`);
+    } catch (error) {
+      console.error('メッセージの転送に失敗しました:', error);
+    }
+  }
 });
 
 const EventEmitter = require('events');
