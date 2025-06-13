@@ -1280,22 +1280,29 @@ if (message.content.includes("スニャイヴは")) {
   })(); // ←これがポイント！（即時実行）
 }
 
-  if (message.content.match(/seiは|せいは/)) {
-  let text1 = await message.channel.send("せいさんはですね・・・。");
-  let text2 = await message.channel.send("言いたい事たくさんあるんですよ。");
-  setTimeout(() => text2.delete().catch(console.error), 3500);
-  let text3 = await message.channel.send("結構長くなるので覚悟してくださいね？");
-  setTimeout(() => text3.delete().catch(console.error), 3500);
-  let text4 = await message.channel.send("何から話そうかな。"); 
-  setTimeout(() => text4.delete().catch(console.error), 3500);
-  let text5 = await message.channel.send("まずは僕と青酸がはじめて出会った日の事ですが、");
-  setTimeout(() => text5.delete().catch(console.error), 3500);
-  let text6 = await message.channel.send("あれはまだ僕たちが高3だった頃…の2年前…。");
-  setTimeout(() => text6.delete().catch(console.error), 3500);
-  setTimeout(() => text1.delete().catch(console.error), 500);
-  let text7 = await message.channel.send("続きは課金してね！♡");
+if (message.content.match(/seiは|せいは/)) {
+  (async () => {
+    try {
+      let text1 = await message.channel.send("せいさんはですね・・・。");
+      let text2 = await message.channel.send("言いたい事たくさんあるんですよ。");
+      setTimeout(() => text2.delete().catch(console.error), 3500);
+      let text3 = await message.channel.send("結構長くなるので覚悟してくださいね？");
+      setTimeout(() => text3.delete().catch(console.error), 3500);
+      let text4 = await message.channel.send("何から話そうかな。"); 
+      setTimeout(() => text4.delete().catch(console.error), 3500);
+      let text5 = await message.channel.send("まずは僕と青酸がはじめて出会った日の事ですが、");
+      setTimeout(() => text5.delete().catch(console.error), 3500);
+      let text6 = await message.channel.send("あれはまだ僕たちが高3だった頃…の2年前…。");
+      setTimeout(() => text6.delete().catch(console.error), 3500);
+      setTimeout(() => text1.delete().catch(console.error), 500);
+      await message.channel.send("続きは課金してね！♡");
+    } catch (err) {
+      console.error("せいはブロックでエラー:", err);
+    }
+  })(); // ← ここで即実行
   return;
 }
+
 
   if (message.content.match(/うえからみたっつん|上からみたっつん|上ら見たっつん|うえから見たっつん/)){
    let tattsun = ["https://cdn.discordapp.com/attachments/1007569901457780827/1066748844974555256/7e761eb540b3d144.mp4",
