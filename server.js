@@ -34,6 +34,18 @@ const client = new Client({
   ]
 });
 
+client.on(Events.MessageCreate, async message => {
+  if (message.author.bot) return;
+
+  // ✅ メンションだけの場合はここで即応答（一番最初に書く！）
+  if (message.mentions.has(client.user) && !message.content.match(/おみくじ/)) {
+    sendReply(message, [
+      "お呼びですか？何か質問があればどうぞ！",
+      "ちなみに「メンション＋質問」でAIが答えてくれることもあります！"
+    ]);
+    return;
+  }
+
 // ✅ v14形式のメッセージ受信イベント
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
