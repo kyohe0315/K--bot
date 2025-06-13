@@ -22,7 +22,6 @@ const sourceChannelId = '1261217940112539714';
 const destinationGuildId = '930348999196676167';//きょへ鯖ID
 const destinationChannelId = '932595932464291872';//転送先チャンネルID
 
-const axios = require('axios');
 const ical = require('ical');
 const ICAL_URL = 'https://calendar.google.com/calendar/ical/9bitjp%40gmail.com/public/basic.ics'; // GoogleカレンダーのiCal URL
 const IcalChannelId = '954864505232429097';//カレンダーの通知チャンネル
