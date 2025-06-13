@@ -1273,22 +1273,23 @@ if (message.content.includes("スニャイヴは")) {
         console.error('メッセージの処理中にエラーが発生しました:', error);
     }
 }
-  if (message.content.match(/seiは|せいは/)){
-    let text1 = await message.channel.send("せいさんはですね・・・。");
-    let text2 = await message.channel.send("言いたい事たくさんあるんですよ。");
-    await text2.delete({ timeout: 3500 });
-    let text3 = await message.channel.send("結構長くなるので覚悟してくださいね？");
-    await text3.delete({ timeout: 3500 });
-    let text4 = await message.channel.send("何から話そうかな。"); 
-    await text4.delete({ timeout: 3500 });
-    let text5 = await message.channel.send("まずは僕と青酸がはじめて出会った日の事ですが、");
-    await text5.delete({ timeout: 3500 });
-    let text6 = await message.channel.send("あれはまだ僕たちが高3だった頃…の2年前…。");
-    await text6.delete({ timeout: 3500 });
-    await text1.delete({ timeout: 500 });
-    let text7 = await message.channel.send("続きは課金してね！♡");
-    return;
-  }
+  if (message.content.match(/seiは|せいは/)) {
+  let text1 = await message.channel.send("せいさんはですね・・・。");
+  let text2 = await message.channel.send("言いたい事たくさんあるんですよ。");
+  setTimeout(() => text2.delete().catch(console.error), 3500);
+  let text3 = await message.channel.send("結構長くなるので覚悟してくださいね？");
+  setTimeout(() => text3.delete().catch(console.error), 3500);
+  let text4 = await message.channel.send("何から話そうかな。"); 
+  setTimeout(() => text4.delete().catch(console.error), 3500);
+  let text5 = await message.channel.send("まずは僕と青酸がはじめて出会った日の事ですが、");
+  setTimeout(() => text5.delete().catch(console.error), 3500);
+  let text6 = await message.channel.send("あれはまだ僕たちが高3だった頃…の2年前…。");
+  setTimeout(() => text6.delete().catch(console.error), 3500);
+  setTimeout(() => text1.delete().catch(console.error), 500);
+  let text7 = await message.channel.send("続きは課金してね！♡");
+  return;
+}
+
   if (message.content.match(/うえからみたっつん|上からみたっつん|上ら見たっつん|うえから見たっつん/)){
    let tattsun = ["https://cdn.discordapp.com/attachments/1007569901457780827/1066748844974555256/7e761eb540b3d144.mp4",
                   "https://cdn.discordapp.com/attachments/1007569901457780827/1066748925719105578/402b6a73c6da4df7.mp4",
