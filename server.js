@@ -1455,7 +1455,7 @@ function sendMsg(channelId, text, option = {}) {
         });
 }
 
-function Double(channelId,text1,text2){　
+function Double(channelId,text1,text2){
   sendMsg(channelId,text1)
   sendMsg(channelId,text2)
 }
