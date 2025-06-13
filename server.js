@@ -1330,9 +1330,13 @@ if (message.content.includes("スニャイヴは")) {
     let text1 = await message.channel.send("おい！");
     let text2 = await message.channel.send("そんなこと言うなよ！");
     let text3 = await message.channel.send("‥‥‥‥‥‥");
-    await text3.delete({ timeout: 3000 });
+    setTimeout(() => {
+      text3.delete().catch(console.error);
+    }, 3000);
     let text4 = await message.channel.send("ｸｿｶﾞ");
-    await text4.delete({ timeout: 400 });
+    setTimeout(() => {
+      text3.delete().catch(console.error);
+    }, 400);
     return;
   }
   if (message.content.match("VC開始|ボイチャ開始|VCスタート|ボイチャスタート")) {
@@ -1345,21 +1349,24 @@ if (message.content.includes("スニャイヴは")) {
   return;
 }
 
-  if (message.content.match("うんこ|💩|ウンコ|ウンチ|うんｔ")){
-    let text1 = await message.channel.send("う");
-    let text2 = await message.channel.send("ん");
-    let text3 = await message.channel.send("こ");
-    let text4 = await message.channel.send("だ");
-    let text5 = await message.channel.send("な");
-    let text6 = await message.channel.send("♪");
-    await text1.delete({ timeout: 700 });
-    await text2.delete({ timeout: 100 });
-    await text3.delete({ timeout: 100 });
-    await text4.delete({ timeout: 100 });
-    await text5.delete({ timeout: 100 });
-    await text6.delete({ timeout: 100 });
-    return;
-  }
+  if (message.content.match("うんこ|💩|ウンコ|ウンチ|うんｔ")) {
+  let text1 = await message.channel.send("う");
+  let text2 = await message.channel.send("ん");
+  let text3 = await message.channel.send("こ");
+  let text4 = await message.channel.send("だ");
+  let text5 = await message.channel.send("な");
+  let text6 = await message.channel.send("♪");
+
+  setTimeout(() => text1.delete().catch(console.error), 700);
+  setTimeout(() => text2.delete().catch(console.error), 100);
+  setTimeout(() => text3.delete().catch(console.error), 100);
+  setTimeout(() => text4.delete().catch(console.error), 100);
+  setTimeout(() => text5.delete().catch(console.error), 100);
+  setTimeout(() => text6.delete().catch(console.error), 100);
+  
+  return;
+}
+
   if (message.content.match(/！おみくじ|!おみくじ/) ||
      (message.mentions.has(client.user) && message.content.match(/おみくじ/))){
     sendReply(message,"");
@@ -1389,7 +1396,9 @@ if (message.content.includes("スニャイヴは")) {
     lotteryByWeight(message.channel.id, arr, GIFGIF, weight);
    
     try {
-    await message.delete({ timeout: 1000 });
+    setTimeout(() => {
+    message.delete().catch(console.error);
+    }, 1000);
 　　 } catch (error) {
     console.error('メッセージの削除中にエラーが発生しました:', error);
 　　 }
