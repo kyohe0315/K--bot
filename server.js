@@ -40,8 +40,8 @@ client.on(Events.MessageCreate, async message => {
   // ✅ メンションだけの場合はここで即応答（一番最初に書く！）
   if (message.mentions.has(client.user) && !message.content.match(/おみくじ/)) {
     sendReply(message, [
-      "お呼びですか？何か質問があればどうぞ！",
-      "ちなみに「メンション＋質問」でAIが答えてくれることもあります！"
+      "お金を入れてね！カードが貰えるよ！",
+      "あと、最新AIへの質問はスニャボットにメンションしてね。間違えてんじゃないわよ"
     ]);
     return;
   }
