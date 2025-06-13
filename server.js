@@ -27,7 +27,6 @@ const ICAL_URL = 'https://calendar.google.com/calendar/ical/9bitjp%40gmail.com/p
 const IcalChannelId = '954864505232429097';//カレンダーの通知チャンネル
 
 const DebackChannelId = '1022093564995436594';//チャンネル
-const cron = require('node-cron');
 
 
 
