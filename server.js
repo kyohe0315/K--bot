@@ -1261,27 +1261,25 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
 
 
 if (message.content.includes("スニャイヴは")) {
+  (async () => {
     try {
-        // 最初のメッセージを送信
-        let initialMessage = await message.channel.send("天才小学生プログラマー");
+      let initialMessage = await message.channel.send("天才小学生プログラマー");
 
-        // 一定時間待機してからメッセージを編集
+      setTimeout(async () => {
+        await initialMessage.edit("~~ 天才小学生プログラマー ~~");
+
         setTimeout(async () => {
-            // メッセージを編集
-            await initialMessage.edit("~~ 天才小学生プログラマー ~~");
+          await initialMessage.delete();
+          message.channel.send("すみませんただのガキでした。");
+        }, 3500);
+      }, 2500);
 
-            // さらに待機してからメッセージを削除
-            setTimeout(async () => {
-                await initialMessage.delete();
-                
-                // 最後のメッセージを送信
-                message.channel.send("すみませんただのガキでした。");
-            }, 3500); // メッセージを編集した後、3.5秒後に削除
-        },2500); // メッセージを送信してから2秒後に編集
     } catch (error) {
-        console.error('メッセージの処理中にエラーが発生しました:', error);
+      console.error('メッセージの処理中にエラーが発生しました:', error);
     }
+  })(); // ←これがポイント！（即時実行）
 }
+
   if (message.content.match(/seiは|せいは/)) {
   let text1 = await message.channel.send("せいさんはですね・・・。");
   let text2 = await message.channel.send("言いたい事たくさんあるんですよ。");
