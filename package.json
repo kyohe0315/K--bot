@@ -18,7 +18,7 @@
     "querystring": "^0.2.0"
   },
   "engines": {
-    "node": "16.x"
+    "node": "20.x"
   },
   "repository": {
     "url": "https://glitch.com/edit/#!/hello-express"
