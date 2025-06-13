@@ -1329,7 +1329,7 @@ if (message.content.includes("スニャイヴは")) {
     return;
   }
   for (const { pattern, response } of patterns) {
-  if (await handleMatchingMessage((message, pattern, response, message.channel.id)) {
+  if (await handleMatchingMessage(message, pattern, response, message.channel.id)) {
     return;
   }
 }
