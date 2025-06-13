@@ -8,25 +8,20 @@ app.get("/healthz", (req, res) => {
   res.status(200).send("OK");
 });
 
-const noticeChannelId = "954873746857005096";
-const debugChannelId = "1022093564995436594";
+const noticeChannelId = process.env.NOTICE_CHANNEL_ID;
+const debugChannelId = process.env.DEBUG_CHANNEL_ID;
+const mainChannelId = process.env.MAIN_CHANNEL_ID;
+const voiceChannelId = process.env.VOICE_CHANNEL_ID;
 
-const mainChannelId = '932595932464291872';
-const voiceChannelId = '930348999645483111';
+const sourceGuildId = process.env.SOURCE_GUILD_ID;
+const sourceChannelId = process.env.SOURCE_CHANNEL_ID;
 
-// 転送元のギルドIDとチャンネルID
-const sourceGuildId = '851037687577706546';
-const sourceChannelId = '1261217940112539714';
+const destinationGuildId = process.env.DESTINATION_GUILD_ID;
+const destinationChannelId = process.env.DESTINATION_CHANNEL_ID;
 
-// 転送先のギルドID
-const destinationGuildId = '930348999196676167';//きょへ鯖ID
-const destinationChannelId = '932595932464291872';//転送先チャンネルID
-
-const ical = require('ical');
-const ICAL_URL = 'https://calendar.google.com/calendar/ical/9bitjp%40gmail.com/public/basic.ics'; // GoogleカレンダーのiCal URL
-const IcalChannelId = '954864505232429097';//カレンダーの通知チャンネル
-
-const DebackChannelId = '1022093564995436594';//チャンネル
+const ICAL_URL = process.env.ICAL_URL;
+const IcalChannelId = process.env.ICAL_CHANNEL_ID;
+const DebackChannelId = process.env.DEBACK_CHANNEL_ID;
 
 
 
