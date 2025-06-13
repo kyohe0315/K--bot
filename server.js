@@ -44,7 +44,8 @@ client.on(Events.MessageCreate, async message => {
       "あと、最新AIへの質問はスニャボットにメンションしてね。間違えてんじゃないわよ"
     ]);
     return;
-  }
+  　}
+  });
 
 // ✅ v14形式のメッセージ受信イベント
 client.on(Events.MessageCreate, async (message) => {
