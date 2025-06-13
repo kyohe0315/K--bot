@@ -1431,10 +1431,12 @@ function lotteryByWeight(channelId, arr, GIFGIF, weight) {
 }
 
 function sendReply(message, text){
-  message.reply(text)
-    .then(console.log("リプライ送信: " + text))
+  const replyText = Array.isArray(text) ? text.join('\n') : text;
+  message.reply(replyText)
+    .then(() => console.log("リプライ送信: " + replyText))
     .catch(console.error);
 }
+
 
 function sendMsg(channelId, text, option = {}) {
     const channel = client.channels.cache.get(channelId);
