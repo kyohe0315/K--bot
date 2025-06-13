@@ -334,15 +334,20 @@ client.on(Events.MessageCreate, async message => {
 async function handleMatchingMessage(message, pattern, response, channelID, deleteDelay = 0) {
   try {
     if (message.content.match(pattern)) {
+      let sentMessage = null;
+
       if (typeof response === "function") {
         await response(); // 関数なら実行
       } else {
-        await sendMsg(channelID, response);
+        sentMessage = await message.channel.send(response);
       }
-      if (deleteDelay > 0) {
-        const sentMessage = await message.channel.send(response);
-        await sentMessage.delete({ timeout: deleteDelay });
+
+      if (deleteDelay > 0 && sentMessage) {
+        setTimeout(() => {
+          sentMessage.delete().catch(console.error);
+        }, deleteDelay);
       }
+
       return true;
     }
     return false;
@@ -351,6 +356,7 @@ async function handleMatchingMessage(message, pattern, response, channelID, dele
     return false;
   }
 }
+
 
   
     const patterns = [
