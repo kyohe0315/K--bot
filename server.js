@@ -306,8 +306,7 @@ const reactionsMap = {
   '😎': '😎',
   'mint_': '✨',
 };
-
-client.on('message',async message =>{
+client.on(Events.MessageCreate, async message => {
   if (message.author.id === client.user.id || message.author.bot){
     return;
   }
