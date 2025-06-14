@@ -1,8 +1,4 @@
 # DiscordBotBase
 
-GlitchでDiscordBotを作るためのベースです。
-
-
-## 詳細
-
-[誰でも作れる！Discord Bot（基礎編）](https://note.com/exteoi/n/nf1c37cb26c41)をお読みください。
+趣味の鯖でちょっとした不便を解消したり、
+便利を追加したり、面白さを増すためのコードです
