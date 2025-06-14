@@ -13,6 +13,8 @@ const TOKEN = process.env.DISCORD_BOT_TOKEN;
 // 定型レスポンス
 const simplePatterns = [
   { pattern: /こんにちは|やあ|こんちゃ/, responses: ["やあ！", "こんにちは～", "元気？"] },
+  { pattern: /きょへ。?は/, responses: ["ピカチュウ窓主"] },
+  { pattern: /テスト/, responses: ["これはテストメッセージです。", "すべて正常に動作しています。"] },
   { pattern: /うんこ|💩/, responses: ["う", "ん", "こ", "だ", "な", "♪"], sequential: true },
 ];
 
@@ -95,7 +97,7 @@ client.on(Events.MessageCreate, async (message) => {
 
   // VC通話開始メッセージ
   if (message.content.match(/VC開始|ボイチャ開始|VCスタート|ボイチャスタート/)) {
-    const sent = await message.channel.send("chatroom1にて通話が開始されました！");
+    const sent = await message.channel.send("chatroom1にて通話が開始されました！　https://discord.gg/PpugjHBgDB");
     vcStartMessages.set(message.guildId, sent.id);
     setTimeout(() => message.delete().catch(() => {}), 200);
     return;
