@@ -116,7 +116,7 @@ client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
       if (textChannel && msgId) {
         const msg = await textChannel.messages.fetch(msgId);
         await msg.delete().catch(() => {});
-        await textChannel.send("通話おつかれさまでした！");
+        await textChannel.send("おつかれさまでした！");
         vcStartMessages.delete(oldState.guild.id);
       }
     } catch (err) {
