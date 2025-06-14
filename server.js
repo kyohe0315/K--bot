@@ -122,4 +122,28 @@ function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+const CHECK_INTERVAL = 10 * 60 * 1000; // 10分（ミリ秒）
+
+setInterval(async () => {
+  const channel = client.channels.cache.get(VC_NOTIFY_CHANNEL_ID);
+  if (!channel || !channel.isTextBased()) return;
+
+  try {
+    const fetched = await channel.messages.fetch({ limit: 50 });
+    const targets = fetched
+      .filter(msg => msg.content === "おつかれさまでした！🥱" && !msg.author.bot)
+      .sort((a, b) => b.createdTimestamp - a.createdTimestamp); // 新しい順
+
+    if (targets.size > 1) {
+      const [, ...oldOnes] = targets.map(msg => msg); // 最新1つを残して削除
+      for (const msg of oldOnes) {
+        await msg.delete().catch(() => {});
+      }
+    }
+  } catch (err) {
+    console.error("メッセージ自動整理エラー:", err);
+  }
+}, CHECK_INTERVAL);
+
+
 client.login(TOKEN);
