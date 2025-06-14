@@ -77,8 +77,8 @@ client.on(Events.MessageCreate, async (message) => {
     if (message.content.match(pattern)) {
       for (const msgText of messages) {
         const msg = await message.channel.send(msgText);
-        setTimeout(() => msg.delete().catch(() => {}), 1000);
-        await delay(3000);
+        setTimeout(() => msg.delete().catch(() => {}), 100);
+        await delay(5000);
       }
       return;
     }
