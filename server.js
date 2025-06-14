@@ -95,7 +95,7 @@ client.on(Events.MessageCreate, async (message) => {
   // ChatGPT呼び出し処理
   if (
     message.mentions.has(client.user) &&
-    message.content.includes("@k-bot.")
+    message.content.includes(@K-bot.#7426 ")
   ) {
     try {
       const prompt = message.content.replace(/<@!?(\d+)>/g, "").trim(); // メンション削除
