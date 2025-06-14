@@ -17,7 +17,7 @@ const vcStartMessages = new Map();
 
 client.once(Events.ClientReady, () => {
   console.log(`${client.user.tag} でログイン中`);
-  client.user.setActivity("第二の人生v2.1", { type: 0 }); // ← これを追加
+  client.user.setActivity("第二の人生v2.4", { type: 0 }); // ← これを追加
 });
 
 client.on(Events.MessageCreate, async (message) => {
@@ -73,14 +73,6 @@ client.on(Events.MessageCreate, async (message) => {
     const result = omikujiResults[Math.floor(Math.random() * omikujiResults.length)];
     await message.reply(result);
     setTimeout(() => message.delete().catch(() => {}), 1000);
-    return;
-  }
-
-  // VC通話開始
-  if (/VC開始|ボイチャ開始|VCスタート|ボイチャスタート/.test(message.content)) {
-    const sent = await message.channel.send("chatroom1にて通話が開始されました！\nhttps://discord.gg/PpugjHBgDB");
-    vcStartMessages.set(message.guildId, sent.id);
-    setTimeout(() => message.delete().catch(() => {}), 200);
     return;
   }
 });
