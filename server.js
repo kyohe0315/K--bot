@@ -10,19 +10,33 @@ const client = new Client({
 
 const TOKEN = process.env.DISCORD_BOT_TOKEN;
 
-// 定型レスポンス
-const simplePatterns = [
-  { pattern: /こんにちは|やあ|こんちゃ/, responses: ["やあ！", "こんにちは～", "元気？"] },
-  { pattern: /きょへ。?は/, responses: ["ピカチュウ窓主"] },
-  { pattern: /テスト/, responses: ["これはテストメッセージです。", "すべて正常に動作しています。"] },
-  { pattern: /うんこ|💩/, responses: ["う", "ん", "こ", "だ", "な", "♪"], sequential: true },
-];
-
-// 複数メッセージ＆順次削除
-const multiMessagePatterns = [
+// 設定されたレスポンスパターン
+const messagePatterns = [
+  {
+    pattern: /こんにちは|やあ|こんちゃ/,
+    responses: ["やあ！", "こんにちは～", "元気？"],
+    type: "random",
+  },
+  {
+    pattern: /きょへ。?は/,
+    responses: ["ピカチュウ窓主"],
+    type: "random",
+  },
+  {
+    pattern: /テスト/,
+    responses: ["これはテストメッセージです。", "すべて正常に動作しています。"],
+    type: "multi",
+  },
+  {
+    pattern: /うんこ|💩/,
+    responses: ["う", "ん", "こ", "だ", "な", "♪"],
+    type: "sequential",
+    deleteAfter: 1000,
+    interval: 3000,
+  },
   {
     pattern: /せいは/,
-    messages: [
+    responses: [
       "せいさんはですね・・・。",
       "言いたい事たくさんあるんですよ。",
       "結構長くなるので覚悟してくださいね？",
@@ -31,10 +45,13 @@ const multiMessagePatterns = [
       "あれはまだ僕たちが高3だった頃…の2年前…。",
       "続きは課金してね！♡",
     ],
+    type: "sequential",
+    deleteAfter: 1000,
+    interval: 3000,
   },
 ];
 
-// おみくじ用
+// おみくじ機能
 const omikujiTriggers = /！おみくじ|!おみくじ|おみくじ/;
 const omikujiResults = [
   "🎊すっごーーーい大吉！！🎊",
@@ -55,36 +72,24 @@ client.on(Events.ClientReady, () => {
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
 
-  // シンプルなランダムレスポンス
-  for (const { pattern, responses, sequential } of simplePatterns) {
+  // 共通レスポンス処理
+  for (const { pattern, responses, type, deleteAfter = 0, interval = 0 } of messagePatterns) {
     if (message.content.match(pattern)) {
-      if (sequential) {
+      if (type === "random") {
+        const res = responses[Math.floor(Math.random() * responses.length)];
+        await message.channel.send(res);
+      } else {
         for (const text of responses) {
           const msg = await message.channel.send(text);
-          setTimeout(() => msg.delete().catch(() => {}), 1000);
-          await delay(3000);
+          if (deleteAfter > 0) setTimeout(() => msg.delete().catch(() => {}), deleteAfter);
+          if (interval > 0) await delay(interval);
         }
-      } else {
-        const random = responses[Math.floor(Math.random() * responses.length)];
-        await message.channel.send(random);
       }
       return;
     }
   }
 
-  // 複数メッセージ順次表示削除
-  for (const { pattern, messages } of multiMessagePatterns) {
-    if (message.content.match(pattern)) {
-      for (const msgText of messages) {
-        const msg = await message.channel.send(msgText);
-        setTimeout(() => msg.delete().catch(() => {}), 100);
-        await delay(5000);
-      }
-      return;
-    }
-  }
-
-  // おみくじ
+  // おみくじ処理
   if (
     message.content.match(omikujiTriggers) ||
     (message.mentions.has(client.user) && message.content.includes("おみくじ"))
@@ -95,16 +100,17 @@ client.on(Events.MessageCreate, async (message) => {
     return;
   }
 
-  // VC通話開始メッセージ
+  // VC通話開始
   if (message.content.match(/VC開始|ボイチャ開始|VCスタート|ボイチャスタート/)) {
-    const sent = await message.channel.send("chatroom1にて通話が開始されました！　\n https://discord.gg/PpugjHBgDB");
+    const sent = await message.channel.send("chatroom1にて通話が開始されました！　
+ https://discord.gg/PpugjHBgDB");
     vcStartMessages.set(message.guildId, sent.id);
     setTimeout(() => message.delete().catch(() => {}), 200);
     return;
   }
 });
 
-// VC退出 → 開始メッセージ削除
+// VC退出 → 通話終了＋開始メッセージ削除
 client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
   const channel = oldState.channel;
   if (
@@ -114,7 +120,9 @@ client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
     vcStartMessages.has(oldState.guild.id)
   ) {
     try {
-      const textChannel = channel.guild.channels.cache.find((ch) => ch.isTextBased());
+      const textChannel = channel.guild.channels.cache.find(
+        (ch) => ch.isTextBased() && ch.name === "chatroom1-text"
+      );
       if (textChannel) {
         const msgId = vcStartMessages.get(oldState.guild.id);
         const msg = await textChannel.messages.fetch(msgId);
