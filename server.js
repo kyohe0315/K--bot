@@ -83,6 +83,23 @@ client.on(Events.MessageCreate, async (message) => {
   }
 });
 
+// VC開始 → 通知送信
+client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
+  // ユーザーが通話に「入った」瞬間
+  if (!oldState.channel && newState.channel) {
+    const channel = newState.channel;
+    const textChannel = channel.guild.channels.cache.find(ch => ch.isTextBased());
+    if (textChannel) {
+      try {
+        const msg = await textChannel.send("chatroom1にて通話が開始されました！\nhttps://discord.gg/PpugjHBgDB");
+        vcStartMessages.set(newState.guild.id, msg.id); // 終了時に削除できるよう保存
+      } catch (err) {
+        console.error("VC開始メッセージ送信失敗:", err);
+      }
+    }
+  }
+});
+
 // VC退出時に開始メッセージ削除＆終了メッセージ
 client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
   const channel = oldState.channel;
