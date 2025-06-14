@@ -13,6 +13,10 @@ module.exports = [
     responses: ["ハゲ"],
     type: "static"
   },
+  { pattern: /VC開始/,
+    responses: ["ハゲ"],
+    type: "static"
+  },
   {
     pattern: /テスト/,
     responses: ["これはテストメッセージです。", "すべて正常に動作しています。"],
