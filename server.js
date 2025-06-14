@@ -12,6 +12,7 @@ const client = new Client({
 });
 
 const TOKEN = process.env.DISCORD_BOT_TOKEN;
+const VC_NOTIFY_CHANNEL_ID = "932595932464291872";// ← 聞き専チャンネル
 const vcStartMessages = new Map();
 
 client.once(Events.ClientReady, () => {
@@ -84,25 +85,23 @@ client.on(Events.MessageCreate, async (message) => {
   }
 });
 
-// VC開始 → 通知送信
 client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
-  // ユーザーが通話に「入った」瞬間
+  const guild = newState.guild;
+
+  // 通話に人が入った時
   if (!oldState.channel && newState.channel) {
-    const channel = newState.channel;
-    const textChannel = channel.guild.channels.cache.find(ch => ch.isTextBased());
-    if (textChannel) {
+    const textChannel = guild.channels.cache.get(VC_NOTIFY_CHANNEL_ID);
+    if (textChannel && textChannel.isTextBased()) {
       try {
         const msg = await textChannel.send("chatroom1にて通話が開始されました！\nhttps://discord.gg/PpugjHBgDB");
-        vcStartMessages.set(newState.guild.id, msg.id); // 終了時に削除できるよう保存
+        vcStartMessages.set(guild.id, msg.id);
       } catch (err) {
-        console.error("VC開始メッセージ送信失敗:", err);
+        console.error("VC開始メッセージ送信エラー:", err);
       }
     }
   }
-});
 
-// VC退出時に開始メッセージ削除＆終了メッセージ
-client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
+  // 通話から全員いなくなった時
   const channel = oldState.channel;
   if (
     channel &&
@@ -111,16 +110,16 @@ client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
     vcStartMessages.has(oldState.guild.id)
   ) {
     try {
-      const textChannel = channel.guild.channels.cache.find((ch) => ch.isTextBased());
+      const textChannel = channel.guild.channels.cache.get(VC_NOTIFY_CHANNEL_ID);
       const msgId = vcStartMessages.get(oldState.guild.id);
-      if (textChannel && msgId) {
+      if (textChannel && textChannel.isTextBased() && msgId) {
         const msg = await textChannel.messages.fetch(msgId);
         await msg.delete().catch(() => {});
         await textChannel.send("おつかれさまでした！");
         vcStartMessages.delete(oldState.guild.id);
       }
     } catch (err) {
-      console.error("VC終了時のメッセージ削除エラー:", err);
+      console.error("VC終了メッセージ削除エラー:", err);
     }
   }
 });
