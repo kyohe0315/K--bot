@@ -35,7 +35,7 @@ client.on(Events.MessageCreate, async (message) => {
         case "progressive":
           for (const r of res) {
             const sent = await message.channel.send(r);
-            setTimeout(() => sent.delete().catch(() => {}), 1000);
+            setTimeout(() => sent.delete().catch(() => {}), 100);
             await delay(3000);
           }
           break;
@@ -45,7 +45,7 @@ client.on(Events.MessageCreate, async (message) => {
           for (const r of res) messages.push(await message.channel.send(r));
           for (const m of messages.reverse()) {
             setTimeout(() => m.delete().catch(() => {}), 1000);
-            await delay(3000);
+            await delay(2000);
           }
           break;
         }
