@@ -2,8 +2,8 @@
 const { Client, GatewayIntentBits, Events } = require("discord.js");
 const responses = require("./responses.js");
 
-const { OpenAI } = require("openai");
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY); // .envから読込む想定
 
 const client = new Client({
   intents: [
@@ -89,29 +89,16 @@ client.on(Events.MessageCreate, async (message) => {
   }
 });
 
+ // Gemini問い合わせ
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
-
   if (message.mentions.has(client.user)) {
     const prompt = message.content.replace(/<@!?(\d+)>/g, "").trim();
-    if (prompt.length === 0) return;
-
-    try {
-      const response = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: prompt }],
-        temperature: 0.8,
-      });
-
-      const replyText = response.choices[0].message.content.trim();
-      await message.reply(replyText);
-    } catch (err) {
-      console.error("ChatGPTへの問い合わせでエラー:", err);
-      await message.reply("ChatGPTへの問い合わせに失敗しました🥲");
-    }
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const result = await model.generateContent(prompt);
+    await message.reply(result.response.text());
   }
 });
-
 
 client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
   const guild = newState.guild;
