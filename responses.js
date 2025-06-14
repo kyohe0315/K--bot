@@ -14,7 +14,7 @@ module.exports = [
     type: "static"
   },
   { pattern: /VC開始/,
-    responses: ["ハゲ"],
+    responses: ["chatroom1にて通話が開始されました！\nhttps://discord.gg/PpugjHBgDB"],
     type: "static"
   },
   {
