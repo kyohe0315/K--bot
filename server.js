@@ -95,8 +95,13 @@ client.on(Events.MessageCreate, async (message) => {
   if (message.mentions.has(client.user)) {
     const prompt = message.content.replace(/<@!?(\d+)>/g, "").trim();
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
-    const result = await model.generateContent(prompt);
-    await message.reply(result.response.text());
+    try {
+      const result = await model.generateContent(prompt);
+      await message.reply(result.response.text());
+    } catch (error) {
+      console.error("Gemini APIエラー:", error);
+      await message.reply("⚠️ Gemini APIとの通信でエラーが発生しました。");
+    }
   }
 });
 
