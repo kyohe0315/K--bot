@@ -92,14 +92,11 @@ client.on(Events.MessageCreate, async (message) => {
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
 
-  // ChatGPT呼び出し処理
-  if (
-    message.mentions.has(client.user) &&
-    message.content.includes("@868371965415677963")
-  ) {
-    try {
-      const prompt = message.content.replace(/<@!?(\d+)>/g, "").trim(); // メンション削除
+  if (message.mentions.has(client.user)) {
+    const prompt = message.content.replace(/<@!?(\d+)>/g, "").trim();
+    if (prompt.length === 0) return;
 
+    try {
       const response = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [{ role: "user", content: prompt }],
@@ -114,6 +111,7 @@ client.on(Events.MessageCreate, async (message) => {
     }
   }
 });
+
 
 client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
   const guild = newState.guild;
