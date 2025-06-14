@@ -1,7 +1,6 @@
-
 const fs = require("fs");
 const path = require("path");
-const FILE_PATH = path.join(__dirname, "../conversation_data.json");
+const FILE_PATH = "/tmp/conversation_data.json"; // ← ここを修正
 
 function loadHistory() {
   if (!fs.existsSync(FILE_PATH)) return {};
