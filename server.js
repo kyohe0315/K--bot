@@ -2,6 +2,9 @@
 const { Client, GatewayIntentBits, Events } = require("discord.js");
 const responses = require("./responses.js");
 
+const { OpenAI } = require("openai");
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -83,6 +86,32 @@ client.on(Events.MessageCreate, async (message) => {
     await message.reply(result);
     setTimeout(() => message.delete().catch(() => {}), 1000);
     return;
+  }
+});
+
+client.on(Events.MessageCreate, async (message) => {
+  if (message.author.bot) return;
+
+  // ChatGPT呼び出し処理
+  if (
+    message.mentions.has(client.user) &&
+    message.content.includes("@k-bot.")
+  ) {
+    try {
+      const prompt = message.content.replace(/<@!?(\d+)>/g, "").trim(); // メンション削除
+
+      const response = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo",
+        messages: [{ role: "user", content: prompt }],
+        temperature: 0.8,
+      });
+
+      const replyText = response.choices[0].message.content.trim();
+      await message.reply(replyText);
+    } catch (err) {
+      console.error("ChatGPTへの問い合わせでエラー:", err);
+      await message.reply("ChatGPTへの問い合わせに失敗しました🥲");
+    }
   }
 });
 
