@@ -36,14 +36,14 @@ client.on(Events.MessageCreate, async (message) => {
           break;
 
         case "progressive":
-          for (const r of res) {
+          for (const r of res) { // ← 例）うんこ
             const sent = await message.channel.send(r);
             setTimeout(() => sent.delete().catch(() => {}), 3000); // ← 表示時間
             await delay(100); // ← 次のメッセージまでの待ち時間
           }
           break;
 
-        case "reverse-delete": {
+        case "reverse-delete": { // ← 例）せいは
           const messages = [];
           for (const r of res) messages.push(await message.channel.send(r));
           for (const m of messages.reverse()) {
