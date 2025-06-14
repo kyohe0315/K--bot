@@ -2,7 +2,7 @@
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 const PROFILE_API = "https://script.google.com/macros/s/AKfycbwXue0nRRj2-1zxYHJTOvdP6xJIe9gR-KoF4EhIvqrqt3uQqSvNCbOuvLk_WSYZK6u7/exec"; // プロフィールGASのURLに置き換えてください
-const SUMMARY_API = "https://script.google.com/macros/s/AKfycbz7UJ6OtYJ8LE0sulZl7jiPBgpJksRshcnPD3F1gAuBORtStD-MZ_KWNX6kYEcJD2Qh/exec"; // 会話要約GASのURLに置き換えてください
+const SUMMARY_API = "https://script.google.com/macros/s/AKfycbz4XgpIwF4SUBByd1zrefZglEKjiq81O7i3Sy0SG7B3sIA49rPD6aypLelBUXr0i1oO/exec"; // 会話要約GASのURLに置き換えてください
 
 // プロフィール取得関数
 async function getUserProfile(userId) {
