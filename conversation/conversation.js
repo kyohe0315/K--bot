@@ -1,55 +1,9 @@
-const { loadHistory, saveHistory } = require("./jsonStorage");
-const fetch = require("node-fetch"); // ← これを追加！
+const fetch = require("node-fetch");
 
-const MAX_HISTORY = 15;
-const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzW_4EjWkTlYl2dzQdtOwP-O_seUqDEymefazelR0gmzHqyJW9E3SXmvnEjOkWGR9wX/exec"; // ← 差し替え！
+const PROFILE_API = "https://your-gas-profile-url.com"; // プロフィールGASのURLに置き換えてください
+const SUMMARY_API = "https://your-gas-summary-url.com"; // 会話要約GASのURLに置き換えてください
 
-// 読み込み
-const userConversations = new Map(Object.entries(loadHistory()));
-
-function addToHistory(userId, message) {
-  const history = userConversations.get(userId) || [];
-  history.push(message);
-  if (history.length > MAX_HISTORY) history.shift();
-  userConversations.set(userId, history);
-
-  saveHistory(Object.fromEntries(userConversations));
-
-  // 👇 GASに送信（最後の2発言を送る）
-  if (history.length >= 2) {
-    sendToGAS(userId, history.at(-2), history.at(-1));
-  }
-}
-
-function getConversationPrompt(userId) {
-  const history = userConversations.get(userId) || [];
-  return history.join("\n");
-}
-
-// 👇 ここがGASに送る処理
-async function sendToGAS(userId, message, reply) {
-  try {
-    await fetch(GAS_WEBHOOK_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId,
-        message,
-        reply,
-      }),
-    });
-  } catch (err) {
-    console.error("GAS送信エラー:", err);
-  }
-}
-
-module.exports = {
-  addToHistory,
-  getConversationPrompt,
-};
-
-const PROFILE_API = "https://script.google.com/macros/s/AKfycbyoo2Cw1D5oibyASMa1U_-E6DhVr0SKrranWn-fyZ21WtMsvEgbLU5JGOB406Kxq_he/exec"; // GASのデプロイURL
-
+// プロフィール取得関数
 async function getUserProfile(userId) {
   try {
     const res = await fetch(`${PROFILE_API}?userId=${userId}`);
@@ -61,3 +15,42 @@ async function getUserProfile(userId) {
   }
 }
 
+// 会話要約取得関数
+async function getConversationSummary(userId) {
+  try {
+    const res = await fetch(`${SUMMARY_API}?userId=${userId}`);
+    const json = await res.json();
+    return json.summaries?.join("\n") || "";
+  } catch (e) {
+    console.error("要約取得失敗", e);
+    return "";
+  }
+}
+
+// Geminiプロンプト生成（例）
+async function generateGeminiPrompt(userId, messages) {
+  const profile = await getUserProfile(userId);
+  const summary = await getConversationSummary(userId);
+
+  let profileText = "";
+  if (profile) {
+    profileText = `このユーザーは「${profile.nickname}」と呼ばれたい。\n性格：${profile.personality}\n好きなもの：${profile.likes}\n`;
+  }
+
+  const prompt = `
+${profileText}
+【最近の会話要約】
+${summary}
+
+【ユーザーの発言】
+${messages.map(msg => msg.content).join("\n")}
+`;
+
+  return prompt;
+}
+
+module.exports = {
+  getUserProfile,
+  getConversationSummary,
+  generateGeminiPrompt
+};
