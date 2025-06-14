@@ -1,0 +1,36 @@
+// responses.js
+module.exports = [
+  {
+    pattern: /こんにちは|やあ|こんちゃ/,
+    responses: ["やあ！", "こんにちは～", "元気？"],
+    type: "random"
+  },
+  {
+    pattern: /きょへ。?は/,
+    responses: ["ピカチュウ窓主"],
+    type: "static"
+  },
+  {
+    pattern: /テスト/,
+    responses: ["これはテストメッセージです。", "すべて正常に動作しています。"],
+    type: "static"
+  },
+  {
+    pattern: /うんこ|💩/,
+    responses: ["う", "ん", "こ", "だ", "な", "♪"],
+    type: "reverse-delete"
+  },
+  {
+    pattern: /せいは/,
+    responses: [
+      "せいさんはですね・・・。",
+      "言いたい事たくさんあるんですよ。",
+      "結構長くなるので覚悟してくださいね？",
+      "何から話そうかな。",
+      "まずは僕と青酸がはじめて出会った日の事ですが、",
+      "あれはまだ僕たちが高3だった頃…の2年前…。",
+      "続きは課金してね！♡"
+    ],
+    type: "progressive"
+  }
+];
