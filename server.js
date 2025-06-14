@@ -17,7 +17,7 @@ const vcStartMessages = new Map();
 
 client.once(Events.ClientReady, () => {
   console.log(`${client.user.tag} でログイン中`);
-  client.user.setActivity("第二の人生v2", { type: 0 }); // ← これを追加
+  client.user.setActivity("第二の人生v2.1", { type: 0 }); // ← これを追加
 });
 
 client.on(Events.MessageCreate, async (message) => {
