@@ -31,4 +31,3 @@
     "express"
   ]
 }
-yarn add axios node-ical node-cron
