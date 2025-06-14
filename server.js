@@ -32,14 +32,14 @@ client.on(Events.MessageCreate, async (message) => {
           break;
 
         case "random":
-          await message.channel.send(res[Math.floor(Math.random() * res.length)]);
+          await message.channel.send(res[Math.floor(Math.random() * res.length)]); 
           break;
 
         case "progressive":
           for (const r of res) {
             const sent = await message.channel.send(r);
-            setTimeout(() => sent.delete().catch(() => {}), 3000);
-            await delay(100);
+            setTimeout(() => sent.delete().catch(() => {}), 3000); // ← 表示時間
+            await delay(100); // ← 次のメッセージまでの待ち時間
           }
           break;
 
@@ -47,8 +47,8 @@ client.on(Events.MessageCreate, async (message) => {
           const messages = [];
           for (const r of res) messages.push(await message.channel.send(r));
           for (const m of messages.reverse()) {
-            setTimeout(() => m.delete().catch(() => {}), 1000);
-            await delay(2000);
+            setTimeout(() => m.delete().catch(() => {}), 1000); // ← 各メッセージの削除までの時間
+            await delay(2000); // ← 次の削除までの待ち時間
           }
           break;
         }
