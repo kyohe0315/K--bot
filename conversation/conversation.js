@@ -47,3 +47,17 @@ module.exports = {
   addToHistory,
   getConversationPrompt,
 };
+
+const PROFILE_API = "https://script.google.com/macros/s/AKfycbyoo2Cw1D5oibyASMa1U_-E6DhVr0SKrranWn-fyZ21WtMsvEgbLU5JGOB406Kxq_he/exec"; // GASのデプロイURL
+
+async function getUserProfile(userId) {
+  try {
+    const res = await fetch(`${PROFILE_API}?userId=${userId}`);
+    const json = await res.json();
+    return json.error ? null : json;
+  } catch (e) {
+    console.error("プロフィール取得失敗", e);
+    return null;
+  }
+}
+
