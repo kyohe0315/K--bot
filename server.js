@@ -97,7 +97,7 @@ client.on(Events.MessageCreate, async (message) => {
 
   // VC通話開始メッセージ
   if (message.content.match(/VC開始|ボイチャ開始|VCスタート|ボイチャスタート/)) {
-    const sent = await message.channel.send("chatroom1にて通話が開始されました！　https://discord.gg/PpugjHBgDB");
+    const sent = await message.channel.send("chatroom1にて通話が開始されました！　\n https://discord.gg/PpugjHBgDB");
     vcStartMessages.set(message.guildId, sent.id);
     setTimeout(() => message.delete().catch(() => {}), 200);
     return;
