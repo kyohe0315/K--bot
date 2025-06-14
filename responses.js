@@ -5,9 +5,12 @@ module.exports = [
     responses: ["やあ！", "こんにちは～", "元気？"],
     type: "random"
   },
-  {
-    pattern: /きょへ。?は/,
+  { pattern: /きょへ。?は/,
     responses: ["ピカチュウ窓主"],
+    type: "static"
+  },
+  { pattern: /たっつんは/,
+    responses: ["ハゲ"],
     type: "static"
   },
   {
