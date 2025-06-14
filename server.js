@@ -1,93 +1,133 @@
-// ✅ discord.js v14対応 全機能統合型Botの骨組み（簡潔＆高機能ベース）
-
-const { Client, GatewayIntentBits, Events } = require('discord.js');
-const express = require('express');
-const cron = require('node-cron');
-const axios = require('axios');
-const ical = require('ical');
-
-const app = express();
-app.get('/healthz', (req, res) => res.status(200).send('OK'));
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Web server running on ${PORT}`));
-
+const { Client, GatewayIntentBits, Events } = require("discord.js");
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
     GatewayIntentBits.GuildVoiceStates,
-    GatewayIntentBits.GuildMembers
-  ]
+  ],
 });
 
-const reactionsMap = { '🥺': '🥺', '😅': '😅' }; // 例
-const patterns = [
-  { pattern: /K-bot/, response: "はいはいなんでしょうか？" },
-  { pattern: /きょへ/, response: () => sendMsg(process.env.DEBUG_CHANNEL_ID, "ピカチュウ窓主") }
+const TOKEN = process.env.DISCORD_BOT_TOKEN;
+
+// 定型レスポンス
+const simplePatterns = [
+  { pattern: /こんにちは|やあ|こんちゃ/, responses: ["やあ！", "こんにちは～", "元気？"] },
+  { pattern: /うんこ|💩/, responses: ["う", "ん", "こ", "だ", "な", "♪"], sequential: true },
 ];
 
-client.once(Events.ClientReady, () => {
-  console.log(`Logged in as ${client.user.tag}`);
-  client.user.setPresence({ activities: [{ name: '第２の人生' }], status: 'online' });
+// 複数メッセージ＆順次削除
+const multiMessagePatterns = [
+  {
+    pattern: /せいは/,
+    messages: [
+      "せいさんはですね・・・。",
+      "言いたい事たくさんあるんですよ。",
+      "結構長くなるので覚悟してくださいね？",
+      "何から話そうかな。",
+      "まずは僕と青酸がはじめて出会った日の事ですが、",
+      "あれはまだ僕たちが高3だった頃…の2年前…。",
+      "続きは課金してね！♡",
+    ],
+  },
+];
+
+// おみくじ用
+const omikujiTriggers = /！おみくじ|!おみくじ|おみくじ/;
+const omikujiResults = [
+  "🎊すっごーーーい大吉！！🎊",
+  "✨かなり大吉✨",
+  "✨吉だね！✨",
+  "中吉だなぁ～👍🏻",
+  "残念~ 小吉~www",
+  "凶！",
+  "大凶。背後には気を付けろよ・・・。",
+];
+
+let vcStartMessages = new Map();
+
+client.on(Events.ClientReady, () => {
+  console.log(`${client.user.tag} でログイン中`);
 });
 
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
 
-  // リアクション
-  for (const emoji in reactionsMap) {
-    if (message.content.includes(emoji)) {
-      message.react(reactionsMap[emoji]).catch(console.error);
-    }
-  }
-
-  // パターン応答
-  for (const { pattern, response } of patterns) {
+  // シンプルなランダムレスポンス
+  for (const { pattern, responses, sequential } of simplePatterns) {
     if (message.content.match(pattern)) {
-      if (typeof response === 'function') {
-        await response();
+      if (sequential) {
+        for (const text of responses) {
+          const msg = await message.channel.send(text);
+          setTimeout(() => msg.delete().catch(() => {}), 1000);
+          await delay(3000);
+        }
       } else {
-        await message.channel.send(response);
+        const random = responses[Math.floor(Math.random() * responses.length)];
+        await message.channel.send(random);
       }
       return;
     }
   }
+
+  // 複数メッセージ順次表示削除
+  for (const { pattern, messages } of multiMessagePatterns) {
+    if (message.content.match(pattern)) {
+      for (const msgText of messages) {
+        const msg = await message.channel.send(msgText);
+        setTimeout(() => msg.delete().catch(() => {}), 1000);
+        await delay(3000);
+      }
+      return;
+    }
+  }
+
+  // おみくじ
+  if (
+    message.content.match(omikujiTriggers) ||
+    (message.mentions.has(client.user) && message.content.includes("おみくじ"))
+  ) {
+    const result = omikujiResults[Math.floor(Math.random() * omikujiResults.length)];
+    await message.reply(result);
+    setTimeout(() => message.delete().catch(() => {}), 1000);
+    return;
+  }
+
+  // VC通話開始メッセージ
+  if (message.content.match(/VC開始|ボイチャ開始|VCスタート|ボイチャスタート/)) {
+    const sent = await message.channel.send("chatroom1にて通話が開始されました！");
+    vcStartMessages.set(message.guildId, sent.id);
+    setTimeout(() => message.delete().catch(() => {}), 200);
+    return;
+  }
 });
 
-client.on('voiceStateUpdate', async (oldState, newState) => {
-  const vc = client.channels.cache.get(process.env.VOICE_CHANNEL_ID);
-  const text = client.channels.cache.get(process.env.MAIN_CHANNEL_ID);
-  if (!vc || !text) return;
-
-  // 通話開始
-  if (!oldState.channelId && newState.channelId === vc.id && vc.members.size === 1) {
-    text.send("chatroom1にて通話が開始されました！");
-  }
-  // 通話終了
-  if (oldState.channelId === vc.id && vc.members.size === 0) {
-    text.send("お疲れ様でした！🥱");
-  }
-});
-
-// カレンダー関連
-cron.schedule('0 9 * * 1', async () => {
-  try {
-    const res = await axios.get(process.env.ICAL_URL);
-    const events = ical.parseICS(res.data);
-    const msg = Object.values(events)
-      .filter(e => e.start)
-      .map(e => `**${e.summary}** - ${e.start.toLocaleDateString('ja-JP')}`)
-      .join('\n');
-    client.channels.cache.get(process.env.ICAL_CHANNEL_ID)?.send(`# 📅 今月の予定\n${msg}`);
-  } catch (e) {
-    console.error('iCal error:', e);
+// VC退出 → 開始メッセージ削除
+client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
+  const channel = oldState.channel;
+  if (
+    channel &&
+    oldState.channelId !== newState.channelId &&
+    channel.members.size === 0 &&
+    vcStartMessages.has(oldState.guild.id)
+  ) {
+    try {
+      const textChannel = channel.guild.channels.cache.find((ch) => ch.isTextBased());
+      if (textChannel) {
+        const msgId = vcStartMessages.get(oldState.guild.id);
+        const msg = await textChannel.messages.fetch(msgId);
+        await msg.delete().catch(() => {});
+        await textChannel.send("通話おつかれさまでした！");
+        vcStartMessages.delete(oldState.guild.id);
+      }
+    } catch (err) {
+      console.error("通話終了メッセージ削除エラー:", err);
+    }
   }
 });
 
-function sendMsg(channelId, text) {
-  const ch = client.channels.cache.get(channelId);
-  if (ch) ch.send(text).catch(console.error);
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-client.login(process.env.DISCORD_BOT_TOKEN);
+client.login(TOKEN);
