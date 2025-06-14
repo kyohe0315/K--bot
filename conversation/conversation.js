@@ -2,7 +2,7 @@ const { loadHistory, saveHistory } = require("./jsonStorage");
 const fetch = require("node-fetch"); // ← これを追加！
 
 const MAX_HISTORY = 15;
-const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/あなたのID/exec"; // ← 差し替え！
+const GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzW_4EjWkTlYl2dzQdtOwP-O_seUqDEymefazelR0gmzHqyJW9E3SXmvnEjOkWGR9wX/exec"; // ← 差し替え！
 
 // 読み込み
 const userConversations = new Map(Object.entries(loadHistory()));
