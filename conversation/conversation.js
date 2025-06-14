@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 
-const PROFILE_API = "https://your-gas-profile-url.com"; // プロフィールGASのURLに置き換えてください
-const SUMMARY_API = "https://your-gas-summary-url.com"; // 会話要約GASのURLに置き換えてください
+const PROFILE_API = "https://script.google.com/macros/s/AKfycbwmtmwACnSJFnzz9SwsqPIMJPyZVD6Wp07qleXVW3k7xNTXInF_sdd6tKdMRCVkYJOY/exec"; // プロフィールGASのURLに置き換えてください
+const SUMMARY_API = "https://script.google.com/macros/s/AKfycbz7UJ6OtYJ8LE0sulZl7jiPBgpJksRshcnPD3F1gAuBORtStD-MZ_KWNX6kYEcJD2Qh/exec"; // 会話要約GASのURLに置き換えてください
 
 // プロフィール取得関数
 async function getUserProfile(userId) {
