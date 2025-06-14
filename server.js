@@ -120,7 +120,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
   if (!vc || !text) return;
 
   if (!oldState.channelId && newState.channelId === vc.id && vc.members.size === 1) {
-    text.send("chatroom1にて通話が開始されました！");
+    text.send("chatroom1にて通話が開始されました！https://discord.gg/PpugjHBgDB");
   }
 
   if (oldState.channelId === vc.id && vc.members.size === 0) {
