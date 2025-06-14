@@ -2,6 +2,8 @@
 const { Client, GatewayIntentBits, Events } = require("discord.js");
 const responses = require("./responses.js");
 
+const { generateGeminiPrompt } = require('./conversation/conversation');
+
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY); // .envから読込む想定
 
