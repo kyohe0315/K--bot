@@ -22,21 +22,3 @@ module.exports = {
   getConversationPrompt,
 };
 
-const fetch = require("node-fetch"); // 必要ならnpmでインストール
-
-async function sendToGAS(userId, message, reply) {
-  try {
-    await fetch("https://script.google.com/macros/s/あなたのGAS_URL/exec", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId,
-        message,
-        reply,
-      }),
-    });
-  } catch (e) {
-    console.error("GAS送信エラー:", e);
-  }
-}
-
