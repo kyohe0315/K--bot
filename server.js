@@ -122,7 +122,7 @@ function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-const CHECK_INTERVAL = 10 * 60 * 1000; // 10分（ミリ秒）
+const CHECK_INTERVAL = 1 * 60 * 1000; // 10分（ミリ秒）
 
 setInterval(async () => {
   const channel = client.channels.cache.get(VC_NOTIFY_CHANNEL_ID);
