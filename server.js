@@ -15,6 +15,7 @@ const TOKEN = process.env.DISCORD_BOT_TOKEN;
 const VC_NOTIFY_CHANNEL_ID = "932595932464291872"; // ← 聞き専チャンネル
 const VOICE_CHANNEL_ID = "930348999645483111"; // ← chatroom1
 const ICAL_CHANNEL_ID = process.env.ICAL_CHANNEL_ID;
+const ICAL_URL = process.env.ICAL_URL;
 const vcStartMessages = new Map();
 
 client.once(Events.ClientReady, () => {
