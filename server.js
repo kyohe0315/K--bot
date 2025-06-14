@@ -97,10 +97,14 @@ client.on(Events.MessageCreate, async (message) => {
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
   if (message.mentions.has(client.user)) {
-    const prompt = message.content.replace(/<@!?(\d+)>/g, "").trim();
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
     try {
-      const result = await model.generateContent(prompt);
+      const prompt = await generateGeminiPrompt(message.author.id, [
+        { role: 'user', content: message.content }
+      ]);
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+      const result = await model.generateContent({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }]
+      });
       await message.reply(result.response.text());
     } catch (error) {
       console.error("Gemini APIエラー:", error);
@@ -108,6 +112,7 @@ client.on(Events.MessageCreate, async (message) => {
     }
   }
 });
+
 
 client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
   const guild = newState.guild;
