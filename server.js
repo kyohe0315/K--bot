@@ -18,6 +18,10 @@ const ICAL_CHANNEL_ID = process.env.ICAL_CHANNEL_ID; // ← 星の子の話し�
 const ICAL_URL = process.env.ICAL_URL; // ← GoogleカレンダーURL
 const vcStartMessages = new Map();
 
+const axios = require("axios");
+const ical = require("node-ical");
+const cron = require("node-cron");
+
 client.once(Events.ClientReady, () => {
   console.log(`${client.user.tag} でログイン中`);
   client.user.setActivity("第二の人生v2.4", { type: 0 }); // ← これを追加
@@ -147,5 +151,92 @@ setInterval(async () => {
   }
 }, CHECK_INTERVAL);
 
+function getMonthRange() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), now.getMonth(), 1);
+  const end = new Date(now.getFullYear(), now.getMonth() + 2, 0, 23, 59, 59);
+  return { start, end };
+}
+
+async function postMonthlyEvents() {
+  try {
+    const { start, end } = getMonthRange();
+    const response = await axios.get(ICAL_URL);
+    const events = ical.parseICS(response.data);
+
+    const monthlyEvents = Object.values(events).filter(event =>
+      event.start && event.start >= start && event.start <= end
+    );
+
+    global.monthlyEvents = monthlyEvents;
+
+    const channel = client.channels.cache.get(ICAL_CHANNEL_ID);
+    if (!channel || !channel.isTextBased()) return;
+
+    if (monthlyEvents.length > 0) {
+      let message = `# 📅 ${start.toLocaleDateString('ja-JP')} ～ ${end.toLocaleDateString('ja-JP')} のイベント一覧\n\n\n`;
+      monthlyEvents.forEach(event => {
+        const startDate = event.start.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' }).replace(/^\d+\/(\d+)\/(\d+)$/, '$1/$2');
+        const endDate = event.end ? event.end.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' }).replace(/^\d+\/(\d+)\/(\d+)$/, '$1/$2') : '未定';
+        message += `**${event.summary}**\n${startDate} ～ ${endDate}\n\n`;
+      });
+      await channel.send(message);
+    } else {
+      await channel.send(`📅 今月 (${start.toLocaleDateString('ja-JP')} ～ ${end.toLocaleDateString('ja-JP')}) に予定されているイベントはありません。`);
+    }
+  } catch (error) {
+    console.error('カレンダーの取得に失敗しました:', error);
+  }
+}
+
+async function remindCurrentEvents() {
+  try {
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    const { start, end } = getMonthRange();
+    const response = await axios.get(ICAL_URL);
+    const events = ical.parseICS(response.data);
+
+    const monthlyEvents = Object.values(events).filter(event =>
+      event.start && event.start >= start && event.start <= end
+    );
+    global.monthlyEvents = monthlyEvents;
+
+    const channel = client.channels.cache.get(ICAL_CHANNEL_ID);
+    if (!channel || !channel.isTextBased()) return;
+
+    const ongoingEvents = monthlyEvents.filter(event => {
+      const eventStart = new Date(event.start);
+      const eventEnd = new Date(event.end || event.start); // 終了未設定なら開始日と同じに
+      eventStart.setHours(0, 0, 0, 0);
+      eventEnd.setHours(0, 0, 0, 0);
+      return eventStart <= now && eventEnd >= now;
+    });
+
+    if (ongoingEvents.length > 0) {
+      let message = `## 🔔 現在進行中のイベント\n\n`;
+      ongoingEvents.forEach(event => {
+        const startDate = event.start.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' }).replace(/^\d+\/(\d+)\/(\d+)$/, '$1/$2');
+        const endDate = event.end ? event.end.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' }).replace(/^\d+\/(\d+)\/(\d+)$/, '$1/$2') : '未定';
+        message += `**${event.summary}**\n開始日: ${startDate} ～ 終了日: ${endDate}\n\n`;
+      });
+      await channel.send(message);
+    } else {
+      await channel.send('🔔 現在進行中のイベントはありません。');
+    }
+  } catch (error) {
+    console.error('リマインダーの送信に失敗しました:', error);
+  }
+}
+
+// 月曜 午前9時：今月のイベント一覧
+cron.schedule('0 9 * * 1', () => {
+  postMonthlyEvents();
+});
+
+// 水・金 午後5時：進行中イベントリマインダー
+cron.schedule('0 17 * * 3,5', () => {
+  remindCurrentEvents();
+});
 
 client.login(TOKEN);
