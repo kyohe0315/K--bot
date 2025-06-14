@@ -16,7 +16,7 @@
     "node-ical": "^0.15.0",
     "node-cron": "^3.0.3",
     "querystring": "^0.2.0",
-    "openai": "^4.30.0"
+    "@google/generative-ai": "^1.x.x"
   },
   "engines": {
     "node": "20.x"
