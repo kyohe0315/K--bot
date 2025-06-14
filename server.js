@@ -12,7 +12,8 @@ const client = new Client({
 });
 
 const TOKEN = process.env.DISCORD_BOT_TOKEN;
-const VC_NOTIFY_CHANNEL_ID = "932595932464291872";// ← 聞き専チャンネル
+const VC_NOTIFY_CHANNEL_ID = "932595932464291872"; // ← 聞き専チャンネル
+const VOICE_CHANNEL_ID = "930348999645483111"; // ← chatroom1
 const vcStartMessages = new Map();
 
 client.once(Events.ClientReady, () => {
@@ -80,8 +81,8 @@ client.on(Events.MessageCreate, async (message) => {
 client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
   const guild = newState.guild;
 
-  // 通話に人が入った時
-  if (!oldState.channel && newState.channel) {
+  // ✅ 指定VCに人が入った時だけ通知を送る
+  if (!oldState.channel && newState.channelId === VOICE_CHANNEL_ID) {
     const textChannel = guild.channels.cache.get(VC_NOTIFY_CHANNEL_ID);
     if (textChannel && textChannel.isTextBased()) {
       try {
@@ -93,10 +94,11 @@ client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
     }
   }
 
-  // 通話から全員いなくなった時
+  // ✅ VCから全員いなくなったら終了メッセージ送信＆開始メッセージ削除
   const channel = oldState.channel;
   if (
     channel &&
+    channel.id === VOICE_CHANNEL_ID && // ← 対象VCであることも確認
     oldState.channelId !== newState.channelId &&
     channel.members.size === 0 &&
     vcStartMessages.has(oldState.guild.id)
