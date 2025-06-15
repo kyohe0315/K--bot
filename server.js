@@ -93,7 +93,6 @@ const isSkyTopic = /Sky|キャンマラ|星を紡ぐ|エリア|ひだね|火種|
 
 const fs = require('fs');
 const path = require('path');
-const { Events } = require('discord.js');
 
 // エリア名のマッピング（別名対応）
 const areaAlias = {
