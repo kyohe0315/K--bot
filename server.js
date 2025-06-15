@@ -92,9 +92,6 @@ client.on(Events.MessageCreate, async (message) => {
 const fs = require('fs');
 const path = require('path');
 
-const jsonPath = path.join(__dirname, "data", `fire_seeds_${matchedArea}.json`);
-const jsonData = fs.readFileSync(jsonPath, "utf-8");
-
 // エリア名のマッピング（別名対応）
 const areaAlias = {
   "捨て地": ["捨地", "すてち", "すてっち"],
@@ -149,7 +146,7 @@ client.on(Events.MessageCreate, async (message) => {
       let relevantData = [];
 
       if (areaName) {
-        const filePath = path.join(__dirname, "../data", `fire_seeds_${areaName}.json`);
+        const filePath = path.join(__dirname, "data", `fire_seeds_${areaName}.json`);
         const json = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
         relevantData = extractRelevantSpots(json, userInput);
         if (relevantData.length === 0) relevantData = json.locations; // fallback
