@@ -279,15 +279,14 @@ app.get("/healthz", (req, res) => {
   res.status(200).send("OK");
 });
 
-// オプション：Renderが "/" を叩く場合の保険
 app.get("/", (req, res) => {
-  res.status(200).send("K-bot is live!");
+  console.log(`[Ping] / にアクセスされました: ${new Date().toISOString()}`);
+  res.status(200).send("It works");
 });
 
-// サーバー起動
-app.listen(PORT, () => {
-  console.log(`HTTPサーバーが起動中 (port ${PORT})`);
+app.get("/healthz", (req, res) => {
+  console.log(`[Ping] /healthz にアクセスされました: ${new Date().toISOString()}`);
+  res.status(200).send("OK");
 });
-
 
 client.login(TOKEN);
