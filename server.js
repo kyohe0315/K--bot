@@ -108,6 +108,15 @@ const areaAlias = {
   "ソーシャルライト・他": ["ソーシャル", "ならい", "ウニ", "パン", "貝", "焚火", "レース", "花束", "シャード", "虹"]
 };
 
+function detectAreaName(text) {
+  for (const [standard, aliases] of Object.entries(areaAlias)) {
+    if ([standard, ...aliases].some(keyword => text.includes(keyword))) {
+      return standard;
+    }
+  }
+  return null;
+}
+
 // 別名を標準名に変換
 function detectAreaName(text) {
   for (const [standard, aliases] of Object.entries(areaAlias)) {
