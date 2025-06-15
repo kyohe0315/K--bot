@@ -31,7 +31,7 @@ const cron = require("node-cron");
 
 client.once(Events.ClientReady, () => {
   console.log(`${client.user.tag} でログイン中`);
-  client.user.setActivity("第二の人生v2.6", { type: 0 }); // ← これを追加
+  client.user.setActivity("第二の人生v2.7", { type: 0 }); // ← これを追加
   //postMonthlyEvents(); // ← デバッグ用
   //remindCurrentEvents(); // ← デバッグ用← これを追加
 });
