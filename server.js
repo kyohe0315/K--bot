@@ -274,7 +274,7 @@ const httpApp = express();
 const PORT = process.env.PORT || 3000;
 
 httpApp.get("/healthz", (req, res) => {
-  res.send("OK"); // GASがこれを見て「Bot起きてる」と判断
+  res.status(200).send("OK"); // GASがこれを見て「Bot起きてる」と判断
 });
 
 httpApp.listen(PORT, () => {
