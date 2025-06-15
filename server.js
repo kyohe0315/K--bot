@@ -108,6 +108,7 @@ const areaAlias = {
   "ソーシャルライト・他": ["ソーシャル", "ならい", "ウニ", "パン", "貝", "焚火", "レース", "花束", "シャード", "虹"]
 };
 
+// 別名を標準名に変換
 function detectAreaName(text) {
   for (const [standard, aliases] of Object.entries(areaAlias)) {
     if ([standard, ...aliases].some(keyword => text.includes(keyword))) {
@@ -117,14 +118,13 @@ function detectAreaName(text) {
   return null;
 }
 
-// 別名を標準名に変換
-function detectAreaName(text) {
-  for (const [standard, aliases] of Object.entries(areaAlias)) {
-    if ([standard, ...aliases].some(keyword => text.includes(keyword))) {
-      return standard;
-    }
+function loadFireSeedData(area) {
+  const filePath = path.join(__dirname, '../data', `fire_seeds_${area}.json`);
+  if (!fs.existsSync(filePath)) {
+    console.warn(`⚠️ ファイルが見つかりません: ${filePath}`);
+    return null;
   }
-  return null;
+  return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 }
 
 // 関連スポットだけ抽出
