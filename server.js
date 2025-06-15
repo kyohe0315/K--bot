@@ -285,8 +285,15 @@ app.get("/", (req, res) => {
 });
 
 app.get("/healthz", (req, res) => {
-  console.log(`[Ping] /healthz にアクセスされました: ${new Date().toISOString()}`);
+  const now = new Date().toISOString();
+  const gasHeader = req.headers["x-from-gas"];
+  const userAgent = req.headers["user-agent"];
+
+  console.log(`[Healthz Ping] ${now} | GASヘッダー: ${gasHeader} | UA: ${userAgent}`);
+  console.error(`[Healthz DEBUG] 呼び出しを受信しました - 時間: ${now}`);
+  
   res.status(200).send("OK");
 });
+
 
 client.login(TOKEN);
