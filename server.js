@@ -89,37 +89,97 @@ client.on(Events.MessageCreate, async (message) => {
   }
 });
 
- // Gemini問い合わせ
+const fs = require('fs');
+const path = require('path');
+const { Events } = require('discord.js');
+
+// エリア名のマッピング（別名対応）
+const areaAlias = {
+  "捨て地": ["捨地", "すてち"],
+  "雨林": ["あめりん"],
+  "草原": ["そうげん"],
+  "孤島": ["ことう"],
+  "峡谷": ["きょうこく"],
+  "書庫": ["図書館"],
+  "天空": ["てんくう"],
+  "海ホーム": ["海"],
+  "花鳥卿": ["かちょう", "花鳥"],
+  "アリスカフェ": ["カフェ", "アリス"],
+  "ソーシャルライト・他": ["ソーシャル", "交流", "光の広場"]
+};
+
+// 別名を標準名に変換
+function detectAreaName(text) {
+  for (const [standard, aliases] of Object.entries(areaAlias)) {
+    if ([standard, ...aliases].some(keyword => text.includes(keyword))) {
+      return standard;
+    }
+  }
+  return null;
+}
+
+// 関連スポットだけ抽出
+function extractRelevantSpots(json, text) {
+  return json.locations.filter(loc =>
+    text.includes(loc.zone) || text.includes(loc.spot)
+  );
+}
+
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
 
-  // メンションされた場合にGeminiに問い合わせる
   if (message.mentions.has(client.user)) {
     try {
-      // プロンプトを生成する部分
+      const userInput = message.content;
+
+      // 🔍 エリア名を推測
+      const areaName = detectAreaName(userInput);
+      let relevantData = [];
+
+      if (areaName) {
+        const filePath = path.join(__dirname, "../data", `fire_seeds_${areaName}.json`);
+        const json = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+        relevantData = extractRelevantSpots(json, userInput);
+        if (relevantData.length === 0) relevantData = json.locations; // fallback
+      }
+
+      // 🔤 言い換え補足文
+      const aliasText = `
+【用語補足】
+・火種＝光のかけら＝かけら＝ひかり
+・捨て地＝捨地＝すてち
+・雨林＝あめりん
+・書庫＝図書館
+...`;
+
+      // 🧠 プロンプトを生成
       const prompt = `
-あなたは親しみやすい会話Botです。  
-ユーザーとの会話では、以下の情報を基に返答してください。
+あなたは親しみやすい会話Botです。
+以下の情報をもとに、ユーザーの質問に的確かつ自然に答えてください。
 
 ---
-【ユーザーの発言】  
-${message.content}
+【用語補足】
+${aliasText}
 
-【あなたの発言の注意点】  
+【ユーザーの発言】
+${userInput}
+
+【参照データ（該当エリア）】
+${JSON.stringify(relevantData, null, 2)}
+
+【あなたの発言の注意点】
 ・妄想で語らない。ソースのある事実ベースでのみ語る。
-・分からない事は、分からないとはっきり言う。
-・返答は、ユーザーの発言のトーンに合わせて行う。
-・答えはだいたい200文字程度に済ませる。
-・※これら注意点はいちいち発言しなくていい。
+・分からないことは、分からないとはっきり言う。
+・返答は、ユーザーのトーンに合わせて自然に。
+・だいたい200文字以内。
 `;
 
-      // Geminiにプロンプトを送信して結果を取得
+      // Geminiへ送信
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
       const result = await model.generateContent({
         contents: [{ role: 'user', parts: [{ text: prompt }] }]
       });
 
-      // Geminiからの返答をDiscordに送信
       await message.reply(result.response.text());
     } catch (error) {
       console.error("Gemini APIエラー:", error);
@@ -127,6 +187,7 @@ ${message.content}
     }
   }
 });
+
 
 
 client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
