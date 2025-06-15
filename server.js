@@ -27,7 +27,7 @@ const cron = require("node-cron");
 
 client.once(Events.ClientReady, () => {
   console.log(`${client.user.tag} でログイン中`);
-  client.user.setActivity("第二の人生v2.8", { type: 0 }); // ← これを追加
+  client.user.setActivity("第二の人生v2.9", { type: 0 }); // ← これを追加
   //postMonthlyEvents(); // ← デバッグ用
   //remindCurrentEvents(); // ← デバッグ用← これを追加
 });
@@ -91,6 +91,9 @@ client.on(Events.MessageCreate, async (message) => {
 
 const fs = require('fs');
 const path = require('path');
+
+const jsonPath = path.join(__dirname, "data", `fire_seeds_${matchedArea}.json`);
+const jsonData = fs.readFileSync(jsonPath, "utf-8");
 
 // エリア名のマッピング（別名対応）
 const areaAlias = {
