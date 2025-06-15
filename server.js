@@ -390,6 +390,9 @@ cron.schedule('0 17 * * 3,5', () => {
 const express = require("express");
 const app = express(); // ← httpAppではなくappにする！
 const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
+});
 
 // ヘルスチェックルート
 app.get("/healthz", (req, res) => {
