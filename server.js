@@ -170,6 +170,29 @@ client.on(Events.MessageCreate, async (message) => {
 
 ...`;
 
+// 発言からエリア名を推定
+let matchedArea = null;
+const areaNames = ["草原", "雨林", "峡谷", "書庫", "捨て地", "孤島", "天空", "海ホーム", "花鳥卿", "アリスカフェ"];
+for (const area of areaNames) {
+  if (message.content.includes(area) || message.content.includes(area.replace("ヶ", "")) || message.content.includes(area.toLowerCase())) {
+    matchedArea = area;
+    break;
+  }
+}
+
+// JSONの読み込み処理（Sky関連ワード＆エリア名が含まれていたときのみ）
+let areaDataText = "";
+if (isSkyTopic && matchedArea) {
+  try {
+    const areaFileName = `fire_seeds_${matchedArea}.json`;
+    const areaFilePath = path.join(__dirname, "data", areaFileName);
+    const areaJson = JSON.parse(fs.readFileSync(areaFilePath, "utf-8"));
+    areaDataText = `\n【${matchedArea}の火種情報】\n${JSON.stringify(areaJson)}`;
+  } catch (err) {
+    console.error(`❌ ${matchedArea} のデータ読み込み失敗`, err);
+  }
+}
+
       // 🧠 プロンプトを生成
       const prompt = `
 あなたは親しみやすい会話Botです。
