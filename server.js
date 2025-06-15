@@ -27,13 +27,14 @@ const cron = require("node-cron");
 
 client.once(Events.ClientReady, () => {
   console.log(`${client.user.tag} でログイン中`);
-  client.user.setActivity("第二の人生v2.7", { type: 0 }); // ← これを追加
+  client.user.setActivity("第二の人生v2.8", { type: 0 }); // ← これを追加
   //postMonthlyEvents(); // ← デバッグ用
   //remindCurrentEvents(); // ← デバッグ用← これを追加
 });
 
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
+  const isSkyTopic = /Sky|キャンマラ|星を紡ぐ|エリア|ひだね|火種|光のかけら|キャンドル|わっくす|雨林|捨て地|孤島|峡谷/.test(message.content);
 
   for (const { pattern, responses: res, type } of responses) {
     if (pattern.test(message.content)) {
@@ -88,8 +89,6 @@ client.on(Events.MessageCreate, async (message) => {
     return;
   }
 });
-
-const isSkyTopic = /Sky|キャンマラ|星を紡ぐ|エリア|ひだね|火種|光のかけら|キャンドル|わっくす|雨林|捨て地|孤島|峡谷/.test(message.content);
 
 const fs = require('fs');
 const path = require('path');
