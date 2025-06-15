@@ -1,7 +1,7 @@
 // 先頭に追加
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
-const PROFILE_API = "https://script.google.com/macros/s/AKfycbzjBLePslLDrcMznI-zHgoFum481DRHZoQvKY9LsiGsK5HN6OPBailzs7L6x6zzKmdf4Q/exec"; // プロフィールGASのURLに置き換えてください
+const PROFILE_API = "https://script.google.com/macros/s/AKfycbyskcoqd-VvLLtSZdLvWxxdyIyue9qZ7whOaY7895s8_0rz-FcPWWimoNpVrrTAV_E_kQ/exec"; // プロフィールGASのURLに置き換えてください
 
 // プロフィール取得関数
 async function getUserProfile(userId) {
