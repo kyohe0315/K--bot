@@ -93,6 +93,23 @@ client.on(Events.MessageCreate, async (message) => {
   }
 });
 
+// GASに会話データを送信する関数
+async function sendConversationToGAS(userId, nickname, userMessage, botResponse) {
+  const url = "https://script.google.com/macros/s/【GASのWebAppURL】/exec"; // GASのWebAppURL
+  const data = {
+    userId: userId,         // ユーザーID
+    nickname: nickname,     // ユーザーの呼び名
+    user_message: userMessage, // ユーザーの発言内容
+    bot_response: botResponse  // Botの返答内容
+  };
+
+  try {
+    await axios.post(url, data);  // POSTでデータをGASに送信
+  } catch (error) {
+    console.error("会話データ送信エラー", error);
+  }
+}
+
  // Gemini問い合わせ
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
