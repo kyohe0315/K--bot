@@ -34,8 +34,8 @@ async function generateGeminiPrompt(userId, messages) {
   const summary = await getConversationSummary(userId);
 
   const nickname = profile?.nickname || "ユーザー";
-  const personality = profile?.personality || "普通";
-  const likes = profile?.likes || "特になし";
+//  const personality = profile?.personality || "普通";
+//  const likes = profile?.likes || "特になし";
 
   const prompt = `
 あなたはDiscord上で活動する、親しみやすく面白い会話Botです。
