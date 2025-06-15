@@ -5,7 +5,7 @@ const PROFILE_API = "https://script.google.com/macros/s/AKfycbyskcoqd-VvLLtSZdLv
 
 // プロフィール取得関数
 async function getUserProfile(userId) {
-  const url = `https://script.google.com/macros/s/【GASのWebAppURL】/exec?userId=${userId}`;
+  const url = `https://script.google.com/macros/s/AKfycbyskcoqd-VvLLtSZdLvWxxdyIyue9qZ7whOaY7895s8_0rz-FcPWWimoNpVrrTAV_E_kQ/exec?userId=${userId}`;
   try {
     const response = await fetch(url);
     const text = await response.text(); // レスポンスをテキストとして受け取る
