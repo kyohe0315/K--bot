@@ -203,7 +203,9 @@ if (isSkyTopic && matchedArea) {
 ${aliasText}
 
 【ユーザーの発言】
-${userInput}
+${message.content}
+
+${areaDataText} // ←これを忘れず入れる
 
 【参照データ（該当エリア）】
 ${JSON.stringify(relevantData, null, 2)}
