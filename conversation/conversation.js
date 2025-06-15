@@ -2,7 +2,6 @@
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 const PROFILE_API = "https://script.google.com/macros/s/AKfycbzjBLePslLDrcMznI-zHgoFum481DRHZoQvKY9LsiGsK5HN6OPBailzs7L6x6zzKmdf4Q/exec"; // プロフィールGASのURLに置き換えてください
-const SUMMARY_API = "https://script.google.com/macros/s/AKfycbyskcoqd-VvLLtSZdLvWxxdyIyue9qZ7whOaY7895s8_0rz-FcPWWimoNpVrrTAV_E_kQ/exec"; // 会話要約GASのURLに置き換えてください
 
 // プロフィール取得関数
 async function getUserProfile(userId) {
@@ -13,18 +12,6 @@ async function getUserProfile(userId) {
   } catch (e) {
     console.error("プロフィール取得失敗", e);
     return null;
-  }
-}
-
-// 会話要約取得関数
-async function getConversationSummary(userId) {
-  try {
-    const res = await fetch(`${SUMMARY_API}?userId=${userId}`);
-    const json = await res.json();
-    return json.summaries?.join("\n") || "";
-  } catch (e) {
-    console.error("要約取得失敗", e);
-    return "";
   }
 }
 
