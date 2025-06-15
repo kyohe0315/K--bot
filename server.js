@@ -93,23 +93,6 @@ client.on(Events.MessageCreate, async (message) => {
   }
 });
 
-// GASに会話データを送信する関数
-async function saveProfileToGAS(userId, nickname, personality, likes) {
-  const url = "https://script.google.com/macros/s/【GASのWebAppURL】/exec";  // GASのWebApp URL
-  const data = {
-    userId: userId,
-    nickname: nickname,
-    personality: personality,  // ユーザーの性格（例：「優しい」）
-    likes: likes               // ユーザーの好み（例：「ゲーム」）
-  };
-
-  try {
-    await axios.post(url, data);  // プロフィール情報をGASに送信
-  } catch (error) {
-    console.error("プロフィール情報送信エラー:", error);
-  }
-}
-
  // Gemini問い合わせ
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
