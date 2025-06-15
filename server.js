@@ -94,8 +94,8 @@ client.on(Events.MessageCreate, async (message) => {
 });
 
 // GASに会話データを送信する関数
-async function sendConversationToGAS(userId, nickname, userMessage, botResponse) {
-  const url = "https://script.google.com/macros/s/AKfycby7Cfr3d7yqeYOPoIte4WjBgSx_WLsh0_64ahGBTvA7-3L_gRIaD04OXwXORW3kNxeerw/exec"; // GASのWebAppURL
+async function saveConversationToSheet(userId, nickname, userMessage, botResponse) {
+  const url = "https://script.google.com/macros/s/【GASのWebAppURL】/exec";  // GASのWebApp URL
   const data = {
     userId: userId,
     nickname: nickname,
@@ -103,10 +103,8 @@ async function sendConversationToGAS(userId, nickname, userMessage, botResponse)
     bot_response: botResponse
   };
 
-  console.log("送信するデータ:", data);  // ここで送信するデータを確認！
-
   try {
-    await axios.post(url, data); // データをGASに送信
+    await axios.post(url, data);  // 会話履歴を保存
   } catch (error) {
     console.error("GASへの送信エラー:", error);
   }
