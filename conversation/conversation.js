@@ -33,22 +33,38 @@ async function generateGeminiPrompt(userId, messages) {
   const profile = await getUserProfile(userId);
   const summary = await getConversationSummary(userId);
 
-  let profileText = "";
-  if (profile) {
-    profileText = `このユーザーは「${profile.nickname}」と呼ばれたい。\n性格：${profile.personality}\n好きなもの：${profile.likes}\n`;
-  }
+  const nickname = profile?.nickname || "ユーザー";
+  const personality = profile?.personality || "普通";
+  const likes = profile?.likes || "特になし";
 
   const prompt = `
-${profileText}
-【最近の会話要約】
-${summary}
+あなたはDiscord上で活動する、親しみやすく面白い会話Botです。
+skyやスマブラの知識が多くあります。
+以下の情報を元に、ユーザーとの自然で楽しい会話を行ってください。
 
-【ユーザーの発言】
+---
+■ ユーザー情報
+呼び方：${nickname}
+性格：${personality}
+好きなもの：${likes}
+
+■ 最近の会話要約：
+${summary || "なし"}
+
+■ ユーザーの発言：
 ${messages.map(msg => msg.content).join("\n")}
+
+■ あなたの返事のルール：
+・感情表現を含める
+・軽くノリ良く対応
+・なるべく人間らしく返す（ただし冗長にしすぎない）
+・長くても200文字程度の返信。長くなる情報の場合は超えてもOK
+・※プロフィール情報が未入力の場合（たとえば「好きなもの」「名前」が空欄の時）、無理に話題に出さず自然に会話してください。
 `;
 
   return prompt;
 }
+
 
 module.exports = {
   getUserProfile,
