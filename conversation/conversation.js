@@ -5,13 +5,15 @@ const PROFILE_API = "https://script.google.com/macros/s/AKfycbyskcoqd-VvLLtSZdLv
 
 // プロフィール取得関数
 async function getUserProfile(userId) {
+  const url = `https://script.google.com/macros/s/【GASのWebAppURL】/exec?userId=${userId}`;
   try {
-    const res = await fetch(`${PROFILE_API}?userId=${userId}`);
-    const json = await res.json();
-    return json.error ? null : json;
-  } catch (e) {
-    console.error("プロフィール取得失敗", e);
-    return null;
+    const response = await fetch(url);
+    const text = await response.text(); // レスポンスをテキストとして受け取る
+    console.log("レスポンス:", text);  // レスポンスの内容を確認
+    const data = JSON.parse(text); // 正常なJSON形式であればparse
+    return data;
+  } catch (error) {
+    console.error("プロフィール取得エラー:", error);
   }
 }
 
