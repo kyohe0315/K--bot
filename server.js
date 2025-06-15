@@ -95,20 +95,24 @@ client.on(Events.MessageCreate, async (message) => {
 
 // GASに会話データを送信する関数
 async function sendConversationToGAS(userId, nickname, userMessage, botResponse) {
-  const url = "https://script.google.com/macros/s/AKfycby7Cfr3d7yqeYOPoIte4WjBgSx_WLsh0_64ahGBTvA7-3L_gRIaD04OXwXORW3kNxeerw/exec"; // GASのWebAppURL
+  const url = "https://script.google.com/macros/s/【GASのWebAppURL】/exec"; // GASのWebAppURL
   const data = {
-    userId: userId,         // ユーザーID
-    nickname: nickname,     // ユーザーの呼び名
-    user_message: userMessage, // ユーザーの発言内容
-    bot_response: botResponse  // Botの返答内容
+    userId: userId,
+    nickname: nickname,
+    user_message: userMessage,
+    bot_response: botResponse
   };
 
+  console.log("送信するデータ:", data);  // ここで送信するデータを確認！
+
   try {
-    await axios.post(url, data);  // POSTでデータをGASに送信
+    await axios.post(url, data); // データをGASに送信
   } catch (error) {
-    console.error("会話データ送信エラー", error);
+    console.error("GASへの送信エラー:", error);
   }
 }
+
+
 
  // Gemini問い合わせ
 client.on(Events.MessageCreate, async (message) => {
