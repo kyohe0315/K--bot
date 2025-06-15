@@ -34,10 +34,7 @@ skyやスマブラの知識が多くあります。
 性格：${personality}
 好きなもの：${likes}
 
-■ 最近の会話要約：
-${summary || "なし"}
-
-■ ユーザーの発言：
+■ 最近の会話
 ${messages.map(msg => msg.content).join("\n")}
 
 ■ あなたの返事のルール：
