@@ -271,13 +271,14 @@ cron.schedule('0 17 * * 3,5', () => {
 
 const express = require("express");
 const httpApp = express();
+const PORT = process.env.PORT || 3000;
 
 httpApp.get("/healthz", (req, res) => {
   res.send("OK"); // GASがこれを見て「Bot起きてる」と判断
 });
 
-httpApp.listen(3000, () => {
-  console.log("ヘルスチェック用HTTPサーバーが起動中 (port 3000)");
+httpApp.listen(PORT, () => {
+  console.log(`ヘルスチェック用HTTPサーバーが起動中 (port ${PORT})`);
 });
 
 client.login(TOKEN);
