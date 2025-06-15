@@ -2,8 +2,6 @@
 const { Client, GatewayIntentBits, Events } = require("discord.js");
 const responses = require("./responses.js");
 
-const { generateGeminiPrompt } = require('./conversation/conversation');
-
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY); // .envから読込む想定
 
@@ -96,15 +94,29 @@ client.on(Events.MessageCreate, async (message) => {
  // Gemini問い合わせ
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
+
+  // メンションされた場合にGeminiに問い合わせる
   if (message.mentions.has(client.user)) {
     try {
-      const prompt = await generateGeminiPrompt(message.author.id, [
-        { role: 'user', content: message.content }
-      ]);
+      // プロンプトを生成する部分
+      const prompt = `
+あなたは親しみやすい会話Botです。  
+ユーザーとの会話では、以下の情報を基に返答してください。
+
+---
+【ユーザーの発言】  
+${message.content}
+
+返答は、ユーザーの発言のトーンに合わせて行ってください。
+`;
+
+      // Geminiにプロンプトを送信して結果を取得
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
       const result = await model.generateContent({
         contents: [{ role: 'user', parts: [{ text: prompt }] }]
       });
+
+      // Geminiからの返答をDiscordに送信
       await message.reply(result.response.text());
     } catch (error) {
       console.error("Gemini APIエラー:", error);
