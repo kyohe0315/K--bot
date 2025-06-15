@@ -18,7 +18,6 @@ async function getUserProfile(userId) {
 // Geminiプロンプト生成（例）
 async function generateGeminiPrompt(userId, messages) {
   const profile = await getUserProfile(userId);
-  const summary = await getConversationSummary(userId);
 
   const nickname = profile?.nickname || "あなた";
 　const personality = profile?.personality || "普通";
