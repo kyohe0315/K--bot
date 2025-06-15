@@ -232,10 +232,15 @@ ${JSON.stringify(relevantData, null, 2)}
 
 
 client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
+  console.log("VC Update:", {
+    old: oldState.channelId,
+    new: newState.channelId,
+  });
   const guild = newState.guild;
 
   // ✅ 指定VCに人が入った時だけ通知を送る
   if (!oldState.channel && newState.channelId === VOICE_CHANNEL_ID) {
+    console.log("✅ VCに誰かが入った");
     const textChannel = guild.channels.cache.get(VC_NOTIFY_CHANNEL_ID);
     if (textChannel && textChannel.isTextBased()) {
       try {
