@@ -89,6 +89,8 @@ client.on(Events.MessageCreate, async (message) => {
   }
 });
 
+const isSkyTopic = /Sky|キャンマラ|星を紡ぐ|エリア|ひだね|火種|光のかけら|キャンドル|わっくす|雨林|捨て地|孤島|峡谷/.test(message.content);
+
 const fs = require('fs');
 const path = require('path');
 const { Events } = require('discord.js');
