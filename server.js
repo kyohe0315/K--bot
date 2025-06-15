@@ -276,15 +276,6 @@ const PORT = process.env.PORT || 3000;
 
 // ヘルスチェックルート
 app.get("/healthz", (req, res) => {
-  res.status(200).send("OK");
-});
-
-app.get("/", (req, res) => {
-  console.log(`[Ping] / にアクセスされました: ${new Date().toISOString()}`);
-  res.status(200).send("It works");
-});
-
-app.get("/healthz", (req, res) => {
   const now = new Date().toISOString();
   const gasHeader = req.headers["x-from-gas"];
   const userAgent = req.headers["user-agent"];
@@ -295,5 +286,9 @@ app.get("/healthz", (req, res) => {
   res.status(200).send("OK");
 });
 
+app.get("/", (req, res) => {
+  console.log(`[Ping] / にアクセスされました: ${new Date().toISOString()}`);
+  res.status(200).send("It works");
+});
 
 client.login(TOKEN);
