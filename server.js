@@ -269,16 +269,25 @@ cron.schedule('0 17 * * 3,5', () => {
   remindCurrentEvents();
 });
 
+// server.js の express 定義を整理して「1個だけ」にする！
 const express = require("express");
-const httpApp = express();
+const app = express(); // ← httpAppではなくappにする！
 const PORT = process.env.PORT || 3000;
 
-httpApp.get("/healthz", (req, res) => {
-  res.status(200).send("OK"); // GASがこれを見て「Bot起きてる」と判断
+// ヘルスチェックルート
+app.get("/healthz", (req, res) => {
+  res.status(200).send("OK");
 });
 
-httpApp.listen(PORT, () => {
-  console.log(`ヘルスチェック用HTTPサーバーが起動中 (port ${PORT})`);
+// オプション：Renderが "/" を叩く場合の保険
+app.get("/", (req, res) => {
+  res.status(200).send("K-bot is live!");
 });
+
+// サーバー起動
+app.listen(PORT, () => {
+  console.log(`HTTPサーバーが起動中 (port ${PORT})`);
+});
+
 
 client.login(TOKEN);
