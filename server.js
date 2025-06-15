@@ -34,7 +34,6 @@ client.once(Events.ClientReady, () => {
 
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
-  const isSkyTopic = /Sky|キャンマラ|星を紡ぐ|エリア|ひだね|火種|光のかけら|キャンドル|わっくす|雨林|捨て地|孤島|峡谷/.test(message.content);
 
   for (const { pattern, responses: res, type } of responses) {
     if (pattern.test(message.content)) {
@@ -136,6 +135,7 @@ function extractRelevantSpots(json, text) {
 
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
+  const isSkyTopic = /Sky|キャンマラ|星を紡ぐ|エリア|ひだね|火種|光のかけら|キャンドル|わっくす|雨林|捨て地|孤島|峡谷/.test(message.content);
 
   if (message.mentions.has(client.user)) {
     try {
