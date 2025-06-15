@@ -14,8 +14,6 @@ const client = new Client({
   ],
 });
 
-const { addToHistory, getConversationPrompt } = require("./conversation/conversation"); // ← 会話履歴処理
-
 const TOKEN = process.env.DISCORD_BOT_TOKEN;
 const VC_NOTIFY_CHANNEL_ID = process.env.VC_NOTIFY_CHANNEL_ID; // ← 聞き専チャンネル
 const VOICE_CHANNEL_ID = process.env.VOICE_CHANNEL_ID; // ← chatroom1
