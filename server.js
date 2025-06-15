@@ -94,23 +94,21 @@ client.on(Events.MessageCreate, async (message) => {
 });
 
 // GASに会話データを送信する関数
-async function saveConversationToSheet(userId, nickname, userMessage, botResponse) {
+async function saveProfileToGAS(userId, nickname, personality, likes) {
   const url = "https://script.google.com/macros/s/【GASのWebAppURL】/exec";  // GASのWebApp URL
   const data = {
     userId: userId,
     nickname: nickname,
-    user_message: userMessage,
-    bot_response: botResponse
+    personality: personality,  // ユーザーの性格（例：「優しい」）
+    likes: likes               // ユーザーの好み（例：「ゲーム」）
   };
 
   try {
-    await axios.post(url, data);  // 会話履歴を保存
+    await axios.post(url, data);  // プロフィール情報をGASに送信
   } catch (error) {
-    console.error("GASへの送信エラー:", error);
+    console.error("プロフィール情報送信エラー:", error);
   }
 }
-
-
 
  // Gemini問い合わせ
 client.on(Events.MessageCreate, async (message) => {
