@@ -203,7 +203,7 @@ ${aliasText}
 【ユーザーの発言】
 ${message.content}
 
-${areaDataText} // ←これを忘れず入れる
+${areaDataText}
 
 【参照データ（該当エリア）】
 ${JSON.stringify(relevantData, null, 2)}
