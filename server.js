@@ -12,4 +12,5 @@ app.get("/healthz", (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`✅ サーバー起動完了 on port ${PORT}`);
+  console.log(`✅ Listening on http://localhost:${PORT}`);
 });
