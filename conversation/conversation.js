@@ -53,6 +53,5 @@ ${messages.map(msg => msg.content).join("\n")}
 
 module.exports = {
   getUserProfile,
-  getConversationSummary,
   generateGeminiPrompt
 };
