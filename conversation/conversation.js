@@ -33,7 +33,7 @@ async function generateGeminiPrompt(userId, messages) {
   const profile = await getUserProfile(userId);
   const summary = await getConversationSummary(userId);
 
-  const nickname = profile?.nickname || "ユーザー";
+  const nickname = profile?.nickname || "あなた";
 　const personality = profile?.personality || "普通";
   const likes = profile?.likes || "特になし";
 
