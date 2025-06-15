@@ -95,7 +95,7 @@ client.on(Events.MessageCreate, async (message) => {
 
 // GASに会話データを送信する関数
 async function sendConversationToGAS(userId, nickname, userMessage, botResponse) {
-  const url = "https://script.google.com/macros/s/【GASのWebAppURL】/exec"; // GASのWebAppURL
+  const url = "https://script.google.com/macros/s/AKfycby7Cfr3d7yqeYOPoIte4WjBgSx_WLsh0_64ahGBTvA7-3L_gRIaD04OXwXORW3kNxeerw/exec"; // GASのWebAppURL
   const data = {
     userId: userId,         // ユーザーID
     nickname: nickname,     // ユーザーの呼び名
