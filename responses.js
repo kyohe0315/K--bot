@@ -26,10 +26,11 @@ module.exports = [
   },
   { pattern: /へこにゃんは/,
     responses: [
-      "百合好き76才　現役JK",
-      "たまに真面目なこと言うけど9割がテキトウ",
+      "百合好きの76才！！なんと現役JK！！！",
+      "たまに真面目なこと言うけど9割は適当",
       "最前線で社会の理不尽さを嘆くピカチュウ使い",
       "女の子からｶﾜｲｸお願いすれば、カラオケ配信してくれます！",
+      "たまに自転車に乗ってると車に轢かれる可哀そうな子！ｱﾗﾔﾀﾞ",
       "全世界に愛されし現役バ美肉女子高生(76)"
     ], type: "random"
   },
@@ -38,7 +39,7 @@ module.exports = [
       "⠀　　    ゆ\n⠀　  あ  で\n⠀ゆ  あ  た\n⠀で  ゆ  ま\n⠀た  で  ご\n⠀ま  た\n⠀ご  ま\n⠀　  ご",
       "# 圧倒的コミュ強。\nそのコミュ強を武器にあらゆる人との繋がりを持っている。\n-# ただし頭皮と毛の繋がりはない模様。",
       "声がでかくて、風呂が長い！\nハゲ！と呼びかけると元気に答えてくれる本能を持ち合わせている",
-      "おじさん/おっさん と呼ぶと脊髄反射で「〇〇～‥‥」と答えてくれる。\nその答えは君の眼で確かめるのだ！",
+      "おじさん/おっさん と呼ぶと脊髄反射で「〇〇～‥‥」と答えてくれる。\nその答えは君の眼で確かめるのだ！"
     ], type: "random"
   },
   { pattern: /うみは/,
@@ -46,6 +47,7 @@ module.exports = [
       "うみばよ!!",
       "英語達者、日本語達者、母国語の広東語、そして中国語……\nどういう脳みそしてたらそんな覚えれるんだろうね？？？？",
       "発言、声ともに可愛さ100点満点！",
+      "くしゃみの仕方が異常にかわいい。おかしい。さすがにおかしい。",
       "APEX好きなワサビ創設者"
     ], type: "random"
   },
@@ -54,7 +56,7 @@ module.exports = [
       "# めんこ～～～いッ‼‼‼",
       "たまにパソコンぶっ壊してるお茶目な子",
       "はざまの前では脳の機能が低下し、\n一時的なIQは3との噂も巷では…。",
-      "はざまの前では脳の機能が低下し、一時的なIQは3との噂も巷では…。",
+      "自分なりに追及したり質問したり、固定概念なく人の言葉を素直に信じられる子",
       "行動力はちゃんとあって、やる時はやる。コツコツやる力もある"
     ], type: "random"
   },
@@ -95,18 +97,16 @@ module.exports = [
   },
   { pattern: /ことは/,
     responses: [
-      "「小兎は」で打てばちゃんと出るよ",
-      "実は影でいろんな努力をしてるタイプ",
-      "行動と言動のギャップが良い",
-      "小さなうさぎは大きな力を持つ"
+      "「小兎は」で打てばちゃんと出るよ"
     ], type: "random"
   },
   { pattern: /小兎は/,
     responses: [
-      "意外と頼もしくて何でも自分でこなそうとする子",
-      "言葉の本質を深くとらえる性格。考え過ぎてショートしてしまう特性があるが基本は人の意見を尊重する子",
-      "放っておくと勝手にレベルアップしてる",
-      "地味に頼れる裏エース"
+      "ぱっと見では消極的のように見えるかもしれないけど意外と頼もしく、何でも自分でこなそうとする実は芯の強い子。",
+      "言葉の本質を深く捉える性格…かな？故に考え過ぎてショートしてしまう特性があるけど基本は人の意見を尊重してる",
+      "純粋な心を持ってて大事なものは最優先に、やりたい事はしっかり努力してやるタイプ",
+      "多分本人は自覚ないけど普通にゲームが上手い！",
+      "シェアスぺ作るのがとっても上手！！"
     ], type: "random"
   },
   { pattern: /こまは/,
@@ -118,6 +118,7 @@ module.exports = [
     responses: [
       "こんドロの紅一点",
       "たまに出る癒しボイスで視聴者のやる気を底上げする存在",
+      "意外と芯が強くて意見ははっきり言える所がカッコいい",
       "ゲームは勝ち負け系の結果より楽しむ事や過程が好きなタイプ！",
       "裏番長説…濃厚…。\n-# （諸説あり）"
     ], type: "random"
@@ -125,6 +126,7 @@ module.exports = [
   { pattern: /ふゆさくらは/,
     responses: [
       "イケボぶっぱ厨",
+      "強い思いがあって人と対立する事もあるけど曲がらない強さがある",
       "スマブラでは上位プレイヤーを破壊力を持ってる。\n-# ただし待ち戦法、ガーキャン戦法にはめっきり弱い…ｗ\n-# 彼にとって待ちやガードは漢の所業ではないとか…。",
       "のめりこんだものにはえぐい集中力、探求力がある恐ろしい人"
     ], type: "random"
@@ -349,18 +351,131 @@ module.exports = [
                ],
     type: "static"
   },
-  { pattern: /AAA/,
-    responses: ["BBB"],
+  { pattern: /先行入力は/,
+    responses: ["1.通常の先行入力：次の動作が可能になる９F前までに入力されたアクション\n2.押しっぱなし先行入力：次の動作が可能になる3F前までホールドされたアクション"],
     type: "static"
   },
-  { pattern: /AAA/,
-    responses: ["BBB"],
+  { pattern: /反転空後のコツは/,
+    responses: ["兎にも角にも練習練習練習"],
     type: "static"
   },
-  { pattern: /AAA/,
-    responses: ["BBB"],
+  { pattern: /空ダのコツは/,
+    responses: ["この動画がオススメ！",
+               "https://youtu.be/4JAx3ZkWPfs"],
     type: "static"
   },
+
+  //ピカチュウ系　static
+  { pattern: /ピカチュウは/, responses: ["かわいい"], type: "static" },
+  { pattern: /ピカチュウの弱|ピカの弱/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuJab.gif", "判定：2~3F 全体：17F 不利：12~13F"], type: "static" },
+  { pattern: /ピカチュウの横強上|ピカの横強上/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuFTiltUp.gif", "判定：6~8F 全体：29F 不利：13F（上シフト）"], type: "static" },
+  { pattern: /ピカチュウの横強下|ピカの横強下/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuFTiltDown.gif", "判定：6~8F 全体：29F 不利：15F（下シフト）"], type: "static" },
+  { pattern: /ピカ(チュウ)の横強|ピカの横強/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuFTilt.gif", "判定：6~8F 全体：29F 不利：14F（無シフト）"], type: "static" },
+  { pattern: /ピカチュウの上強|ピカの上強/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuUTilt.gif", "判定：7~13F 全体：26F 不利：13F(背面) / 7~10F（正面）"], type: "static" },
+  { pattern: /ピカチュウの下強|ピカの下強/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuDTilt.gif", "判定：7~8F 全体：18F 不利4F ←つまりガーキャン空中攻撃はまず不可能"], type: "static" },
+  { pattern: /ピカチュウのDA|ピカのDA|ピカチュウのダッシュアタック|ピカのダッシュアタック|ピカチュウのda|ピカのda/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuDashAttack.gif", "判定：6~8/9~12F 全体：35F 不利：11F"], type: "static" },
+  { pattern: /ピカチュウの横スマ|ピカの横スマ/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuFSmash.gif", "判定：15~16/17~19(SS)/20~29F 全体：53F 不利：27/24/~24F 全然飛ばない"], type: "static" },
+  { pattern: /ピカチュウの上スマ|ピカの上スマ/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuUSmash.gif", "判定：10~12/13~14/15~17F 全体：44F 不利：24F ガーキャン掴みより早いヨ"], type: "static" },
+  { pattern: /ピカチュウの下スマ|ピカの下スマ/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuDSmash.gif", "判定：8~9/11~12/14~15/17~18/20~21/23F 全体：65F 不利：39F 弱すぎｗ"], type: "static" },
+  { pattern: /ピカチュウのダッシュ掴み|ピカのダッシュ掴み/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuDashGrab.gif", "判定：11~12F 全体：44F"], type: "static" },
+  { pattern: /ピカチュウの振り向き掴み|ピカの振り向き掴み|ピカチュウのふりむき掴み|ピカのふりむき掴み/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuPivotGrab.gif", "判定：12~13F 全体：39F"], type: "static" },
+  { pattern: /ピカチュウの掴み打撃|ピカの掴み打撃|ピカチュウの掴み攻撃|ピカの掴み攻撃/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuPummel.gif", "判定：1F 全体：5F"], type: "static" },
+  { pattern: /ピカチュウの掴み|ピカの掴み|ピカチュウのその場掴み|ピカのその場掴み/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuGrab.gif", "判定：7~8F 全体：36F"], type: "static" },
+  { pattern: /ピカチュウの空前|ピカの空前/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuFAir.gif", "判定：11~25(Rehit:3)/27F 全体：41F 着地隙：12F 不利：9~12F(降り) or 12F(sj最速急降下無し) or 7F(sj最速+24F目で急降下 or sjしてから8F目で出す)"], type: "static" },
+  { pattern: /ピカチュウの空後|ピカの空後/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuBAir.gif", "https://ultimateframedata.com/hitboxes/pikachu/PikachuBAirLanding.gif", "判定：4~5/8~9/12~13/16~17/20~21/24~25/1~2(LF)F　全体：43F　着地隙：(LF)18F　不利：12F(降り)   or   16F(sj最速+急降下無し)   or   15F(sj最速+36F目に急降下)   or   12F(sj最速+最速急降下)"], type: "static" },
+  { pattern: /ピカチュウの空上|ピカの空上/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuUAir.gif", "判定：4~6/7~8F　全体：26F　着地隙：14F　不利：11~約20F(降り)   or   19F(sj最速)   or   14F(sjしてから22F目で出す：本当て)   or   11F(sjしてから22F目で出す：カス当て)"], type: "static" },
+  { pattern: /ピカチュウの空下|ピカの空下/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuDAir.gif", "https://ultimateframedata.com/hitboxes/pikachu/PikachuDAirLanding.gif", "判定：14~15/16~26/1~2F　全体：47F　着地隙：(LF)22F　不利：16F(降り)   or   23F(sj最速)     ※(sj最速+最速急降下によるLFまでの間の不利は7F)"], type: "static" },
+  { pattern: /ピカチュウのNB|ピカのNB|ピカチュウのnb|ピカのnb/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuThunderjoltAerial.gif", "判定18~52(最短)：F　全体：74(最短) / 21(衝突後)F 不利：2~15F"], type: "static" },
+  { pattern: /ピカチュウの空N|ピカの空N/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuNAir.gif", "判定：3~6/9~12/15~18/21~22F　全体：38F　着地隙：9F　不利：7~12F(降り)   or   19F(sj最速)   or   13~18F(sj最速+急降下)"], type: "static" },
+  { pattern: /ピカチュウの横B|ピカの横B|ピカチュウの横b|ピカの横b/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuSkullBash.gif", "判定18~52(最短)：F　全体：74(最短) / 21(衝突後)F 不利：2~15F"], type: "static" },
+  { pattern: /ピカチュウの上B|ピカの上B|ピカチュウの上b|ピカの上b|ピカチュウの石火|ピカの石火|ピカチュウの電光|ピカの電光/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuQuickAttack.gif", "判定：15~19/29~33F　全体：(43)/(57)F　着地隙：24F　不利：21~34(１段目) / 20~24(２段目着地)F"], type: "static" },
+  { pattern: /ピカチュウの下B|ピカの下B|ピカチュウの下b|ピカの下b|ピカチュウの雷|ピカの雷|ピカチュウのかみなり|ピカのかみなり/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuThunder.gif", "https://ultimateframedata.com/hitboxes/pikachu/PikachuThunderHit.gif", "判定：13~15/21~23(稲妻) / 16~85/24~93(稲妻持続)F　全体：86(未接触) / 41(接触：地上) / 35(接触：空中)F　全身無敵：1~10(接触：地上) / 1~8(接触：空中)　不利：26(地上) / 20(空中)F"], type: "static" },
+  { pattern: /ピカチュウの前投げ|ピカの前投げ/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuFThrow.gif", "判定：11/15/19/23/30F　全体：45F"], type: "static" },
+  { pattern: /ピカチュウの下投げ|ピカの下投げ/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuDThrow.gif", "判定：29F　全体：51F"], type: "static" },
+  { pattern: /ピカチュウの上投げ|ピカの上投げ/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuUThrow.gif", "判定：14/16F　全体：35F"], type: "static" },
+  { pattern: /ピカチュウの後ろ投げ|ピカの後ろ投げ/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/PikachuBThrow.gif", "判定：26 全体：49F"], type: "static" },
+  { pattern: /ピカチュウの攻撃あがり|ピカの攻撃あがり|ピカチュウの攻撃上がり|ピカの攻撃上がり/, responses: ["https://ultimateframedata.com/hitboxes/pikachu/pikachuGetupAttackU.gif", "https://ultimateframedata.com/hitboxes/pikachu/pikachuGetupAttackD.gif", "https://ultimateframedata.com/hitboxes/pikachu/pikachuTripAttack.gif", "https://ultimateframedata.com/hitboxes/pikachu/pikachuLedgeAttack.gif"], type: "static" },
+  { pattern: /ピカチュウの崖掴み|ピカの崖掴み/, responses: ["https://ultimateframedata.com/ledgegrabs/Pikachu%20Ledgegrab%201.png", "https://ultimateframedata.com/ledgehangs/PikachuLedgehang.gif"], type: "static" },
+  { pattern: /ピカチュウのステータス|ピカのステータス|ピカチュウの体重|ピカの体重|ピカチュウの重さ|ピカの重さ/, responses: ["体重：79(79位)　歩行速度：1.302(13位)　走行速度：2.039(20位)　空中速度：0.957(66位)　走行移行前F 12(73位)　落下速度：1.55(53位)　急降下速度：2.48(51位)"], type: "static" },
+
+  //きょへ系 static
+  { pattern: /きょへ。?の原罪マップ|きょへ。?原罪マップ|きょへ。?さんの原罪マップ/, responses: ["https://youtu.be/Ew921TnFoaw?si=Ic79rsavyEZPTokJ", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/kyoheVer.jpg?v=1683557962502"], type: "static" },
+  { pattern: /きょへ。?の性癖|きょへ。?さんの性癖/, responses: ["https://cdn.discordapp.com/attachments/932594717529604116/1022114482878685264/IMG_5258.png"], type: "static" },
+  { pattern: /きょへ。?の年収|きょへ。?さんの年収/, responses: ["年収なんと2億!!おめでとうございます！ありがとうございます！"], type: "static" },
+  { pattern: /きょへ。?の月収|きょへ。?さんの月収/, responses: ["月収なんと0.2万円!!"], type: "static" },
+  { pattern: /きょへ。?の日給|きょへ。?さんの日給/, responses: ["日給はなんともやし7袋!!"], type: "static" },
+  { pattern: /おい！きょへ！/, responses: ["Yeah Ｉ'm boring man..."], type: "static" },
+  { pattern: /きょへさんは喋らないんですか|きょへさん喋らないんですか|きょへさんは喋らないの？|きょへさん喋らないの？/, responses: ["文字なんて打ってないでまずはあなたがミュート解除してみませんか？^^ﾆｯｺﾘ"], type: "static" },
+  { pattern: /きょへにいこんにちは/, responses: ["くらげちゃんこんにちは！"], type: "static" },
+  { pattern: /きょへにいこんばんは/, responses: ["くらげちゃんこんばんは！"], type: "static" },
+  { pattern: /きょへにいやぁやぁ|きょへにいやあやあ/, responses: ["やあやあ！ｗ"], type: "static" },
+  { pattern: /きょへ。?さんの体操/, responses: ["昔の跳馬の映像あったよ", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/160824_155613.mov?v=1702759298994"], type: "static" },
+  { pattern: /きょへ。?さんハートください|きょへ。?さんハート下さい/, responses: [`いいよ。後で送っておくね。<@530155393117192203>`], type: "static" },
+  { pattern: /きょへ。?の身長|きょへ。?さんの身長/, responses: ["180㎝までもう少し！！","-# 普通に175cmですぅ～…"], type: "static" },
+  { pattern: /きょへ。?の体重|きょへ。?さんの体重/, responses: ["大学の頃からずっと64kg"], type: "static" },
+  { pattern: /きょへ。?の住所|きょへ。?さんの住所/, responses: ["ピカチュウ王国"], type: "static" },
+  { pattern: /きょへ。?は無職|きょへ。?さんは無職/, responses: ["無職じゃねえ！！！！！！！！（無職）"], type: "static" },
+  { pattern: /きょへ。?はニート|きょへ。?さんはニート/, responses: ["ニートじゃねえ！！！！！！！！","-# 引 き こ も り ！","DA☆！"], type: "static" },
+  { pattern: /きょへ。?の職業|きょへ。?さんの職業/, responses: ["肩書き：夢追い人（※現実逃避中）"], type: "static" },
+  { pattern: /きょへ。?の趣味|きょへ。?さんの趣味/, responses: ["趣味…なんだろ…。アニメ見たりYouTube見たり、skyしたり、ふらっと動画作ったり、キャンマラしたり、検証したり、BOT作ったり、料理作ったり、PC系の情報調べたり、ChatGPTと話したり、人生観の話したり…。\nと、少ないよ！"], type: "static" },
+  { pattern: /きょへ。?の性格/, responses: ["どんな性格だと思う？"], type: "static" },
+  { pattern: /あっときょへ/, responses: ["せめてメンションしろスニャ", `はぁ…。さっさと来い<@530155393117192203>`], type: "static" },
+
+  //羽系
+  { pattern: /孤島の?(羽|翼|光の翼|光の子|枚数)/i,
+    response: "９枚\n→(メインエリア➄＋試練➃)", type: "static" },
+  { pattern: /草原の?(羽|翼|光の翼|光の子|枚数)/i,
+    response: "２4枚\n→(蝶々の住処➂＋洞窟➁＋鳥の巣➁＋浮島➃＋神殿上部➁＋楽園➇＋草原連邦➂)", type: "static" },
+  { pattern: /雨林の?(羽|翼|光の翼|光の子|枚数)/i,
+    response: "１９枚\n→(最初のエリア➁＋小川➃＋ツリーハウス➁＋神殿前➂＋神殿奥➀＋晴れ間エリア➁＋晴れ間地下エリア➃＋風の街道➀)", type: "static" },
+  { pattern: /峡谷の?(羽|翼|光の翼|光の子|枚数)/i,
+    response: "１７枚\n→(スライダー左列➀＋スケートリンク➁＋天球儀➁＋空レース➁＋陸レース➀＋レース後半➀＋神殿前➀＋神殿内➀＋夢見➂＋劇場➀＋隠者➁)", type: "static" },
+  { pattern: /捨て地の?(羽|翼|光の翼|光の子|枚数)/i,
+    response: "１８枚\n→(秘宝の座礁➁＋最初のエリア➁＋エビ１匹エリア➁＋エビ４匹エリア➃＋座礁船➂＋神殿前➁＋神殿内➀＋忘れられた方舟➁)", type: "static" },
+  { pattern: /書庫の?(羽|翼|光の翼|光の子|枚数)/i,
+    response: "１６枚\n→(地下➁＋１階➀＋３階➀＋４階➁＋５階➀＋最上階➀＋保存庫➀＋星月夜の砂漠➂＋三日月オアシス➂＋ムーミン谷➀)", type: "static" },
+  { pattern: /(暴風域|原罪|現在)の?(羽|翼|光の翼|光の子|枚数)/i,
+    response: "１０枚\n→(第一エリア➀＋第二エリア➈)", type: "static" },
+  { pattern: /光の翼の総数は|羽の総数は|光の羽の総数は|全エリアの羽|全エリアの羽|全エリアの翼|全エリアの光の翼|全エリアの光の子|全ての枚数|全ての翼|全ての光の翼|全ての光の子|全ての枚数|全翼|全光の翼|全光の子|全枚数|光の子の合計は/,
+    response: "合計119枚（113枚+追想6枚）\n→(孤島9 + 草原24 + 雨林19 + 峡谷17 + 捨て地18 + 書庫16 + 暴風域10 + 追想6)", type: "static" },
+
+  //火種系
+  { pattern: /(火種|光の(かけら|カケラ|欠片))の(スプレッド|量|一覧|表)/i,
+    responses: ["https://docs.google.com/spreadsheets/d/1Y5nDH81N3rpbvWhwSY_DgvTCA2mXAKeF2-RmorIN2WE/edit#gid=1739335542"], type: "static" },
+  { pattern: /ホームの?(光のカケラ|光のかけら|火種|ワックス)/i,
+    responses: ["23個"], type: "static" },
+  { pattern: /花鳥卿の?(光のカケラ|光のかけら|火種|ワックス)/i,
+    responses: ["23個 + シナモンロール50 + アリスカフェ284"], type: "static" },
+  { pattern: /孤島の?(光のカケラ|光のかけら|火種|ワックス)/i,
+    responses: ["885個"], type: "static" },
+  { pattern: /試練の?(光のカケラ|光のかけら|火種|ワックス)/i,
+    responses: ["水106 + 地115 + 風200 + 火200"], type: "static" },
+  { pattern: /草原の?(光のカケラ|光のかけら|火種|ワックス)/i,
+    responses: ["691 + 151(亀の背中の闇花51 + ←を焼いた後に出る地上の貝100) + 水中の貝α(200前後)"], type: "static" },
+  { pattern: /貝の?(光のカケラ|光のかけら|火種|ワックス)/i,
+    responses: ["【楽園夕日時の貝】\n　  大：30\n小(開)：30\n小(閉)：10～20"], type: "static" },
+  { pattern: /雨林の?(光のカケラ|光のかけら|火種|ワックス)/i,
+    responses: ["897(日,月,水,金)/898(火,木,土)個"], type: "static" },
+  { pattern: /峡谷の?(光のカケラ|光のかけら|火種|ワックス)/i,
+    responses: ["882 + 劇場の花α + 隠者レース150+α"], type: "static" },
+  { pattern: /捨て地の?(光のカケラ|光のかけら|火種|ワックス)/i,
+    responses: ["545(月,水,金)/546(火,木,土)/660個(日)　+ 貝ｘ"], type: "static" },
+  { pattern: /書庫の?(光のカケラ|光のかけら|火種|ワックス)/i,
+    responses: ["801個"], type: "static" },
+  { pattern: /原罪の?(光のカケラ|光のかけら|火種|ワックス)/i,
+    responses: ["一個もないよ！(天空にはあるよ)"], type: "static" },
+  { pattern: /天空の?(光のカケラ|光のかけら|火種|ワックス)/i,
+    responses: ["最大で225　（精霊/フレに触れると5。精霊最大30体、フレ最大15人"], type: "static" },
+  { pattern: /(劇場|音楽堂|楽譜|楽譜チャレンジ|演奏)の?(光のカケラ|光のかけら|火種|ワックス|演奏|楽譜|音楽|)/i,
+    responses: ["上手く出来れば100個(結果次第では50)"], type: "static" },
+  { pattern: /ウニ焼きの?(光のカケラ|光のかけら|火種|ワックス)/i,
+    responses: ["250～350/10分　上限1011個"], type: "static" },
+  { pattern: /ウナギの?(光のカケラ|光のかけら|火種|ワックス)/i,
+    responses: ["500/約12.5分 上限500個"], type: "static" },
+  { pattern: /(パン|ぱん)の?(光のカケラ|光のかけら|火種|ワックス)/i,
+    responses: ["約600個/10分 上限1000個"], type: "static" },
+
+
   { pattern: /AAA/,
     responses: ["BBB"],
     type: "static"
