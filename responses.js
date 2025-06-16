@@ -474,6 +474,12 @@ module.exports = [
     responses: ["500/約12.5分 上限500個"], type: "static" },
   { pattern: /(パン|ぱん)の?(光のカケラ|光のかけら|火種|ワックス)/i,
     responses: ["約600個/10分 上限1000個"], type: "static" },
+  { pattern: /今月のイベント/i,
+    type: "function",
+    response: async () => await postMonthlyEvents() },
+  { pattern: /(現在|進行中)のイベント/i,
+    type: "function",
+    response: async () => await remindCurrentEvents() },
 
 
   { pattern: /AAA/,
