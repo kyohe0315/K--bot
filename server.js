@@ -180,10 +180,12 @@ ${relevantData.length > 0 ? `【参照データ】\n${JSON.stringify(relevantDat
           break;
 
         case "random":// ランダム表示。複数可
-          const randresult = weightedRandom(res);
-          const wtexts = Array.isArray(randresult.texts) ? randresult.texts : [randresult.text];
-          for (const t of wtexts) {
-            if (t?.trim()) await message.channel.send(t);
+          const rand = weightedRandom(res);
+          const items = Array.isArray(rand) ? rand : [rand];
+          for (const item of items) {
+            if (typeof item === "string" && item.trim()) {
+              await message.channel.send(item);
+            }
           }
           break;
           
