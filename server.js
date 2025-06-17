@@ -41,6 +41,24 @@ const delegateHandlers = {
   }
 };
 
+async function saveSummarizedLog(userId, userSummary, botSummary) {
+  const payload = {
+    userId,
+    userSummary,
+    botSummary,
+    mode: "save"
+  };
+
+  const res = await fetch(GAS_LOG_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+
+  const text = await res.text();
+  console.log("[LogGAS] Save response:", text);
+}
+
 const GAS_LOG_URL = process.env.GAS_LOG_URL;
 const GAS_PROFILE_URL = process.env.GAS_PROFILE_URL;
 
