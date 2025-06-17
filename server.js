@@ -54,29 +54,27 @@ function weightedRandom(arr) {
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
 
-  // ============================
-  // ① Gemini に送る条件：
-  // メンションがあり、Sky関連ワードが含まれている場合は Gemini を優先する
-  // ============================
-  const isMentioned = message.mentions.has(client.user);
-  const isSkyTopic = /Sky|キャンマラ|星を紡ぐ|エリア|ひだね|火種|光のかけら|キャンドル|わっくす|雨林|捨て地|孤島|峡谷/.test(message.content);
-
-  if (isMentioned && isSkyTopic) {
+  // ① メンションがあれば、Gemini に送る（ジャンル判定あり）
+  if (message.mentions.has(client.user)) {
     try {
       const userInput = message.content;
+      const isSky = /Sky|キャンマラ|星を紡ぐ|エリア|ひだね|火種|光のかけら|キャンドル|わっくす|雨林|捨て地|孤島|峡谷/.test(userInput);
+      const areaName = isSky ? detectAreaName(userInput) : null;
 
-      // --- エリア検出・JSON取得 ---
-      const areaName = detectAreaName(userInput);
       let relevantData = [];
+      let areaDataText = "";
+      let aliasText = "";
+      
+      // Sky系の場合のみ JSONデータを参照
+      if (isSky && areaName) {
+        try {
+          const filePath = path.join(__dirname, "data", `fire_seeds_${areaName}.json`);
+          const json = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+          relevantData = extractRelevantSpots(json, userInput);
+          if (relevantData.length === 0) relevantData = json.locations;
 
-      if (areaName) {
-        const filePath = path.join(__dirname, "data", `fire_seeds_${areaName}.json`);
-        const json = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-        relevantData = extractRelevantSpots(json, userInput);
-        if (relevantData.length === 0) relevantData = json.locations;
-      }
-
-      const aliasText = `
+          areaDataText = `\n【${areaName}の火種情報】\n${JSON.stringify(json)}`;
+          aliasText = `
 【用語補足】
 ・火種＝光のかけら＝かけら＝ひかり＝ワックス
 ・捨て地＝捨地＝すてち
@@ -88,34 +86,22 @@ client.on(Events.MessageCreate, async (message) => {
 ・DC＝大キャン＝大キャンドル
 ・音楽＝音楽堂の音楽チャレンジの事
 `;
-
-      let areaDataText = "";
-      if (areaName) {
-        try {
-          const areaFilePath = path.join(__dirname, "data", `fire_seeds_${areaName}.json`);
-          const areaJson = JSON.parse(fs.readFileSync(areaFilePath, "utf-8"));
-          areaDataText = `\n【${areaName}の火種情報】\n${JSON.stringify(areaJson)}`;
         } catch (err) {
           console.error(`❌ ${areaName} のデータ読み込み失敗`, err);
         }
       }
 
-      // --- プロンプト生成 ---
       const prompt = `
 あなたは親しみやすい会話Botです。
 以下の情報をもとに、ユーザーの質問に的確かつ自然に答えてください。
 
 ---
-【用語補足】
-${aliasText}
-
+${aliasText ? `【用語補足】\n${aliasText}` : ""}
 【ユーザーの発言】
-${message.content}
-
+${userInput}
 ${areaDataText}
 
-【参照データ（該当エリア）】
-${JSON.stringify(relevantData, null, 2)}
+${relevantData.length > 0 ? `【参照データ】\n${JSON.stringify(relevantData, null, 2)}` : ""}
 
 【あなたの発言の注意点】
 ・妄想で語らない。ソースのある事実ベースでのみ語る。
@@ -134,16 +120,14 @@ ${JSON.stringify(relevantData, null, 2)}
       console.error("Gemini APIエラー:", error);
       await message.reply("⚠️ Gemini APIとの通信でエラーが発生しました。");
     }
-    return; // ★ responses 側には行かせない
+    return;// ★ responses 側には行かせない
   }
 
-  // ============================
-  // ② responses.js のパターンチェック＆処理
-  // ============================
+  // ② responses.js の pattern にマッチするかチェック（メンションないとき）
   for (const { pattern, responses: res, type, id } of responses) {
     if (pattern.test(message.content)) {
       switch (type) {
-
+          
         case "static": // 候補を全て送信。ノーマル
           const staticResponses = Array.isArray(res) ? res : [res];
           for (const r of staticResponses) {
@@ -196,7 +180,7 @@ ${JSON.stringify(relevantData, null, 2)}
 
         case "delegate": // 特定関数を委任呼び出し
           if (id && typeof delegateHandlers[id] === "function") {
-            await delegateHandlers[id](message); // ← ここで実行
+            await delegateHandlers[id](message);
           } else {
             console.warn(`⚠ delegateHandler "${id}" が見つかりません`);
           }
@@ -206,6 +190,7 @@ ${JSON.stringify(relevantData, null, 2)}
     }
   }
 });
+
 
 const fs = require('fs');
 const path = require('path');
