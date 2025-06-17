@@ -439,7 +439,7 @@ module.exports = [
   { pattern: /光の翼の総数は|羽の総数は|光の羽の総数は|全エリアの羽|全エリアの羽|全エリアの翼|全エリアの光の翼|全エリアの光の子|全ての枚数|全ての翼|全ての光の翼|全ての光の子|全ての枚数|全翼|全光の翼|全光の子|全枚数|光の子の合計は/,
     response: "合計119枚（113枚+追想6枚）\n→(孤島9 + 草原24 + 雨林19 + 峡谷17 + 捨て地18 + 書庫16 + 暴風域10 + 追想6)", type: "static" },
 
-  //火種系
+  //火種系 static
   { pattern: /(火種|光の(かけら|カケラ|欠片))の(スプレッド|量|一覧|表)/i,
     responses: ["https://docs.google.com/spreadsheets/d/1Y5nDH81N3rpbvWhwSY_DgvTCA2mXAKeF2-RmorIN2WE/edit#gid=1739335542"], type: "static" },
   { pattern: /ホームの?(光のカケラ|光のかけら|火種|ワックス)/i,
@@ -485,7 +485,7 @@ module.exports = [
     await remindCurrentEvents(); // チャンネルに直接送るなら return null;
     return null; }},
 
-  //古いネタ・ネットネタ系
+  //古いネタ・ネットネタ系 static
   { pattern: /今北産業/,
     responses: ["遅かったね～やっと来たか～。…1行以上喋る事ないよ。"], type: "static" },
   { pattern: /kwsk/, 
@@ -519,7 +519,7 @@ module.exports = [
   { pattern: /ハッピー|Happy/, 
     responses: ["https://tenor.com/view/happy-happy-happy-happy-happy-cat-happy-dancing-cat-gif-716006509349864265"], type: "static" },
 
-  //特定の地雷
+  //特定の地雷 static
   { pattern: /ｳｵｵｵｵｱｱｱｱ|ｱﾞｱﾞｱﾞｱﾞ/, 
     responses: ["うるさいぞズマ"], type: "static" },
   { pattern: /興奮した？/, 
@@ -674,7 +674,7 @@ module.exports = [
   { pattern: /くそかわいい|クソかわいい|くそ可愛い|クソ可愛い/,
     response: "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/389ab7d086cefbef.mp4?v=1702825472889", type: "static" },
   
-//おススメの〇〇系
+//おススメの〇〇系 static
   { pattern: /オ?ススメのキャンマラルート|オ?ススメのキャンマラ/i,
   responses: ["このルートがオススメ！\nhttps://youtu.be/FA6heQJNHEU?si=5-Ndg5qkGZKvCUIW"], type: "static" },
 { pattern: /お?ススメのYouTuber?|オ?ススメのチャンネル|オ?ススメの動画|おすすめの動画|おすすめのYouTuber?|おすすめのチャンネル/i,
@@ -706,7 +706,7 @@ module.exports = [
 { pattern: /オ?ススメのパソコン|おすすめのパソコン|オ?ススメのPC|おすすめのPC/i,
   responses: ["M2 or M3 チップ搭載してるMacBookPro、メモリは8GB以上。ただしゲームしたいならWindowsの方が良いかも。WindowsならCPUがi7、メモリは8GB以上。でもあなたのやりたい事次第。"], type: "static" },
 
-//sky系
+//sky系 static
   { pattern: /今日の?デイリー|今日の?シーズンキャンドル|今日の?大キャン/,
     response: ["黒沢さんのツイートはこちら\n👇　　　👇　　　👇\nhttps://x.com/sky_box0324?s=20\n",
                "9bitの情報はこちら\n👇　　　👇　　　👇\nhttps://9-bit.jp/skygold/6593"], type: "static" },    
