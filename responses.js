@@ -34,6 +34,16 @@ module.exports = [
       "全世界に愛されし現役バ美肉女子高生(76)"
     ], type: "random"
   },
+  { pattern: /スニャイヴは/,
+    responses: [
+      "あ",
+      "テスト",
+      "調整中",
+      "書くこと無し",
+      "しらん",
+      "んあ"
+    ], type: "random"
+  },
   { pattern: /たっつんは/,
     responses: [
       "⠀　　    ゆ\n⠀　  あ  で\n⠀ゆ  あ  た\n⠀で  ゆ  ま\n⠀た  で  ご\n⠀ま  た\n⠀ご  ま\n⠀　  ご",
