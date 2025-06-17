@@ -179,6 +179,7 @@ ${relevantData.length > 0 ? `【参照データ】\n${JSON.stringify(relevantDat
           }
           break;
 
+        case "random":// ランダム表示。複数可
           const r = res[Math.floor(Math.random() * res.length)];
           const texts = Array.isArray(r) ? r : [r];
           for (const t of texts) {
