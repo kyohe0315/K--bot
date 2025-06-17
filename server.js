@@ -134,8 +134,9 @@ client.on(Events.MessageCreate, async (message) => {
 ・孤島＝ことう
 ・峡谷＝きょうこく
 ・DC＝大キャン＝大キャンドル
-・音楽＝音楽堂の音楽チャレンジの事`;
-
+・音楽＝音楽堂の音楽チャレンジの事
+` : "";
+      
       let areaDataText = "";
       const matchedArea = areaName;
       if (matchedArea) {
