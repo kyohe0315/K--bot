@@ -59,7 +59,8 @@ client.on(Events.MessageCreate, async (message) => {
   for (const { pattern, responses: res, type, id } of responses) {
     if (pattern.test(message.content)) {
       switch (type) {
-        case "static":
+          
+        case "static": // 候補を全て送信。ノーマル
           const staticResponses = Array.isArray(res) ? res : [res];
           for (const r of staticResponses) {
             if (r && typeof r === "string" && r.trim() !== "") {
@@ -68,14 +69,14 @@ client.on(Events.MessageCreate, async (message) => {
           }
           break;
 
-        case "random":
+        case "random":　//　候補のうちどれかを1つ送信＝ランダム
           const r = res[Math.floor(Math.random() * res.length)];
           if (r && typeof r === "string" && r.trim() !== "") {
             await message.channel.send(r);
           }
           break;
 
-        case "progressive":
+        case "progressive": // 1つ表示→削除。次を表示→削除 ×n
           for (const r of res) {
             const sent = await message.channel.send(r);
             await delay(3000);
@@ -83,7 +84,7 @@ client.on(Events.MessageCreate, async (message) => {
           }
           break;
 
-        case "function":
+        case "function": // 実行用
           if (typeof res === "function") {
             const result = await res(message);
             if (result && typeof result === "string" && result.trim() !== "") {
@@ -92,7 +93,7 @@ client.on(Events.MessageCreate, async (message) => {
           }
           break;
 
-        case "weighted": {
+        case "weighted": { // ランダム。だけど確率の重さを定義
           const result = weightedRandom(res);
           const texts = Array.isArray(result.texts) ? result.texts : [result.text];
           for (const t of texts) {
@@ -101,7 +102,7 @@ client.on(Events.MessageCreate, async (message) => {
           break;
         }
 
-        case "reverse-delete": {
+        case "reverse-delete": { // 1つずつ全部表示 → 1つずつ削除
           const messages = [];
           for (const r of res) messages.push(await message.channel.send(r));
           for (const m of messages.reverse()) {
