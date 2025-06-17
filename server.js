@@ -180,14 +180,13 @@ ${relevantData.length > 0 ? `【参照データ】\n${JSON.stringify(relevantDat
           break;
 
         case "random":// ランダム表示。複数可
-          const r = res[Math.floor(Math.random() * res.length)];
-          const texts = Array.isArray(r) ? r : [r];
-          for (const t of texts) {
+          const result = weightedRandom(res);
+          const wtexts = Array.isArray(result.texts) ? result.texts : [result.text];
+          for (const t of wtexts) {
             if (t?.trim()) await message.channel.send(t);
           }
           break;
-
-
+          
         case "progressive": // 1つ表示→削除。次を表示→削除 ×n
           for (const r of res) {
             const sent = await message.channel.send(r);
