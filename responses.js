@@ -491,15 +491,17 @@ module.exports = [
     responses: ["約600個/10分 上限1000個"], type: "static" },
   { pattern: /今月のイベント/i,
     type: "function",
-    responses: async () => {
-    await postMonthlyEvents(); // チャンネルに直接送るなら return null;
-    return null; }},
+    responses: async (message) => {
+      await postMonthlyEvents(message.channel); // ← チャンネルを渡すようにする
+      return null; }
+  },
   { pattern: /(現在|進行中)のイベント/i,
     type: "function",
-    responses: async () => {
-    await remindCurrentEvents(); // チャンネルに直接送るなら return null;
-    return null; }},
-
+    responses: async (message) => {
+      await remindCurrentEvents(message.channel); // チャンネルに直接送るなら return null;
+      return null; }
+  },
+  
   //古いネタ・ネットネタ系 static
   { pattern: /今北産業/,
     responses: ["遅かったね～やっと来たか～。…1行以上喋る事ないよ。"], type: "static" },
