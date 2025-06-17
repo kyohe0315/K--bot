@@ -41,6 +41,39 @@ const delegateHandlers = {
   }
 };
 
+// 🔹 過去の会話10件をGASから取得
+async function fetchPastLogs(userId) {
+  try {
+    const res = await fetch(process.env.GAS_LOG_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId })
+    });
+    return await res.json(); // [{ user, bot }, ...]
+  } catch (err) {
+    console.error("過去ログ取得失敗:", err);
+    return [];
+  }
+}
+
+// 🔹 新しい会話ログをGASに保存
+async function logToGAS(userId, username, userMessage, botReply) {
+  try {
+    await fetch(process.env.GAS_LOG_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId,
+        username,
+        userMessage,
+        botReply
+      })
+    });
+  } catch (err) {
+    console.error("ログ送信エラー:", err);
+  }
+}
+
 function weightedRandom(arr) {
   const total = arr.reduce((sum, obj) => sum + (obj.weight || 1), 0);
   let rand = Math.random() * total;
@@ -64,6 +97,9 @@ client.on(Events.MessageCreate, async (message) => {
       let relevantData = [];
       let areaDataText = "";
       let aliasText = "";
+
+      const pastLogs = await fetchPastLogs(message.author.id);
+      const logText = pastLogs.map((log, i) => `【会話${i + 1}】\nUser: ${log.user}\nBot: ${log.bot}`).join("\n\n");
       
       // Sky系の場合のみ JSONデータを参照
       if (isSky && areaName) {
@@ -96,7 +132,9 @@ client.on(Events.MessageCreate, async (message) => {
 以下の情報をもとに、ユーザーの質問に的確かつ自然に答えてください。
 
 ---
+${logText ? `【このユーザーとの過去の会話】\n${logText}` : ""}
 ${aliasText ? `【用語補足】\n${aliasText}` : ""}
+
 【ユーザーの発言】
 ${userInput}
 ${areaDataText}
@@ -115,6 +153,10 @@ ${relevantData.length > 0 ? `【参照データ】\n${JSON.stringify(relevantDat
       const result = await model.generateContent({
         contents: [{ role: 'user', parts: [{ text: prompt }] }]
       });
+
+      const reply = result.response.text();
+      await message.reply(reply);
+      await logToGAS(message.author.id, message.author.username, userInput, reply);
 
       await message.reply(result.response.text());
     } catch (error) {
