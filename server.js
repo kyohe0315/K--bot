@@ -40,11 +40,18 @@ client.on(Events.MessageCreate, async (message) => {
       switch (type) {
         case "static":
           const staticResponses = Array.isArray(res) ? res : [res];
-          for (const r of staticResponses) await message.channel.send(r);
+          for (const r of staticResponses) {
+            if (r && typeof r === "string" && r.trim() !== "") {
+              await message.channel.send(r);
+            }
+          }
           break;
 
         case "random":
-          await message.channel.send(res[Math.floor(Math.random() * res.length)]); 
+          const r = res[Math.floor(Math.random() * res.length)];
+          if (r && typeof r === "string" && r.trim() !== "") {
+            await message.channel.send(r);
+          }
           break;
 
         case "progressive":
@@ -57,10 +64,13 @@ client.on(Events.MessageCreate, async (message) => {
           
         case "function":
           if (typeof res === "function") {
-            const result = await res(message); // messageを引数にしても良い
-            if (result) await message.channel.send(result); // nullやundefinedでなければ送信
+            const result = await res(message);
+            if (result && typeof result === "string" && result.trim() !== "") {
+              await message.channel.send(result);
+            }
           }
           break;
+
           
         case "reverse-delete": { // ← 例）せいは
           const messages = [];
