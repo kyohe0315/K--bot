@@ -179,12 +179,13 @@ ${relevantData.length > 0 ? `【参照データ】\n${JSON.stringify(relevantDat
           }
           break;
 
-        case "random": // 候補のうちどれかを1つ送信＝ランダム
           const r = res[Math.floor(Math.random() * res.length)];
-          if (r && typeof r === "string" && r.trim() !== "") {
-            await message.channel.send(r);
+          const texts = Array.isArray(r) ? r : [r];
+          for (const t of texts) {
+            if (t?.trim()) await message.channel.send(t);
           }
           break;
+
 
         case "progressive": // 1つ表示→削除。次を表示→削除 ×n
           for (const r of res) {
