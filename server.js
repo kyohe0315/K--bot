@@ -71,7 +71,15 @@ client.on(Events.MessageCreate, async (message) => {
           }
           break;
 
-          
+        case "weighted": {
+          const result = weightedRandom(res); // 配列から重み付き選択
+          const texts = Array.isArray(result.texts) ? result.texts : [result.text];
+          for (const t of texts) {
+            if (t?.trim()) await message.channel.send(t);
+          }
+          break;
+        }
+
         case "reverse-delete": { // ← 例）せいは
           const messages = [];
           for (const r of res) messages.push(await message.channel.send(r));
