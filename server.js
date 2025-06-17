@@ -71,6 +71,24 @@ async function getFromProfileGAS(payload) {
   }
 }
 
+// 要約ログ取得用
+async function getFromLogGAS(payload) {
+  const res = await fetch(GAS_LOG_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+
+  const text = await res.text();
+  console.log("[LogGAS] Response text:", text);
+
+  try {
+    return JSON.parse(text);
+  } catch (err) {
+    console.error("[LogGAS] JSON parse error:", err);
+    return [];
+  }
+}
 
 async function fetchUserProfile(userId) {
   const result = await getFromProfileGAS({
