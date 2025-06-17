@@ -46,6 +46,7 @@ function weightedRandom(arr) {
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
 
+  // ① responses.js のパターンチェック＆処理
   for (const { pattern, responses: res, type } of responses) {
     if (pattern.test(message.content)) {
       switch (type) {
@@ -66,13 +67,13 @@ client.on(Events.MessageCreate, async (message) => {
           break;
 
         case "progressive":
-          for (const r of res) {// ← 例）うんこ
+          for (const r of res) {
             const sent = await message.channel.send(r);
-            await delay(3000); // 表示時間
+            await delay(3000);
             await sent.delete().catch(() => {});
           }
           break;
-          
+
         case "function":
           if (typeof res === "function") {
             const result = await res(message);
@@ -83,7 +84,7 @@ client.on(Events.MessageCreate, async (message) => {
           break;
 
         case "weighted": {
-          const result = weightedRandom(res); // 配列から重み付き選択
+          const result = weightedRandom(res);
           const texts = Array.isArray(result.texts) ? result.texts : [result.text];
           for (const t of texts) {
             if (t?.trim()) await message.channel.send(t);
@@ -91,20 +92,100 @@ client.on(Events.MessageCreate, async (message) => {
           break;
         }
 
-        case "reverse-delete": { // ← 例）せいは
+        case "reverse-delete": {
           const messages = [];
           for (const r of res) messages.push(await message.channel.send(r));
           for (const m of messages.reverse()) {
-            await delay(2000); // 待ってから削除
+            await delay(2000);
             await m.delete().catch(() => {});
           }
           break;
         }
       }
-      return;
+      return; // responses にヒットしたら Gemini 側には行かない
+    }
+  }
+
+  // ② Gemini に送る条件：メンションかつ Sky関連ワードが含まれている
+  const isSkyTopic = /Sky|キャンマラ|星を紡ぐ|エリア|ひだね|火種|光のかけら|キャンドル|わっくす|雨林|捨て地|孤島|峡谷/.test(message.content);
+
+  if (message.mentions.has(client.user) && isSkyTopic) {
+    try {
+      const userInput = message.content;
+
+      // --- エリア検出・JSON取得 ---
+      const areaName = detectAreaName(userInput);
+      let relevantData = [];
+
+      if (areaName) {
+        const filePath = path.join(__dirname, "data", `fire_seeds_${areaName}.json`);
+        const json = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+        relevantData = extractRelevantSpots(json, userInput);
+        if (relevantData.length === 0) relevantData = json.locations;
+      }
+
+      const aliasText = `
+【用語補足】
+・火種＝光のかけら＝かけら＝ひかり＝ワックス
+・捨て地＝捨地＝すてち
+・草原＝そうげん
+・雨林＝うりん
+・書庫＝しょこ
+・孤島＝ことう
+・峡谷＝きょうこく
+・書庫＝図書館
+・DC＝大キャン＝大キャンドル
+・音楽＝音楽堂の音楽チャレンジの事`;
+
+      let areaDataText = "";
+      const matchedArea = areaName;
+      if (matchedArea) {
+        try {
+          const areaFilePath = path.join(__dirname, "data", `fire_seeds_${matchedArea}.json`);
+          const areaJson = JSON.parse(fs.readFileSync(areaFilePath, "utf-8"));
+          areaDataText = `\n【${matchedArea}の火種情報】\n${JSON.stringify(areaJson)}`;
+        } catch (err) {
+          console.error(`❌ ${matchedArea} のデータ読み込み失敗`, err);
+        }
+      }
+
+      // --- プロンプト生成 ---
+      const prompt = `
+あなたは親しみやすい会話Botです。
+以下の情報をもとに、ユーザーの質問に的確かつ自然に答えてください。
+
+---
+【用語補足】
+${aliasText}
+
+【ユーザーの発言】
+${message.content}
+
+${areaDataText}
+
+【参照データ（該当エリア）】
+${JSON.stringify(relevantData, null, 2)}
+
+【あなたの発言の注意点】
+・妄想で語らない。ソースのある事実ベースでのみ語る。
+・分からないことは、分からないとはっきり言う。
+・返答は、ユーザーのトーンに合わせて自然に。
+・だいたい200文字以内。
+`;
+
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+      const result = await model.generateContent({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }]
+      });
+
+      await message.reply(result.response.text());
+    } catch (error) {
+      console.error("Gemini APIエラー:", error);
+      await message.reply("⚠️ Gemini APIとの通信でエラーが発生しました。");
     }
   }
 });
+
 
 const fs = require('fs');
 const path = require('path');
@@ -149,104 +230,6 @@ function extractRelevantSpots(json, text) {
     text.includes(loc.zone) || text.includes(loc.spot)
   );
 }
-
-client.on(Events.MessageCreate, async (message) => {
-  if (message.author.bot) return;
-  const isSkyTopic = /Sky|キャンマラ|星を紡ぐ|エリア|ひだね|火種|光のかけら|キャンドル|わっくす|雨林|捨て地|孤島|峡谷/.test(message.content);
-
-  if (message.mentions.has(client.user)) {
-    try {
-      const userInput = message.content;
-
-      // 🔍 エリア名を推測
-      const areaName = detectAreaName(userInput);
-      let relevantData = [];
-
-      if (areaName) {
-        const filePath = path.join(__dirname, "data", `fire_seeds_${areaName}.json`);
-        const json = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-        relevantData = extractRelevantSpots(json, userInput);
-        if (relevantData.length === 0) relevantData = json.locations; // fallback
-      }
-
-      // 🔤 言い換え補足文
-      const aliasText = `
-【用語補足】
-・火種＝光のかけら＝かけら＝ひかり＝ワックス
-・捨て地＝捨地＝すてち
-・草原＝そうげん
-・雨林＝うりん
-・書庫＝しょこ
-・孤島＝ことう
-・峡谷＝きょうこく
-・書庫＝図書館
-・DC＝大キャン＝大キャンドル
-・音楽＝音楽堂の音楽チャレンジの事
-
-...`;
-
-// 発言からエリア名を推定
-let matchedArea = null;
-const areaNames = ["草原", "雨林", "峡谷", "書庫", "捨て地", "孤島", "天空", "海ホーム", "花鳥卿", "アリスカフェ"];
-for (const area of areaNames) {
-  if (message.content.includes(area) || message.content.includes(area.replace("ヶ", "")) || message.content.includes(area.toLowerCase())) {
-    matchedArea = area;
-    break;
-  }
-}
-
-// JSONの読み込み処理（Sky関連ワード＆エリア名が含まれていたときのみ）
-let areaDataText = "";
-if (isSkyTopic && matchedArea) {
-  try {
-    const areaFileName = `fire_seeds_${matchedArea}.json`;
-    const areaFilePath = path.join(__dirname, "data", areaFileName);
-    const areaJson = JSON.parse(fs.readFileSync(areaFilePath, "utf-8"));
-    areaDataText = `\n【${matchedArea}の火種情報】\n${JSON.stringify(areaJson)}`;
-  } catch (err) {
-    console.error(`❌ ${matchedArea} のデータ読み込み失敗`, err);
-  }
-}
-
-      // 🧠 プロンプトを生成
-      const prompt = `
-あなたは親しみやすい会話Botです。
-以下の情報をもとに、ユーザーの質問に的確かつ自然に答えてください。
-
----
-【用語補足】
-${aliasText}
-
-【ユーザーの発言】
-${message.content}
-
-${areaDataText}
-
-【参照データ（該当エリア）】
-${JSON.stringify(relevantData, null, 2)}
-
-【あなたの発言の注意点】
-・妄想で語らない。ソースのある事実ベースでのみ語る。
-・分からないことは、分からないとはっきり言う。
-・返答は、ユーザーのトーンに合わせて自然に。
-・だいたい200文字以内。
-`;
-
-      // Geminiへ送信
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
-      const result = await model.generateContent({
-        contents: [{ role: 'user', parts: [{ text: prompt }] }]
-      });
-
-      await message.reply(result.response.text());
-    } catch (error) {
-      console.error("Gemini APIエラー:", error);
-      await message.reply("⚠️ Gemini APIとの通信でエラーが発生しました。");
-    }
-  }
-});
-
-
 
 client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
   console.log("VC Update:", {
