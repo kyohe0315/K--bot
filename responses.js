@@ -340,7 +340,7 @@ module.exports = [
     ["大凶。背後には気を付けろよ・・・。", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/%EF%BC%91%EF%BC%92%EF%BC%93.gif?v=1677098585621"],
     ["きょへ様を崇めよ", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/o0365019912329969675.gif?v=1677096910953"],
     ["たっつんは泳いでいます。ここで", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/people_0008_pool.gif?v=1677096924065"]
-  ],  type: "random-pair"
+  ],  type: "weighted"
   },
   { pattern: /ｓぁｆじゃｋｌ/,
     responses: [
