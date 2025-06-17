@@ -41,37 +41,45 @@ const delegateHandlers = {
   }
 };
 
-// 🔹 過去の会話10件をGASから取得
-async function fetchPastLogs(userId) {
-  try {
-    const res = await fetch(process.env.GAS_LOG_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId })
-    });
-    return await res.json(); // [{ user, bot }, ...]
-  } catch (err) {
-    console.error("過去ログ取得失敗:", err);
-    return [];
-  }
+const GAS_LOG_URL = process.env.GAS_LOG_URL;
+
+async function postToGAS(payload) {
+  const res = await fetch(GAS_LOG_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+  return await res.text();
 }
 
-// 🔹 新しい会話ログをGASに保存
-async function logToGAS(userId, username, userMessage, botReply) {
-  try {
-    await fetch(process.env.GAS_LOG_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId,
-        username,
-        userMessage,
-        botReply
-      })
-    });
-  } catch (err) {
-    console.error("ログ送信エラー:", err);
-  }
+async function getFromGAS(payload) {
+  const res = await fetch(GAS_LOG_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+  return await res.json();
+}
+
+async function fetchUserProfile(userId) {
+  const result = await getFromGAS({
+    userId,
+    mode: "get"
+  });
+
+  if (!result.nickname && !result.personality && !result.interest) return "";
+  return `このユーザーは「${result.nickname}」と呼ばれ、性格は「${result.personality}」、興味は「${result.interest}」です。`;
+}
+
+async function fetchSummaryLogs(userId) {
+  const logs = await getFromGAS({
+    userId,
+    mode: "get"
+  });
+
+  return logs.map((log, i) =>
+    `【過去${i + 1}】User: ${log.userSummary}\nBot: ${log.botSummary}`
+  ).join("\n\n");
 }
 
 function weightedRandom(arr) {
@@ -98,10 +106,7 @@ client.on(Events.MessageCreate, async (message) => {
       let areaDataText = "";
       let aliasText = "";
 
-      const pastLogs = await fetchPastLogs(message.author.id);
-      const logText = pastLogs.map((log, i) => `【会話${i + 1}】\nUser: ${log.user}\nBot: ${log.bot}`).join("\n\n");
-      
-      // Sky系の場合のみ JSONデータを参照
+      // 🔹 Sky系の場合のみ JSONデータ参照
       if (isSky && areaName) {
         try {
           const filePath = path.join(__dirname, "data", `fire_seeds_${areaName}.json`);
@@ -127,13 +132,19 @@ client.on(Events.MessageCreate, async (message) => {
         }
       }
 
+      // 🔹 プロフィール＋要約ログを読み込み
+      const profileText = await fetchUserProfile(message.author.id);
+      const summaryText = await fetchSummaryLogs(message.author.id);
+
+      // 🔹 Geminiへのプロンプト作成
       const prompt = `
 あなたは親しみやすい会話Botです。
 以下の情報をもとに、ユーザーの質問に的確かつ自然に答えてください。
 
 ---
-${logText ? `【このユーザーとの過去の会話】\n${logText}` : ""}
-${aliasText ? `【用語補足】\n${aliasText}` : ""}
+${profileText ? `【ユーザーのプロフィール】\n${profileText}\n` : ""}
+${summaryText ? `【ユーザーとの過去の会話】\n${summaryText}\n` : ""}
+${aliasText ? `${aliasText}\n` : ""}
 
 【ユーザーの発言】
 ${userInput}
@@ -156,20 +167,22 @@ ${relevantData.length > 0 ? `【参照データ】\n${JSON.stringify(relevantDat
 
       const reply = result.response.text();
       await message.reply(reply);
-      await logToGAS(message.author.id, message.author.username, userInput, reply);
+
+      // 🔹 要約ログ保存（ユーザーとBotのやり取り）
+      await saveSummarizedLog(userInput, reply, message.author.id);
 
     } catch (error) {
       console.error("Gemini APIエラー:", error);
       await message.reply("⚠️ Gemini APIとの通信でエラーが発生しました。");
     }
-    return;// ★ responses 側には行かせない
+    return; // ★ Gemini使ったら responses 側には行かせない
   }
 
   // ② responses.js の pattern にマッチするかチェック（メンションないとき）
   for (const { pattern, responses: res, type, id } of responses) {
     if (pattern.test(message.content)) {
       switch (type) {
-          
+
         case "static": // 候補を全て送信。ノーマル
           const staticResponses = Array.isArray(res) ? res : [res];
           for (const r of staticResponses) {
@@ -179,7 +192,7 @@ ${relevantData.length > 0 ? `【参照データ】\n${JSON.stringify(relevantDat
           }
           break;
 
-        case "random":// ランダム表示。複数可
+        case "random": // ランダム表示。複数可
           const rand = weightedRandom(res);
           const items = Array.isArray(rand) ? rand : [rand];
           for (const item of items) {
@@ -188,7 +201,7 @@ ${relevantData.length > 0 ? `【参照データ】\n${JSON.stringify(relevantDat
             }
           }
           break;
-          
+
         case "progressive": // 1つ表示→削除。次を表示→削除 ×n
           for (const r of res) {
             const sent = await message.channel.send(r);
@@ -235,7 +248,6 @@ ${relevantData.length > 0 ? `【参照データ】\n${JSON.stringify(relevantDat
     }
   }
 });
-
 
 const fs = require('fs');
 const path = require('path');
