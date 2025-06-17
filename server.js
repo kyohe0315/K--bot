@@ -59,8 +59,18 @@ async function getFromProfileGAS(payload) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
   });
-  return await res.json();
+
+  const text = await res.text();
+  console.log("[ProfileGAS] Response text:", text);
+
+  try {
+    return JSON.parse(text);
+  } catch (err) {
+    console.error("[ProfileGAS] JSON parse error:", err);
+    return {}; // fallback
+  }
 }
+
 
 async function fetchUserProfile(userId) {
   const result = await getFromProfileGAS({
