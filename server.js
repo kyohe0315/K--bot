@@ -67,9 +67,13 @@ async function fetchUserProfile(userId) {
     mode: "get"
   });
 
-  if (!result.nickname && !result.personality && !result.interest) return "";
-  return `このユーザーは「${result.nickname}」と呼ばれ、性格は「${result.personality}」、興味は「${result.interest}」です。`;
+  if (!result.nickname && !result.personality && !result.interest) {
+    return "このユーザーのプロフィールはまだ登録されていません。";
+  }
+
+  return `このユーザーは「${result.nickname || "（未設定）"}」と呼ばれ、性格は「${result.personality || "（未設定）"}」、興味は「${result.interest || "（未設定）"}」です。`;
 }
+
 
 async function fetchSummaryLogs(userId) {
   const logs = await getFromGAS({
