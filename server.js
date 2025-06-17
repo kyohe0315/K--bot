@@ -133,7 +133,6 @@ client.on(Events.MessageCreate, async (message) => {
 ・書庫＝しょこ
 ・孤島＝ことう
 ・峡谷＝きょうこく
-・書庫＝図書館
 ・DC＝大キャン＝大キャンドル
 ・音楽＝音楽堂の音楽チャレンジの事`;
 
@@ -213,15 +212,6 @@ function detectAreaName(text) {
     }
   }
   return null;
-}
-
-function loadFireSeedData(area) {
-  const filePath = path.join(__dirname, '../data', `fire_seeds_${area}.json`);
-  if (!fs.existsSync(filePath)) {
-    console.warn(`⚠️ ファイルが見つかりません: ${filePath}`);
-    return null;
-  }
-  return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 }
 
 // 関連スポットだけ抽出
