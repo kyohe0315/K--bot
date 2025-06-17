@@ -180,8 +180,8 @@ ${relevantData.length > 0 ? `【参照データ】\n${JSON.stringify(relevantDat
           break;
 
         case "random":// ランダム表示。複数可
-          const result = weightedRandom(res);
-          const wtexts = Array.isArray(result.texts) ? result.texts : [result.text];
+          const randresult = weightedRandom(res);
+          const wtexts = Array.isArray(randresult.texts) ? randresult.texts : [randresult.text];
           for (const t of wtexts) {
             if (t?.trim()) await message.channel.send(t);
           }
@@ -197,16 +197,16 @@ ${relevantData.length > 0 ? `【参照データ】\n${JSON.stringify(relevantDat
 
         case "function": // 実行用
           if (typeof res === "function") {
-            const result = await res(message);
-            if (result && typeof result === "string" && result.trim() !== "") {
-              await message.channel.send(result);
+            const Fresult = await res(message);
+            if (Fresult && typeof Fresult === "string" && Fresult.trim() !== "") {
+              await message.channel.send(Fresult);
             }
           }
           break;
 
         case "weighted": // ランダム。ただし確率の重みを考慮
-          const result = weightedRandom(res);
-          const texts = Array.isArray(result.texts) ? result.texts : [result.text];
+          const wresult = weightedRandom(res);
+          const texts = Array.isArray(wresult.texts) ? wresult.texts : [wresult.text];
           for (const t of texts) {
             if (t?.trim()) await message.channel.send(t);
           }
