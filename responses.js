@@ -492,7 +492,7 @@ module.exports = [
   { pattern: /今月のイベント/i,
     type: "delegate",
     id: "postMonthlyEventsHandler" },
-  { pattern: /(現在|進行中)のイベント/i,
+  { pattern: /(現在|進行中|今)のイベント/i,
     type: "delegate", 
     id: "remindCurrentEventsHandler" },
 
