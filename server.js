@@ -51,83 +51,17 @@ function weightedRandom(arr) {
   return arr[arr.length - 1]; // 念のため最後にフォールバック
 }
 
-
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
 
-  // ① responses.js のパターンチェック＆処理
-  for (const { pattern, responses: res, type, id } of responses) {
-    if (pattern.test(message.content)) {
-      switch (type) {
-          
-        case "static": // 候補を全て送信。ノーマル
-          const staticResponses = Array.isArray(res) ? res : [res];
-          for (const r of staticResponses) {
-            if (r && typeof r === "string" && r.trim() !== "") {
-              await message.channel.send(r);
-            }
-          }
-          break;
-
-        case "random":　//　候補のうちどれかを1つ送信＝ランダム
-          const r = res[Math.floor(Math.random() * res.length)];
-          if (r && typeof r === "string" && r.trim() !== "") {
-            await message.channel.send(r);
-          }
-          break;
-
-        case "progressive": // 1つ表示→削除。次を表示→削除 ×n
-          for (const r of res) {
-            const sent = await message.channel.send(r);
-            await delay(3000);
-            await sent.delete().catch(() => {});
-          }
-          break;
-
-        case "function": // 実行用
-          if (typeof res === "function") {
-            const result = await res(message);
-            if (result && typeof result === "string" && result.trim() !== "") {
-              await message.channel.send(result);
-            }
-          }
-          break;
-
-        case "weighted": { // ランダム。だけど確率の重さを定義
-          const result = weightedRandom(res);
-          const texts = Array.isArray(result.texts) ? result.texts : [result.text];
-          for (const t of texts) {
-            if (t?.trim()) await message.channel.send(t);
-          }
-          break;
-        }
-
-        case "reverse-delete": { // 1つずつ全部表示 → 1つずつ削除
-          const messages = [];
-          for (const r of res) messages.push(await message.channel.send(r));
-          for (const m of messages.reverse()) {
-            await delay(2000);
-            await m.delete().catch(() => {});
-          }
-          break;
-        }
-          
-        case "delegate":
-          if (id && typeof delegateHandlers[id] === "function") {
-            await delegateHandlers[id](message); // ← ここで実行
-          } else {
-            console.warn(`⚠ delegateHandler "${id}" が見つかりません`);
-          }
-          break;
-      }
-      return; // responses にヒットしたら Gemini 側には行かない
-    }
-  }
-
-  // ② Gemini に送る条件：メンションかつ Sky関連ワードが含まれている
+  // ============================
+  // ① Gemini に送る条件：
+  // メンションがあり、Sky関連ワードが含まれている場合は Gemini を優先する
+  // ============================
+  const isMentioned = message.mentions.has(client.user);
   const isSkyTopic = /Sky|キャンマラ|星を紡ぐ|エリア|ひだね|火種|光のかけら|キャンドル|わっくす|雨林|捨て地|孤島|峡谷/.test(message.content);
 
-  if (message.mentions.has(client.user) && isSkyTopic) {
+  if (isMentioned && isSkyTopic) {
     try {
       const userInput = message.content;
 
@@ -142,7 +76,7 @@ client.on(Events.MessageCreate, async (message) => {
         if (relevantData.length === 0) relevantData = json.locations;
       }
 
-      const aliasText = isSkyTopic ? `
+      const aliasText = `
 【用語補足】
 ・火種＝光のかけら＝かけら＝ひかり＝ワックス
 ・捨て地＝捨地＝すてち
@@ -153,17 +87,16 @@ client.on(Events.MessageCreate, async (message) => {
 ・峡谷＝きょうこく
 ・DC＝大キャン＝大キャンドル
 ・音楽＝音楽堂の音楽チャレンジの事
-` : "";
-      
+`;
+
       let areaDataText = "";
-      const matchedArea = areaName;
-      if (matchedArea) {
+      if (areaName) {
         try {
-          const areaFilePath = path.join(__dirname, "data", `fire_seeds_${matchedArea}.json`);
+          const areaFilePath = path.join(__dirname, "data", `fire_seeds_${areaName}.json`);
           const areaJson = JSON.parse(fs.readFileSync(areaFilePath, "utf-8"));
-          areaDataText = `\n【${matchedArea}の火種情報】\n${JSON.stringify(areaJson)}`;
+          areaDataText = `\n【${areaName}の火種情報】\n${JSON.stringify(areaJson)}`;
         } catch (err) {
-          console.error(`❌ ${matchedArea} のデータ読み込み失敗`, err);
+          console.error(`❌ ${areaName} のデータ読み込み失敗`, err);
         }
       }
 
@@ -201,9 +134,78 @@ ${JSON.stringify(relevantData, null, 2)}
       console.error("Gemini APIエラー:", error);
       await message.reply("⚠️ Gemini APIとの通信でエラーが発生しました。");
     }
+    return; // ★ responses 側には行かせない
+  }
+
+  // ============================
+  // ② responses.js のパターンチェック＆処理
+  // ============================
+  for (const { pattern, responses: res, type, id } of responses) {
+    if (pattern.test(message.content)) {
+      switch (type) {
+
+        case "static": // 候補を全て送信。ノーマル
+          const staticResponses = Array.isArray(res) ? res : [res];
+          for (const r of staticResponses) {
+            if (r && typeof r === "string" && r.trim() !== "") {
+              await message.channel.send(r);
+            }
+          }
+          break;
+
+        case "random": // 候補のうちどれかを1つ送信＝ランダム
+          const r = res[Math.floor(Math.random() * res.length)];
+          if (r && typeof r === "string" && r.trim() !== "") {
+            await message.channel.send(r);
+          }
+          break;
+
+        case "progressive": // 1つ表示→削除。次を表示→削除 ×n
+          for (const r of res) {
+            const sent = await message.channel.send(r);
+            await delay(3000);
+            await sent.delete().catch(() => {});
+          }
+          break;
+
+        case "function": // 実行用
+          if (typeof res === "function") {
+            const result = await res(message);
+            if (result && typeof result === "string" && result.trim() !== "") {
+              await message.channel.send(result);
+            }
+          }
+          break;
+
+        case "weighted": // ランダム。ただし確率の重みを考慮
+          const result = weightedRandom(res);
+          const texts = Array.isArray(result.texts) ? result.texts : [result.text];
+          for (const t of texts) {
+            if (t?.trim()) await message.channel.send(t);
+          }
+          break;
+
+        case "reverse-delete": // 1つずつ全部表示 → 1つずつ削除
+          const messages = [];
+          for (const r of res) messages.push(await message.channel.send(r));
+          for (const m of messages.reverse()) {
+            await delay(2000);
+            await m.delete().catch(() => {});
+          }
+          break;
+
+        case "delegate": // 特定関数を委任呼び出し
+          if (id && typeof delegateHandlers[id] === "function") {
+            await delegateHandlers[id](message); // ← ここで実行
+          } else {
+            console.warn(`⚠ delegateHandler "${id}" が見つかりません`);
+          }
+          break;
+      }
+      return; // responses にヒットしたら Gemini 側には行かない
+    }
   }
 });
-
 
 const fs = require('fs');
 const path = require('path');
