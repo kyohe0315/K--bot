@@ -910,5 +910,15 @@ module.exports = [
       "続きは課金してね！♡"
     ],
     type: "progressive"
+  },
+  {
+    pattern: /死ね|アホ|あほ|クソ|くそ|バカ|ばか/,
+    responses: [
+      "おい！",
+      "そんなこと言うなよ！",
+      "‥‥‥‥‥‥",
+      "# ｸｿｶﾞ"
+    ],
+    type: "progressive"
   }
 ];
