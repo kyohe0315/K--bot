@@ -327,6 +327,31 @@ module.exports = [
       "スマブラ勢、リドリー使い。撃墜体でＤＡしない。崖を狩らない。ありがとう。しゅき！あ。でも崖上がり横Ｂしてくる。嫌い。"
     ], type: "random"
   },
+  {
+    pattern: /しんどい|疲れた|つかれた|疲れました|つかれました/,
+    responses: [
+      "# ぽにぃたまぁぁ～～～！\nな人。",
+      "若く素直。とても良い。伸びしろたっぷり",
+      "名前の由来は何なんだろうね",
+      "スマブラ勢、リドリー使い。撃墜体でＤＡしない。崖を狩らない。ありがとう。しゅき！あ。でも崖上がり横Ｂしてくる。嫌い。"
+    ], type: "random"
+  },
+  { pattern: /ｓぁｆじゃｋｌ/,
+    responses: [
+      "1",
+      "2",
+      "3",
+      "4"
+    ], type: "random"
+  },
+  { pattern: /ｓぁｆじゃｋｌ/,
+    responses: [
+      "1",
+      "2",
+      "3",
+      "4"
+    ], type: "random"
+  },
 
   //おみくじ
   {
@@ -341,14 +366,6 @@ module.exports = [
     { texts:["きょへ様を崇めよ", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/o0365019912329969675.gif?v=1677096910953"],weight: 4 },
     { texts:["たっつんは泳いでいます。ここで", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/people_0008_pool.gif?v=1677096924065"],weight: 1 }
   ],  type: "weighted"
-  },
-  { pattern: /ｓぁｆじゃｋｌ/,
-    responses: [
-      "1",
-      "2",
-      "3",
-      "4"
-    ], type: "random"
   },
   { pattern: /ｓぁｆじゃｋｌ/,
     responses: [
