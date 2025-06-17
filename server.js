@@ -56,7 +56,7 @@ client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
 
   // ① responses.js のパターンチェック＆処理
-  for (const { pattern, responses: res, type } of responses) {
+  for (const { pattern, responses: res, type, id } of responses) {
     if (pattern.test(message.content)) {
       switch (type) {
         case "static":
