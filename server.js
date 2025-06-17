@@ -53,7 +53,14 @@ client.on(Events.MessageCreate, async (message) => {
             await sent.delete().catch(() => {});
           }
           break;
-
+          
+        case "function":
+          if (typeof res === "function") {
+            const result = await res(message); // messageを引数にしても良い
+            if (result) await message.channel.send(result); // nullやundefinedでなければ送信
+          }
+          break;
+          
         case "reverse-delete": { // ← 例）せいは
           const messages = [];
           for (const r of res) messages.push(await message.channel.send(r));
