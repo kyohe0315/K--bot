@@ -490,18 +490,12 @@ module.exports = [
   { pattern: /(パン|ぱん)の?(光のカケラ|光のかけら|火種|ワックス)/i,
     responses: ["約600個/10分 上限1000個"], type: "static" },
   { pattern: /今月のイベント/i,
-    type: "function",
-    responses: async (message) => {
-      await postMonthlyEvents(message.channel); // ← チャンネルを渡すようにする
-      return null; }
-  },
+    type: "delegate",
+    id: "postMonthlyEvents" },
   { pattern: /(現在|進行中)のイベント/i,
-    type: "function",
-    responses: async (message) => {
-      await remindCurrentEvents(message.channel); // チャンネルに直接送るなら return null;
-      return null; }
-  },
-  
+    type: "delegate", 
+    id: "remindCurrentEvents" },
+
   //古いネタ・ネットネタ系 static
   { pattern: /今北産業/,
     responses: ["遅かったね～やっと来たか～。…1行以上喋る事ないよ。"], type: "static" },
