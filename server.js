@@ -106,7 +106,7 @@ async function fetchUserProfile(userId) {
 
 
 async function fetchSummaryLogs(userId) {
-  const logs = await getFromGAS({
+  const logs = await getFromLogGAS({
     userId,
     mode: "get"
   });
