@@ -341,21 +341,26 @@ client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
     old: oldState.channelId,
     new: newState.channelId,
   });
-  const guild = newState.guild;
 
-  // ✅ 指定VCに人が入った時だけ通知を送る
+  // ✅ 指定VCに人が入ったとき
   if (!oldState.channel && newState.channelId === VOICE_CHANNEL_ID) {
-    console.log("✅ VCに誰かが入った");
-    const textChannel = guild.channels.cache.get(VC_NOTIFY_CHANNEL_ID);
-    if (textChannel && textChannel.isTextBased()) {
-      try {
-        const msg = await textChannel.send("chatroom1にて通話が開始されました！\nhttps://discord.gg/PpugjHBgDB");
-        vcStartMessages.set(guild.id, msg.id);
-      } catch (err) {
-        console.error("VC開始メッセージ送信エラー:", err);
+    const vcChannel = newState.guild.channels.cache.get(VOICE_CHANNEL_ID);
+
+    if (vcChannel && vcChannel.members.size === 1) {
+      console.log("✅ VCに最初の1人が入りました");
+      const textChannel = newState.guild.channels.cache.get(VC_NOTIFY_CHANNEL_ID);
+
+      if (textChannel && textChannel.isTextBased()) {
+        try {
+          const msg = await textChannel.send("chatroom1にて通話が開始されました！\nhttps://discord.gg/PpugjHBgDB");
+          vcStartMessages.set(newState.guild.id, msg.id);
+        } catch (err) {
+          console.error("VC開始メッセージ送信エラー:", err);
+        }
       }
     }
   }
+});
 
   // ✅ VCから全員いなくなったら終了メッセージ送信＆開始メッセージ削除
   const channel = oldState.channel;
