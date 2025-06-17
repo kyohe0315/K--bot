@@ -124,7 +124,7 @@ client.on(Events.MessageCreate, async (message) => {
         if (relevantData.length === 0) relevantData = json.locations;
       }
 
-      const aliasText = `
+      const aliasText = isSkyTopic ? `
 【用語補足】
 ・火種＝光のかけら＝かけら＝ひかり＝ワックス
 ・捨て地＝捨地＝すてち
