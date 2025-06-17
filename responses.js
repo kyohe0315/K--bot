@@ -470,7 +470,7 @@ module.exports = [
   { pattern: /貝の?(光のカケラ|光のかけら|火種|ワックス)/i,
     responses: ["【楽園夕日時の貝】\n　  大：30\n小(開)：30\n小(閉)：10～20"], type: "static" },
   { pattern: /雨林の?(光のカケラ|光のかけら|火種|ワックス)/i,
-    responses: ["897(日,月,水,金)/898(火,木,土)個"], type: "static" },
+    responses: ["893(日,月,水,金)/894(火,木,土)個"], type: "static" },
   { pattern: /峡谷の?(光のカケラ|光のかけら|火種|ワックス)/i,
     responses: ["882 + 劇場の花α + 隠者レース150+α"], type: "static" },
   { pattern: /捨て地の?(光のカケラ|光のかけら|火種|ワックス)/i,
