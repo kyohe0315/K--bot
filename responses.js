@@ -491,10 +491,10 @@ module.exports = [
     responses: ["約600個/10分 上限1000個"], type: "static" },
   { pattern: /今月のイベント/i,
     type: "delegate",
-    id: "postMonthlyEvents" },
+    id: "postMonthlyEventsHandler" },
   { pattern: /(現在|進行中)のイベント/i,
     type: "delegate", 
-    id: "remindCurrentEvents" },
+    id: "remindCurrentEventsHandler" },
 
   //古いネタ・ネットネタ系 static
   { pattern: /今北産業/,
