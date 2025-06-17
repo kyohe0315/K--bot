@@ -56,7 +56,7 @@ async function saveSummarizedLog(userId, userSummary, botSummary) {
   });
 
   const text = await res.text();
-  console.log("[LogGAS] Save response:", text);
+  console.log("[LogGAS Save] Response:", text);
 }
 
 const GAS_LOG_URL = process.env.GAS_LOG_URL;
