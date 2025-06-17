@@ -332,14 +332,13 @@ module.exports = [
   {
   pattern: /！おみくじ|!おみくじ|おみくじ/,
   responses: [
-    { texts: ["🎊大吉！！", "https://example.com/daikichi.jpg"], weight: 1 },
-    { texts: ["🎊すっごーーーい大吉！！🎊", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/%E3%81%8A%E3%82%81%E3%81%A7%E3%81%A8%E3%81%86-%E5%AC%89%E3%81%97%E3%81%84.gif?v=1677096667773"],weight: 1 },
-    { texts:["✨✨かなり大吉✨✨", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/%E3%81%8A%E3%82%81%E3%81%A7%E3%81%A8%E3%81%86-%E5%AC%89%E3%81%97%E3%81%84%20(1).gif?v=1677096670342"],weight: 1 },
-    { texts:["✨吉だね！✨", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/5c1d0bec96c0080c863ce98c199066dc.gif?v=1677098206251"],weight: 1 },
-    { texts:["中吉だなぁ～👍", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/%E3%81%99%E3%81%94%E3%81%84-%E6%8B%8D%E6%89%8B.gif?v=1677096665281"],weight: 1 },
-    { texts:["凶！", "https://cdn.discordapp.com/attachments/932595932464291872/1078024865031913543/b23a176962cdbe5b.gif"],weight: 1 },
-    { texts:["大凶。背後には気を付けろよ・・・。", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/%EF%BC%91%EF%BC%92%EF%BC%93.gif?v=1677098585621"],weight: 1 },
-    { texts:["きょへ様を崇めよ", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/o0365019912329969675.gif?v=1677096910953"],weight: 1 },
+    { texts: ["🎊すっごーーーい大吉！！🎊", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/%E3%81%8A%E3%82%81%E3%81%A7%E3%81%A8%E3%81%86-%E5%AC%89%E3%81%97%E3%81%84.gif?v=1677096667773"],weight: 6 },
+    { texts:["✨✨かなり大吉✨✨", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/%E3%81%8A%E3%82%81%E3%81%A7%E3%81%A8%E3%81%86-%E5%AC%89%E3%81%97%E3%81%84%20(1).gif?v=1677096670342"],weight: 9 },
+    { texts:["✨吉だね！✨", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/5c1d0bec96c0080c863ce98c199066dc.gif?v=1677098206251"],weight: 12 },
+    { texts:["中吉だなぁ～👍", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/%E3%81%99%E3%81%94%E3%81%84-%E6%8B%8D%E6%89%8B.gif?v=1677096665281"],weight: 15 },
+    { texts:["凶！", "https://cdn.discordapp.com/attachments/932595932464291872/1078024865031913543/b23a176962cdbe5b.gif"],weight: 9 },
+    { texts:["大凶。背後には気を付けろよ・・・。", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/%EF%BC%91%EF%BC%92%EF%BC%93.gif?v=1677098585621"],weight: 6 },
+    { texts:["きょへ様を崇めよ", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/o0365019912329969675.gif?v=1677096910953"],weight: 4 },
     { texts:["たっつんは泳いでいます。ここで", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/people_0008_pool.gif?v=1677096924065"],weight: 1 }
   ],  type: "weighted"
   },
