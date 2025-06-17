@@ -330,10 +330,27 @@ module.exports = [
   {
     pattern: /しんどい|疲れた|つかれた|疲れました|つかれました|死にたい|しにたい/,
     responses: [
-       ["ああああ", "あああ"],
-       ["いいいい", "いいい"],
-       ["うおおおう", "うおうお"],
-       ["ねえねねえええ", "んんぇぇぇえ"]
+       ["https://twitter.com/purinharumaki/status/1236262228581466112?s=20&t=Bg1hXcIolEEil7_xlZLR5w", "これ見て笑えよ"],
+       ["https://twitter.com/BornAKang/status/1574125489110728705?s=20&t=WDmSSyUE4Rm50mU-staUaQ", "これ見て笑えよ"],
+       ["https://twitter.com/aoihk_118/status/1561345302120271872?s=20&t=WDmSSyUE4Rm50mU-staUaQ", "これ見て笑えよ"],
+       ["https://twitter.com/shouldhaveaduck/status/1574819532052766720?s=20&t=k3C0Dl0NG8mbtwaiK5K5oA", "これ見て笑えよ"],
+       ["https://twitter.com/purinharumaki/status/1236262228581466112?s=20&t=WDmSSyUE4Rm50mU-staUaQ", "これ見て笑えよ"],
+       ["https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/XiaoYing_Video_1468200848374.mp4?v=1702753816734", "これ見て笑えよ"],
+       ["https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/RPReplay_Final1656442030.mov?v=1702753818389", "これ見て笑えよ"],
+       ["https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/trim.EC1B9271-A86A-4BCE-BD4F-3AA97650813C.mov?v=1702753819841", "これ見て笑えよ"],
+       ["https://www.youtube.com/watch?v=XlEo9sjLEs8&list=LL&index=5", "これ見て笑えよ"],
+       ["https://www.youtube.com/watch?v=YTwK96HddCo&list=LL&index=6", "これ見て笑えよ"],
+       //["ねえねねえええ", "これ見て笑えよ"],
+       //["ねえねねえええ", "これ見て笑えよ"],
+       ["https://youtu.be/xQ-A48PItOU?si=Wa-ElGAoVALdpTDP", "これ見て笑えよ"],
+       ["https://youtu.be/QPvXp_OGaSg?si=wRsffTDHfBKtU6Na", "これ見て笑えよ"],
+       ["https://youtu.be/rPvcGSIZmfI?si=In-dz3rWsHNk9bAo", "これ見て笑えよ"],
+       ["https://youtu.be/GKc7pVQOYYg?si=LrAjUzA5Ofxd97Fq", "これ見て笑えよ"],
+       ["https://youtu.be/9V2LwgdGia0?si=7EwvfALS_NA1PX1y", "これ見て笑えよ"],
+       ["https://youtu.be/OyX7lh0Fq1Y?si=dhhRbt4d50iOGKmA", "これ見て笑えよ"],
+       ["https://x.com/agashiagashi/status/1917209037118325166", "これ見て笑えよ"],
+       ["https://www.youtube.com/watch?v=ZpsG36Du8_E&list=LL&index=7", "これ見て笑えよ"],
+       ["https://youtu.be/E_mW_Aj5qCY?si=2QeSkkAZnpwLW85L", "これ見て笑えよ"]
     ], type: "random"
   },
   { pattern: /ｓぁｆじゃｋｌ/,
