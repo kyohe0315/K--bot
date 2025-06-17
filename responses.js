@@ -327,6 +327,19 @@ module.exports = [
       "スマブラ勢、リドリー使い。撃墜体でＤＡしない。崖を狩らない。ありがとう。しゅき！あ。でも崖上がり横Ｂしてくる。嫌い。"
     ], type: "random"
   },
+  {
+  pattern: /！おみくじ|!おみくじ|おみくじ/,
+  responses: [
+    ["🎊すっごーーーい大吉！！🎊", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/%E3%81%8A%E3%82%81%E3%81%A7%E3%81%A8%E3%81%86-%E5%AC%89%E3%81%97%E3%81%84.gif?v=1677096667773"],
+    ["✨✨かなり大吉✨✨", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/%E3%81%8A%E3%82%81%E3%81%A7%E3%81%A8%E3%81%86-%E5%AC%89%E3%81%97%E3%81%84%20(1).gif?v=1677096670342"],
+    ["✨吉だね！✨", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/5c1d0bec96c0080c863ce98c199066dc.gif?v=1677098206251"],
+    ["中吉だなぁ～👍", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/%E3%81%99%E3%81%94%E3%81%84-%E6%8B%8D%E6%89%8B.gif?v=1677096665281"],
+    ["凶！", "https://cdn.discordapp.com/attachments/932595932464291872/1078024865031913543/b23a176962cdbe5b.gif"],
+    ["大凶。背後には気を付けろよ・・・。", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/%EF%BC%91%EF%BC%92%EF%BC%93.gif?v=1677098585621"],
+    ["きょへ様を崇めよ", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/o0365019912329969675.gif?v=1677096910953"],
+    ["たっつんは泳いでいます。ここで", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/people_0008_pool.gif?v=1677096924065"]
+  ],  type: "random-pair"
+  },
   { pattern: /ｓぁｆじゃｋｌ/,
     responses: [
       "1",
