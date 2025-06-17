@@ -42,6 +42,7 @@ const delegateHandlers = {
 };
 
 const GAS_LOG_URL = process.env.GAS_LOG_URL;
+const GAS_PROFILE_URL = process.env.GAS_PROFILE_URL;
 
 async function postToGAS(payload) {
   const res = await fetch(GAS_LOG_URL, {
@@ -52,8 +53,8 @@ async function postToGAS(payload) {
   return await res.text();
 }
 
-async function getFromGAS(payload) {
-  const res = await fetch(GAS_LOG_URL, {
+async function getFromProfileGAS(payload) {
+  const res = await fetch(GAS_PROFILE_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
@@ -62,7 +63,7 @@ async function getFromGAS(payload) {
 }
 
 async function fetchUserProfile(userId) {
-  const result = await getFromGAS({
+  const result = await getFromProfileGAS({
     userId,
     mode: "get"
   });
@@ -73,6 +74,7 @@ async function fetchUserProfile(userId) {
 
   return `このユーザーは「${result.nickname || "（未設定）"}」と呼ばれ、性格は「${result.personality || "（未設定）"}」、興味は「${result.interest || "（未設定）"}」です。`;
 }
+
 
 
 async function fetchSummaryLogs(userId) {
