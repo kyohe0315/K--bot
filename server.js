@@ -39,7 +39,8 @@ client.on(Events.MessageCreate, async (message) => {
     if (pattern.test(message.content)) {
       switch (type) {
         case "static":
-          for (const r of res) await message.channel.send(r);
+          const staticResponses = Array.isArray(res) ? res : [res];
+          for (const r of staticResponses) await message.channel.send(r);
           break;
 
         case "random":
