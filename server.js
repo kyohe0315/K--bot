@@ -32,6 +32,17 @@ client.once(Events.ClientReady, () => {
   //remindCurrentEvents(); // ← デバッグ用← これを追加
 });
 
+function weightedRandom(arr) {
+  const total = arr.reduce((sum, obj) => sum + (obj.weight || 1), 0);
+  let rand = Math.random() * total;
+  for (const obj of arr) {
+    rand -= obj.weight || 1;
+    if (rand <= 0) return obj;
+  }
+  return arr[arr.length - 1]; // 念のため最後にフォールバック
+}
+
+
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
 
