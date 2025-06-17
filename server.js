@@ -75,26 +75,6 @@ client.on(Events.MessageCreate, async (message) => {
       return;
     }
   }
-
-  // おみくじ
-  if (
-    /！おみくじ|!おみくじ|おみくじ/.test(message.content) ||
-    (message.mentions.has(client.user) && message.content.includes("おみくじ"))
-  ) {
-    const omikujiResults = [
-      "🎊すっごーーーい大吉！！🎊",
-      "✨かなり大吉✨",
-      "✨吉だね！✨",
-      "中吉だなぁ～👍🏻",
-      "残念~ 小吉~www",
-      "凶！",
-      "大凶。背後には気を付けろよ・・・。",
-    ];
-    const result = omikujiResults[Math.floor(Math.random() * omikujiResults.length)];
-    await message.reply(result);
-    setTimeout(() => message.delete().catch(() => {}), 1000);
-    return;
-  }
 });
 
 const fs = require('fs');
