@@ -32,8 +32,6 @@ client.once(Events.ClientReady, () => {
   //remindCurrentEvents(); // ← デバッグ用← これを追加
 });
 
-const { postMonthlyEvents, remindCurrentEvents } = require("./utils/calendar");
-
 const delegateHandlers = {
   postMonthlyEventsHandler: async (message) => {
     await postMonthlyEvents(message.channel);
