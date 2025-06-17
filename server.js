@@ -158,7 +158,6 @@ ${relevantData.length > 0 ? `【参照データ】\n${JSON.stringify(relevantDat
       await message.reply(reply);
       await logToGAS(message.author.id, message.author.username, userInput, reply);
 
-      await message.reply(result.response.text());
     } catch (error) {
       console.error("Gemini APIエラー:", error);
       await message.reply("⚠️ Gemini APIとの通信でエラーが発生しました。");
