@@ -32,6 +32,17 @@ client.once(Events.ClientReady, () => {
   //remindCurrentEvents(); // ← デバッグ用← これを追加
 });
 
+const { postMonthlyEvents, remindCurrentEvents } = require("./utils/calendar");
+
+const delegateHandlers = {
+  postMonthlyEvents: async (message) => {
+    await postMonthlyEvents(message.channel);
+  },
+  remindCurrentEvents: async (message) => {
+    await remindCurrentEvents(message.channel);
+  }
+};
+
 function weightedRandom(arr) {
   const total = arr.reduce((sum, obj) => sum + (obj.weight || 1), 0);
   let rand = Math.random() * total;
