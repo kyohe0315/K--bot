@@ -536,7 +536,7 @@ module.exports = [
   { pattern: /kwsk/, 
     responses: ["俺も聞きたい。頼む"], type: "static" },
   { pattern: /wktk/, 
-    responses: ["+　　　+", "　 ∧＿∧ +　　+", "（0゜･∀･）  ﾜｸﾜｸ　+", "（0ﾟ つと)　+ ﾃｶﾃｶ", "と＿_）＿）　 +　+"], type: "static" },
+    responses: ["+　　　+\n      ∧＿∧ +　　+\n（0゜･∀･）  ﾜｸﾜｸ　+\n（0ﾟ つと)　+ ﾃｶﾃｶ\nと＿_）＿）　 +　+"], type: "static" },
   { pattern: /ガクブル|gkbr/, 
     responses: ["((( ；ﾟДﾟ)))"], type: "static" },
   { pattern: /もちつけ/,  
