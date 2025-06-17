@@ -101,6 +101,14 @@ client.on(Events.MessageCreate, async (message) => {
           }
           break;
         }
+          
+        case "delegate":
+          if (id && typeof delegateHandlers[id] === "function") {
+            await delegateHandlers[id](message); // ← ここで実行
+          } else {
+            console.warn(`⚠ delegateHandler "${id}" が見つかりません`);
+          }
+          break;
       }
       return; // responses にヒットしたら Gemini 側には行かない
     }
