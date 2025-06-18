@@ -1,4 +1,5 @@
-const fetch = require("node-fetch");
+// node-fetch v3 を CommonJSで使う裏技
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 // 自分のAPIキーとチャンネルIDに置き換えてね
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
