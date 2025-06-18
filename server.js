@@ -36,7 +36,7 @@ client.once(Events.ClientReady, () => {
   client.user.setActivity("第二の人生v3.0.1", { type: 0 }); // ← これを追加
     
   // 🔔 ライブ予約チェック（定期実行）
-  setInterval(() => checkLiveUpcoming(client), 3 *60 * 1000); // 1分ごと
+  setInterval(() => checkLiveUpcoming(client), 3 *60 * 1000); // 3分ごと
 
   // 🔔 RSS動画チェック（定期実行）
   setupRSSWatcher(client);
