@@ -292,47 +292,50 @@ client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
     new: newState.channelId,
   });
 
-  // ✅ 指定VCに人が入ったとき
-  if (!oldState.channel && newState.channelId === VOICE_CHANNEL_ID) {
-    const vcChannel = newState.guild.channels.cache.get(VOICE_CHANNEL_ID);
+  const guildId = oldState.guild.id;
+  const channel = oldState.channel || newState.channel;
 
-    if (vcChannel && vcChannel.members.size === 1) {
-      console.log("✅ VCに最初の1人が入りました");
+  // === VCに入った最初の1人の処理 ===
+  if (
+    newState.channel &&
+    newState.channel.id === VOICE_CHANNEL_ID &&
+    oldState.channelId !== newState.channelId &&
+    newState.channel.members.size === 1
+  ) {
+    try {
       const textChannel = newState.guild.channels.cache.get(VC_NOTIFY_CHANNEL_ID);
-
       if (textChannel && textChannel.isTextBased()) {
-        try {
-          const msg = await textChannel.send("chatroom1にて通話が開始されました！\nhttps://discord.gg/PpugjHBgDB");
-          vcStartMessages.set(newState.guild.id, msg.id);
-        } catch (err) {
-          console.error("VC開始メッセージ送信エラー:", err);
-        }
+        const msg = await textChannel.send("VCが開始されました！🎧");
+        vcStartMessages.set(guildId, msg.id);
       }
+    } catch (err) {
+      console.error("VC開始メッセージ送信エラー:", err);
+    }
+  }
+
+  // === VCから最後の1人が抜けたときの処理 ===
+  if (
+    channel &&
+    channel.id === VOICE_CHANNEL_ID &&
+    oldState.channelId !== newState.channelId &&
+    channel.members.size === 0 &&
+    vcStartMessages.has(guildId)
+  ) {
+    try {
+      const textChannel = channel.guild.channels.cache.get(VC_NOTIFY_CHANNEL_ID);
+      const msgId = vcStartMessages.get(guildId);
+      if (textChannel && textChannel.isTextBased() && msgId) {
+        const msg = await textChannel.messages.fetch(msgId);
+        await msg.delete().catch(() => {});
+        await textChannel.send("おつかれさまでした！🥱");
+        vcStartMessages.delete(guildId);
+      }
+    } catch (err) {
+      console.error("VC終了メッセージ削除エラー:", err);
     }
   }
 });
 
-  // ✅ VCから全員いなくなったら終了メッセージ送信＆開始メッセージ削除
-  const channel = oldState.channel;
-   if (  channel && channel.id === VOICE_CHANNEL_ID &&
-         oldState.channelId !== newState.channelId &&
-         channel.members.size === 0 &&
-         vcStartMessages.has(oldState.guild.id)
-      ) {
-     try {
-       const textChannel = channel.guild.channels.cache.get(VC_NOTIFY_CHANNEL_ID);
-       const msgId = vcStartMessages.get(oldState.guild.id);
-       if (textChannel && textChannel.isTextBased() && msgId) {
-         const msg = await textChannel.messages.fetch(msgId); // ← ここでawaitエラー
-         await msg.delete().catch(() => {});
-         await textChannel.send("おつかれさまでした！🥱");
-         vcStartMessages.delete(oldState.guild.id);
-       }
-     } catch (err) {
-       console.error("VC終了メッセージ削除エラー:", err);
-     }
-   }
-});
 
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
