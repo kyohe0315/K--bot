@@ -39,11 +39,12 @@ const delegateHandlers = {
   }
 };
 
-async function saveSummarizedLog(userId, userSummary, botSummary) {
+async function saveSummarizedLog(userInput, botReply, userId, username = "") {
   const payload = {
     userId,
-    userSummary,
-    botSummary,
+    username,
+    userSummary: userInput,
+    botSummary: botReply,
     mode: "save"
   };
 
@@ -56,6 +57,7 @@ async function saveSummarizedLog(userId, userSummary, botSummary) {
   const text = await res.text();
   console.log("[LogGAS Save] Response:", text);
 }
+
 
 const GAS_LOG_URL = process.env.GAS_LOG_URL;
 
@@ -170,7 +172,7 @@ ${relevantData.length > 0 ? `【参照データ】\n${JSON.stringify(relevantDat
       await message.reply(reply);
 
       // 🔹 要約ログ保存（ユーザーとBotのやり取り）
-      await saveSummarizedLog(userInput, reply, message.author.id);
+      await saveSummarizedLog(userInput, reply, message.author.id, message.author.username);
 
     } catch (error) {
       console.error("Gemini APIエラー:", error);
