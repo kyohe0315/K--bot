@@ -321,7 +321,7 @@ client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
     try {
       const textChannel = newState.guild.channels.cache.get(VC_NOTIFY_CHANNEL_ID);
       if (textChannel && textChannel.isTextBased()) {
-        const msg = await textChannel.send("VCが開始されました！🎧");
+        const msg = await textChannel.send("VCが開始されました！🎧\nhttps://discord.gg/PpugjHBgDB");
         vcStartMessages.set(guildId, msg.id);
       }
     } catch (err) {
