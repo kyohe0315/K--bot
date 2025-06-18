@@ -28,8 +28,6 @@ const cron = require("node-cron");
 client.once(Events.ClientReady, () => {
   console.log(`${client.user.tag} でログイン中`);
   client.user.setActivity("第二の人生v2.9", { type: 0 }); // ← これを追加
-  //postMonthlyEvents(); // ← デバッグ用
-  //remindCurrentEvents(); // ← デバッグ用← これを追加
 });
 
 const delegateHandlers = {
@@ -60,7 +58,6 @@ async function saveSummarizedLog(userId, userSummary, botSummary) {
 }
 
 const GAS_LOG_URL = process.env.GAS_LOG_URL;
-const GAS_PROFILE_URL = process.env.GAS_PROFILE_URL;
 
 async function postToGAS(payload) {
   const res = await fetch(GAS_LOG_URL, {
@@ -69,24 +66,6 @@ async function postToGAS(payload) {
     body: JSON.stringify(payload)
   });
   return await res.text();
-}
-
-async function getFromProfileGAS(payload) {
-  const res = await fetch(GAS_PROFILE_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
-
-  const text = await res.text();
-  console.log("[ProfileGAS] Response text:", text);
-
-  try {
-    return JSON.parse(text);
-  } catch (err) {
-    console.error("[ProfileGAS] JSON parse error:", err);
-    return {}; // fallback
-  }
 }
 
 // 要約ログ取得用
@@ -194,7 +173,6 @@ client.on(Events.MessageCreate, async (message) => {
 以下の情報をもとに、ユーザーの質問に的確かつ自然に答えてください。
 
 ---
-${profileText ? `【ユーザーのプロフィール】\n${profileText}\n` : ""}
 ${summaryText ? `【ユーザーとの過去の会話】\n${summaryText}\n` : ""}
 ${aliasText ? `${aliasText}\n` : ""}
 
