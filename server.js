@@ -98,6 +98,12 @@ function weightedRandom(arr) {
   return arr[arr.length - 1]; // 念のため最後にフォールバック
 }
 
+function logText(label, value) {
+  console.log(`=== ${label} ===`);
+  console.log(value);
+  console.log("===================");
+}
+
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
 
