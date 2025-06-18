@@ -18,7 +18,7 @@ function setupRSSWatcher(client) {
 
         const channel = await client.channels.fetch(YOUTUBE_NOTIFY_CHANNEL_ID);
         if (channel && channel.isTextBased()) {
-          await channel.send(`🎬 新着動画！\n${latest.link}`);
+          await channel.send(`# きょへの新着動画！\n${latest.link}`);
         }
       }
     } catch (err) {
