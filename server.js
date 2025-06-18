@@ -148,10 +148,6 @@ client.on(Events.MessageCreate, async (message) => {
         }
       }
 
-      // 🔹 プロフィール＋要約ログを読み込み
-      const profileText = await fetchUserProfile(message.author.id);
-      const summaryText = await fetchSummaryLogs(message.author.id);
-
       // 🔹 Geminiへのプロンプト作成
       const prompt = `
 あなたは親しみやすい会話Botです。
