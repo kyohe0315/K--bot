@@ -87,17 +87,6 @@ async function getFromLogGAS(payload) {
   }
 }
 
-async function fetchSummaryLogs(userId) {
-  const logs = await getFromLogGAS({
-    userId,
-    mode: "get"
-  });
-
-  return logs.map((log, i) =>
-    `【過去${i + 1}】User: ${log.userSummary}\nBot: ${log.botSummary}`
-  ).join("\n\n");
-}
-
 function weightedRandom(arr) {
   const total = arr.reduce((sum, obj) => sum + (obj.weight || 1), 0);
   let rand = Math.random() * total;
