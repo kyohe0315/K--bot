@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 
 // 自分のAPIキーとチャンネルIDに置き換えてね
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
-const CHANNEL_ID = "UCxxxxxxxxxxxxxxxx"; // 推しのチャンネルID
+const CHANNEL_ID = process.env.YOUTUBE_CHANNEL_ID;; // YouTubeチャンネルID
 let lastNotifiedVideoId = null;
 
 async function checkLiveUpcoming(client) {
