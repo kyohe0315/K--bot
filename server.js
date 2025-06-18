@@ -314,26 +314,24 @@ client.on(Events.VoiceStateUpdate, async (oldState, newState) => {
 
   // ✅ VCから全員いなくなったら終了メッセージ送信＆開始メッセージ削除
   const channel = oldState.channel;
-  if (
-    channel &&
-    channel.id === VOICE_CHANNEL_ID && // ← 対象VCであることも確認
-    oldState.channelId !== newState.channelId &&
-    channel.members.size === 0 &&
-    vcStartMessages.has(oldState.guild.id)
-  ) {
-    try {
-      const textChannel = channel.guild.channels.cache.get(VC_NOTIFY_CHANNEL_ID);
-      const msgId = vcStartMessages.get(oldState.guild.id);
-      if (textChannel && textChannel.isTextBased() && msgId) {
-        const msg = await textChannel.messages.fetch(msgId);
-        await msg.delete().catch(() => {});
-        await textChannel.send("おつかれさまでした！🥱");
-        vcStartMessages.delete(oldState.guild.id);
-      }
-    } catch (err) {
-      console.error("VC終了メッセージ削除エラー:", err);
-    }
-  }
+   if (  channel && channel.id === VOICE_CHANNEL_ID &&
+         oldState.channelId !== newState.channelId &&
+         channel.members.size === 0 &&
+         vcStartMessages.has(oldState.guild.id)
+      ) {
+     try {
+       const textChannel = channel.guild.channels.cache.get(VC_NOTIFY_CHANNEL_ID);
+       const msgId = vcStartMessages.get(oldState.guild.id);
+       if (textChannel && textChannel.isTextBased() && msgId) {
+         const msg = await textChannel.messages.fetch(msgId); // ← ここでawaitエラー
+         await msg.delete().catch(() => {});
+         await textChannel.send("おつかれさまでした！🥱");
+         vcStartMessages.delete(oldState.guild.id);
+       }
+     } catch (err) {
+       console.error("VC終了メッセージ削除エラー:", err);
+     }
+   }
 });
 
 function delay(ms) {
