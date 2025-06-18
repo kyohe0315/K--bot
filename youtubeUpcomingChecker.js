@@ -23,9 +23,9 @@ async function checkLiveUpcoming(client) {
     if (videoId === lastNotifiedVideoId) return;
     lastNotifiedVideoId = videoId;
 
-    const channel = await client.channels.fetch("送信先テキストチャンネルID");
+    const channel = await client.channels.fetch(NOTIFY_CHANNEL_ID);
     await channel.send({
-      content: `📢 ライブ予約発見！\n▶️ **${title}**\nhttps://www.youtube.com/watch?v=${videoId}`,
+      content: `📢 おっ！ライブ予約を発見！\n▶️ **${title}**\nhttps://www.youtube.com/watch?v=${videoId}`,
       files: [thumbnail]
     });
 
