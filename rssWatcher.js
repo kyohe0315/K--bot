@@ -1,6 +1,6 @@
 const Parser = require("rss-parser");
 const parser = new Parser();
-const CHANNEL_ID = process.env.RSS_NOTIFY_CHANNEL_ID;
+const YOUTUBE_NOTIFY_CHANNEL_ID = process.env.YOUTUBE_NOTIFY_CHANNEL_ID;
 const RSS_URL = process.env.RSS_URL;
 
 let latestVideoId = null;
