@@ -25,6 +25,8 @@ const axios = require("axios");
 const ical = require("node-ical");
 const cron = require("node-cron");
 
+const GAS_LOG_URL = process.env.GAS_LOG_URL;
+
 client.once(Events.ClientReady, () => {
   console.log(`${client.user.tag} でログイン中`);
   client.user.setActivity("第二の人生v2.9", { type: 0 }); // ← これを追加
@@ -57,9 +59,6 @@ async function saveSummarizedLog(userInput, botReply, userId, username = "") {
   const text = await res.text();
   console.log("[LogGAS Save] Response:", text);
 }
-
-
-const GAS_LOG_URL = process.env.GAS_LOG_URL;
 
 async function postToGAS(payload) {
   const res = await fetch(GAS_LOG_URL, {
