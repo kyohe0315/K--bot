@@ -87,21 +87,6 @@ async function getFromLogGAS(payload) {
   }
 }
 
-async function fetchUserProfile(userId) {
-  const result = await getFromProfileGAS({
-    userId,
-    mode: "get"
-  });
-
-  if (!result.nickname && !result.personality && !result.interest) {
-    return "このユーザーのプロフィールはまだ登録されていません。";
-  }
-
-  return `このユーザーは「${result.nickname || "（未設定）"}」と呼ばれ、性格は「${result.personality || "（未設定）"}」、興味は「${result.interest || "（未設定）"}」です。`;
-}
-
-
-
 async function fetchSummaryLogs(userId) {
   const logs = await getFromLogGAS({
     userId,
