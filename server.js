@@ -29,7 +29,7 @@ const GAS_LOG_URL = process.env.GAS_LOG_URL;
 
 client.once(Events.ClientReady, () => {
   console.log(`${client.user.tag} でログイン中`);
-  client.user.setActivity("第二の人生v2.9", { type: 0 }); // ← これを追加
+  client.user.setActivity("第二の人生v3.0.0", { type: 0 }); // ← これを追加
 });
 
 const delegateHandlers = {
