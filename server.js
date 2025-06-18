@@ -14,6 +14,10 @@ const client = new Client({
   ],
 });
 
+require("dotenv").config(); // ← 忘れずに！
+const { checkLiveUpcoming } = require("./youtubeUpcomingChecker");
+const setupRSSWatcher = require("./rssWatcher");
+
 const TOKEN = process.env.DISCORD_BOT_TOKEN;
 const VC_NOTIFY_CHANNEL_ID = process.env.VC_NOTIFY_CHANNEL_ID; // ← 聞き専チャンネル
 const VOICE_CHANNEL_ID = process.env.VOICE_CHANNEL_ID; // ← chatroom1
@@ -30,6 +34,12 @@ const GAS_LOG_URL = process.env.GAS_LOG_URL;
 client.once(Events.ClientReady, () => {
   console.log(`${client.user.tag} でログイン中`);
   client.user.setActivity("第二の人生v3.0.0", { type: 0 }); // ← これを追加
+    
+  // 🔔 ライブ予約チェック（定期実行）
+  setInterval(() => checkLiveUpcoming(client), 3 *60 * 1000); // 1分ごと
+
+  // 🔔 RSS動画チェック（定期実行）
+  setupRSSWatcher(client);
 });
 
 const delegateHandlers = {
