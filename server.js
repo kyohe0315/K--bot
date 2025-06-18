@@ -158,7 +158,7 @@ client.on(Events.MessageCreate, async (message) => {
 以下の情報をもとに、ユーザーの質問に的確かつ自然に答えてください。
 
 ---
-${summaryText ? `【ユーザーとの過去の会話】\n${summaryText}\n` : ""}
+${logText ? `【過去の会話ログ】\n${logText}\n` : ""}
 ${aliasText ? `${aliasText}\n` : ""}
 
 【ユーザーの発言】
