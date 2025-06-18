@@ -16,7 +16,7 @@ function setupRSSWatcher(client) {
       if (latest.id !== latestVideoId) {
         latestVideoId = latest.id;
 
-        const channel = await client.channels.fetch(CHANNEL_ID);
+        const channel = await client.channels.fetch(YOUTUBE_NOTIFY_CHANNEL_ID);
         if (channel && channel.isTextBased()) {
           await channel.send(`🎬 新着動画！\n${latest.link}`);
         }
