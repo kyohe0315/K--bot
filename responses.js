@@ -401,6 +401,11 @@ module.exports = [
        ["https://youtu.be/E_mW_Aj5qCY?si=2QeSkkAZnpwLW85L", "これ見て笑えよ"]
     ], type: "random"
   },
+  { pattern: /ケーボット|けーぼっと|K-?bot/i, 
+    responses: [
+      "はいはーい！メンションしてくれれば最新AIが返事するよ！",
+      "お金を入れてね！カードが貰えるよ！"
+    ], type: "static" },
   { pattern: /ｓぁｆじゃｋｌ/,
     responses: [
       "1",
@@ -639,8 +644,6 @@ module.exports = [
     responses: ["赤い。"], type: "static" },
   { pattern: /shovel greenは|shovelgreenは/, 
     responses: ["そもそも呼びかけに反応しない時があるｗ"], type: "static" },
-  { pattern: /ケーボット|けーぼっと|K-?bot/i, 
-    responses: ["はいはーい！メンションしてくれれば自動AIが返信するよ！"], type: "static" },
   { pattern: /hey k-bot|ヘイk-bot|へいk-bot|heyケーボット|ヘイケーボット|へいケーボット|heyけーぼっと|ヘイけーぼっと|へいけーぼっと/, 
     responses: ["すみません。よくSiriません。"], type: "static" },
   { pattern: /OK k-bot|オッケーk-bot|おっけーk-bot|おっけーケーボット|オッケーケーボット|オッケーボット|おっけーけーぼっと|オッケーけーぼっと|おっけーぼっと/, 
