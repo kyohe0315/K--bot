@@ -178,7 +178,7 @@ ${relevantData.length > 0 ? `【参照データ】\n${JSON.stringify(relevantDat
 ・だいたい200文字以内。
 `;
 
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const result = await model.generateContent({
         contents: [{ role: 'user', parts: [{ text: prompt }] }]
       });
