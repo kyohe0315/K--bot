@@ -648,7 +648,7 @@ module.exports = [
     responses: ["誹謗中傷はやめてください！"], type: "static" },
   { pattern: /うるさい/, 
     responses: ["そーだそーだ！うるさいぞー！だまれだまれー！やーいやーーーい！！"], type: "static" },
-  { pattern: /「BOTなのに生意気|生意気なBOT/n, 
+  { pattern: /BOTなのに生意気|生意気なBOT/n, 
     responses: ["誰に文句言ってるんだ人間のくせに"], type: "static" },
   { pattern: /だるい/, 
     responses: ["そんなあなたに！Ctrl+Alt+Del"], type: "static" },
