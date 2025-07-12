@@ -128,6 +128,22 @@ client.on(Events.MessageCreate, async (message) => {
       let areaDataText = "";
       let aliasText = "";
 
+      let recentLogsText = "";
+      try {
+        const pastLogs = await getFromLogGAS({
+          userId: message.author.id,
+          mode: "get"
+        });        
+        const last5 = pastLogs.slice(-5).map((log, i) =>
+          `${i + 1}. ユーザー「${log.userSummary}」→Bot「${log.botSummary}」`
+                                            );        
+        if (last5.length > 0) {
+          recentLogsText = `【過去の会話ログ】\n${last5.join("\n")}\n`;
+        }        
+      } catch (err) {
+      console.warn("過去ログ取得エラー:", err);
+    }
+
       // 🔹 Sky系の場合のみ JSONデータ参照
       if (isSky && areaName) {
         try {
