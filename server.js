@@ -366,11 +366,14 @@ setInterval(async () => {
   try {
     const fetched = await channel.messages.fetch({ limit: 50 });
     const targets = fetched
-      .filter(msg => msg.content === "おつかれさまでした！🥱" && !msg.author.bot)
+      .filter(msg =>
+        msg.author.id === client.user.id &&
+        msg.content === "おつかれさまでした！🥱"
+             )
       .sort((a, b) => b.createdTimestamp - a.createdTimestamp); // 新しい順
 
     if (targets.size > 1) {
-      const [, ...oldOnes] = targets.map(msg => msg); // 最新1つを残して削除
+      const [, ...oldOnes] = targets.map(msg => msg); // 最新1件を除いて削除
       for (const msg of oldOnes) {
         await msg.delete().catch(() => {});
       }
