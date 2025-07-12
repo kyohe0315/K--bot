@@ -48,7 +48,7 @@ module.exports = [
       "ツタージャLove♡\nポケモン「ツタージャ」を愛してやまない熱量がバイオににじみ出ています。\n好きなキャラクターをストレートに推すタイプですね。\nby K-botAI",
       "# 🧠一言でいうと？\nツタージャへの愛をこじらせた、理系っぽいポケ廃。\nでもたぶん理系じゃない。気持ちだけ。\nby ChatGPT",
       "🔥こんな人にオススメ\nX（旧Twitter）で「何言ってんの？」って笑いたい人\nby Gemini",
-      "発言はゆるゆるなのに、たまにガチっぽい理論展開してくるから油断ならない。\nツタージャの布教活動中。たまに事故る。\nby Gemini"
+      "発言はゆるゆる、たまにガチっぽい理論展開してくるから油断ならない。\nツタージャの布教活動中。たまに事故る。\nby Gemini"
     ], type: "random"
   },
   { pattern: /たっつんは/,
@@ -648,7 +648,7 @@ module.exports = [
     responses: ["誹謗中傷はやめてください！"], type: "static" },
   { pattern: /うるさい/, 
     responses: ["そーだそーだ！うるさいぞー！だまれだまれー！やーいやーーーい！！"], type: "static" },
-  { pattern: /BOTなのに生意気|生意気なBOT/n, 
+  { pattern: /BOTなのに生意気|生意気なBOT/i, 
     responses: ["誰に文句言ってるんだ人間のくせに"], type: "static" },
   { pattern: /だるい/, 
     responses: ["そんなあなたに！Ctrl+Alt+Del"], type: "static" },
