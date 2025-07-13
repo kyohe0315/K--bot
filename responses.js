@@ -406,7 +406,7 @@ module.exports = [
       "はいはーい！メンションしてくれれば最新AIが返事するよ！",
       "お金を入れてね！カードが貰えるよ！"
     ], type: "static" },
-  { pattern: /うえからみたっつん|上からみたっつん|上ら見たっつん|うえから見たっつん/,
+  { pattern: /うえからみたっつん|上からみたっつん|上から見たっつん|うえから見たっつん/,
     responses: [
       "https://cdn.discordapp.com/attachments/1007569901457780827/1066748844974555256/7e761eb540b3d144.mp4",
       "https://cdn.discordapp.com/attachments/1007569901457780827/1066748925719105578/402b6a73c6da4df7.mp4",
