@@ -806,7 +806,7 @@ module.exports = [
     responses: ["おめでとーーー！！！🎊✨㊗",
                "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/medium.gif?v=1677097580867"], type: "static"},
   { pattern: /いい加減にせい|いいかげんにせい/,
-    responses: "https://x.gd/Hr8Tp" , type: "static"},
+    responses: "https://cdn.discordapp.com/attachments/1007569901457780827/1066750192747028530/e0cb6e42fac93ce7.mp4" , type: "static"},
   { pattern: /絶体正解|絶体間違えない|クイズ/,
     responses: "絶体正解するクイズ「食文化を支えているのは農家である。Yesか農家で答えて下さい。」" , type: "static"},
   { pattern: /寝るのだ/,
