@@ -406,12 +406,14 @@ module.exports = [
       "はいはーい！メンションしてくれれば最新AIが返事するよ！",
       "お金を入れてね！カードが貰えるよ！"
     ], type: "static" },
-  { pattern: /ｓぁｆじゃｋｌ/,
+  { pattern: /うえからみたっつん|上からみたっつん|上ら見たっつん|うえから見たっつん/,
     responses: [
-      "1",
-      "2",
-      "3",
-      "4"
+      "https://cdn.discordapp.com/attachments/1007569901457780827/1066748844974555256/7e761eb540b3d144.mp4",
+      "https://cdn.discordapp.com/attachments/1007569901457780827/1066748925719105578/402b6a73c6da4df7.mp4",
+      "https://cdn.discordapp.com/attachments/1007569901457780827/1066748961689440326/127f3ecd5b797dcc.mp4",
+      "https://cdn.discordapp.com/attachments/1072643515248549968/1183499885736104047/c8821e1e8e87b669.mp4",
+      "https://cdn.discordapp.com/attachments/1072643515248549968/1183499179989938247/1.mp4?",
+      "https://cdn.discordapp.com/attachments/1007569901457780827/1066750192747028530/e0cb6e42fac93ce7.mp4"
     ], type: "random"
   },
   { pattern: /ｓぁｆじゃｋｌ/,
