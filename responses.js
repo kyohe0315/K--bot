@@ -780,8 +780,6 @@ module.exports = [
   { pattern: /こじんまり/,
     responses: "こじんまりって書きがちだけど本当は『こぢんまり』なんだってね" , type: "static"},
   { pattern: /呪術海鮮/,
-    responses: "呪われた海鮮丼…って事!?" , type: "static"},
-  { pattern: /うゆ/,
     responses: "うゆ。" , type: "static"},
   { pattern: /きょれさん|おもしろかつまた|面白かつまた|おもしろかつた|面白かつた|たのしかつた|楽しかつた|たのしかつまた|楽しかつまた/,
     responses: "ｗｗｗお前ｗｗｗ 五時ってやんのｗｗｗ" , type: "static"},
