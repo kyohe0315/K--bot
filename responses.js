@@ -27,7 +27,7 @@ module.exports = [
   { pattern: /月は|つきは|ツキは/,
     responses: ["このサーバー初の韓国美少女！",
                 "ゲーム大好き"
-    type: "random"
+    ],type: "random"
   },
   { pattern: /へこにゃんは/,
     responses: [
