@@ -19,7 +19,7 @@
     "@google/generative-ai": "^0.3.0"
   },
   "engines": {
-    "node": "20.11.1"
+    "node": "20.10.0"
   },
   "repository": {
   "type": "git",
