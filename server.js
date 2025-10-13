@@ -1,3 +1,4 @@
+require('dotenv').config(); // ローカル保険。最上段に
 // server.js
 const { Client, GatewayIntentBits, Events } = require("discord.js");
 const responses = require("./responses.js");
