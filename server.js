@@ -517,4 +517,7 @@ app.get("/", (req, res) => {
   res.status(200).send("It works");
 });
 
-client.login(TOKEN);
+client.login(TOKEN).catch((e) => {
+  console.error('💥 client.login() 失敗:', e); // 401=トークン違い / Disallowed intent(s)=権限設定
+  process.exit(1);
+});
