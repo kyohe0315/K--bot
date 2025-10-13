@@ -22,7 +22,7 @@
     "@google/generative-ai": "^0.3.0"
   },
   "engines": {
-    "node": "20.x"
+    "node": "20.11.1"
   },
   "repository": {
   "type": "git",
