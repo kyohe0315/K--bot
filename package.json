@@ -1,10 +1,10 @@
 {
   "name": "hello-express",
   "version": "0.0.1",
-  "description": "A simple Node app built on Express, instantly up and running.",
+  "private": true,
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
     "axios": "^1.7.9",
