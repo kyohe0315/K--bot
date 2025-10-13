@@ -43,6 +43,10 @@ client.once(Events.ClientReady, () => {
   setupRSSWatcher(client);
 });
 
+client.on('error', (e) => console.error('[CLIENT ERROR]', e));
+client.on('shardError', (e) => console.error('[SHARD ERROR]', e));
+client.on('invalidated', () => console.error('[INVALIDATED] セッション無効化'));
+
 const delegateHandlers = {
   postMonthlyEventsHandler: async (message) => {
     await postMonthlyEvents(message.channel);
