@@ -84,6 +84,7 @@ module.exports = [
   { pattern: /だめえみ/,
     responses: [
       "https://cdn.discordapp.com/attachments/930348999645483111/1438161970980454501/Screenshot_20251112-224140_LINE_1.jpg?ex=6915e035&is=69148eb5&hm=3131257af45a8b775a2fa578660176661518c2cb8f0f831b98751af4917d078c&",
+      "https://cdn.discordapp.com/attachments/930348999645483111/1438162472140804096/Screenshot_20251112-224340_LINE_1.jpg?ex=6915e0ad&is=69148f2d&hm=3fff76d0fb27a72f9af51d0f9900a14a9d61c044a2705983a2055022afc9d2aa&",
       "https://cdn.discordapp.com/attachments/930348999645483111/1438161880249143386/Screenshot_20251010-232357_LINE_1.jpg?ex=6915e020&is=69148ea0&hm=08598e94699a8b6a93670cc06080f8a6cde6d5f9896c446f6c989953430be148&"
     ], type: "random"
   },
