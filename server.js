@@ -15,7 +15,6 @@ const client = new Client({
   ],
 });
 
-require("dotenv").config(); // ← 忘れずに！
 const { checkLiveUpcoming } = require("./youtubeUpcomingChecker");
 const setupRSSWatcher = require("./rssWatcher");
 
