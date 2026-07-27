@@ -363,7 +363,7 @@ module.exports = [
   {
     pattern: /さすへこ/,
     responses: [
-      "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/%E3%81%95%E3%81%99%E3%81%B8%E3%81%93PNG.jpeg?v=1740915170843",
+      "https://cdn.discordapp.com/attachments/1222143691570024530/1530973036067557467/PNG.png?ex=6a67853f&is=6a6633bf&hm=9af9a0fb3b78430aa1eeae5e568a17c66b81d7313e6aefcf4704d29fb0c61af8&",
       "さすが我らがへこにゃん様！！！！",
       "カッコいいすごいｷｬｰ!!!!",
       "たまに画像付きで煽られるタイプ"
@@ -411,26 +411,14 @@ module.exports = [
     pattern: /しんどい|疲れた|つかれた|疲れました|つかれました|死にたい|しにたい/,
     responses: [
        ["https://twitter.com/purinharumaki/status/1236262228581466112?s=20&t=Bg1hXcIolEEil7_xlZLR5w", "これ見て笑えよ"],
-       ["https://twitter.com/BornAKang/status/1574125489110728705?s=20&t=WDmSSyUE4Rm50mU-staUaQ", "これ見て笑えよ"],
        ["https://twitter.com/aoihk_118/status/1561345302120271872?s=20&t=WDmSSyUE4Rm50mU-staUaQ", "これ見て笑えよ"],
-       ["https://twitter.com/shouldhaveaduck/status/1574819532052766720?s=20&t=k3C0Dl0NG8mbtwaiK5K5oA", "これ見て笑えよ"],
-       ["https://twitter.com/purinharumaki/status/1236262228581466112?s=20&t=WDmSSyUE4Rm50mU-staUaQ", "これ見て笑えよ"],
-       ["https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/XiaoYing_Video_1468200848374.mp4?v=1702753816734", "これ見て笑えよ"],
-       ["https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/RPReplay_Final1656442030.mov?v=1702753818389", "これ見て笑えよ"],
-       ["https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/trim.EC1B9271-A86A-4BCE-BD4F-3AA97650813C.mov?v=1702753819841", "これ見て笑えよ"],
-       ["https://www.youtube.com/watch?v=XlEo9sjLEs8&list=LL&index=5", "これ見て笑えよ"],
-       ["https://www.youtube.com/watch?v=YTwK96HddCo&list=LL&index=6", "これ見て笑えよ"],
+       ["https://cdn.discordapp.com/attachments/1222143691570024530/1530974234531205260/3.png?ex=6a67865d&is=6a6634dd&hm=21fa976b0d976eae6d86484d86526b4b3c1545a1d987f0e45ce6e908a7a0ae80&", "これ見て笑えよ"],
        //["ねえねねえええ", "これ見て笑えよ"],
        //["ねえねねえええ", "これ見て笑えよ"],
-       ["https://youtu.be/xQ-A48PItOU?si=Wa-ElGAoVALdpTDP", "これ見て笑えよ"],
-       ["https://youtu.be/QPvXp_OGaSg?si=wRsffTDHfBKtU6Na", "これ見て笑えよ"],
+       ["https://cdn.discordapp.com/attachments/1222143691570024530/1531223281158590606/TbpthOuNbFj__0UK.mp4?ex=6a686e4e&is=6a671cce&hm=d58514dc177b92b15ef0a7db8fbd1cde90634a7660a32ea3b9cb3f8cc213d8fb&", "これ見て笑えよ"],
        ["https://youtu.be/rPvcGSIZmfI?si=In-dz3rWsHNk9bAo", "これ見て笑えよ"],
        ["https://youtu.be/GKc7pVQOYYg?si=LrAjUzA5Ofxd97Fq", "これ見て笑えよ"],
-       ["https://youtu.be/9V2LwgdGia0?si=7EwvfALS_NA1PX1y", "これ見て笑えよ"],
-       ["https://youtu.be/OyX7lh0Fq1Y?si=dhhRbt4d50iOGKmA", "これ見て笑えよ"],
-       ["https://x.com/agashiagashi/status/1917209037118325166", "これ見て笑えよ"],
        ["https://www.youtube.com/watch?v=ZpsG36Du8_E&list=LL&index=7", "これ見て笑えよ"],
-       ["https://youtu.be/E_mW_Aj5qCY?si=2QeSkkAZnpwLW85L", "これ見て笑えよ"]
     ], type: "random"
   },
   { pattern: /ケーボット|けーぼっと|K-?bot/i, 
@@ -461,14 +449,13 @@ module.exports = [
   {
   pattern: /！おみくじ|!おみくじ|おみくじ/,
   responses: [
-    { texts: ["🎊すっごーーーい大吉！！🎊", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/%E3%81%8A%E3%82%81%E3%81%A7%E3%81%A8%E3%81%86-%E5%AC%89%E3%81%97%E3%81%84.gif?v=1677096667773"],weight: 6 },
-    { texts:["✨✨かなり大吉✨✨", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/%E3%81%8A%E3%82%81%E3%81%A7%E3%81%A8%E3%81%86-%E5%AC%89%E3%81%97%E3%81%84%20(1).gif?v=1677096670342"],weight: 9 },
-    { texts:["✨吉だね！✨", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/5c1d0bec96c0080c863ce98c199066dc.gif?v=1677098206251"],weight: 12 },
-    { texts:["中吉だなぁ～👍", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/%E3%81%99%E3%81%94%E3%81%84-%E6%8B%8D%E6%89%8B.gif?v=1677096665281"],weight: 15 },
+    { texts: ["🎊すっごーーーい大吉！！🎊", "https://cdn.discordapp.com/attachments/1222143691570024530/1531223325261692978/5c1d0bec96c0080c863ce98c199066dc.gif?ex=6a686e59&is=6a671cd9&hm=d337205e56f6ad11321bf751fe62ce5f2a5b04089dcfffb22bf6b4ab70059484&"],weight: 6 },
+    { texts:["✨✨かなり大吉✨✨", "https://cdn.discordapp.com/attachments/1222143691570024530/1531223338024828938/1160fb4501bd0bab8e82ec8f1c959e26.gif?ex=6a686e5c&is=6a671cdc&hm=c8f1d80b277d872ef99a6f41635ff45378d8e74b40d0e5efc371a62cb467c62d&"],weight: 9 },
+    { texts:["✨吉だね！✨", "https://cdn.discordapp.com/attachments/1222143691570024530/1531223362981068992/-.gif?ex=6a686e62&is=6a671ce2&hm=f72f100f79f5e1f5a8cc4470424d5d45d4529ddbd404c909c50dacef0197a6a3&"],weight: 12 },
+    { texts:["中吉だなぁ～👍", "https://cdn.discordapp.com/attachments/1222143691570024530/1531223353606799440/-.gif?ex=6a686e60&is=6a671ce0&hm=3032807d9126b12bdef630c366d7876c2228001014fa645a87a44b7012e7b600&"],weight: 15 },
     { texts:["凶！", "https://cdn.discordapp.com/attachments/932595932464291872/1078024865031913543/b23a176962cdbe5b.gif"],weight: 9 },
-    { texts:["大凶。背後には気を付けろよ・・・。", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/%EF%BC%91%EF%BC%92%EF%BC%93.gif?v=1677098585621"],weight: 6 },
-    { texts:["きょへ様を崇めよ", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/o0365019912329969675.gif?v=1677096910953"],weight: 4 },
-    { texts:["たっつんは泳いでいます。ここで", "https://cdn.glitch.global/68ce99b8-0619-4731-b98b-b5d54a5d616e/people_0008_pool.gif?v=1677096924065"],weight: 1 }
+    { texts:["大凶。背後には気を付けろよ・・・。", "https://cdn.discordapp.com/attachments/1222143691570024530/1531223315119603753/123.gif?ex=6a686e57&is=6a671cd7&hm=bdda73d49aa50a09d94e214c4a96422bf58c720eb8751dbf250400788475330a&"],weight: 6 },
+    { texts:["たっつんは泳いでいます。ここで", "https://cdn.discordapp.com/attachments/1222143691570024530/1531223305938276362/people_0008_pool.gif?ex=6a686e54&is=6a671cd4&hm=f96aa9e294a55b89d255d9314bdc07296ac74e5d1279ff126097d3d12117e88b&"],weight: 1 }
   ],  type: "weighted"
   },
   { pattern: /ｓぁｆじゃｋｌ/,
