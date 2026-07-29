@@ -1,6 +1,6 @@
 require('dotenv').config(); // ローカル保険。最上段に
 // server.js
-const { Client, GatewayIntentBits, Events } = require("discord.js");
+const { Client, GatewayIntentBits, Events, Partials } = require("discord.js");
 const responses = require("./responses.js");
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
@@ -10,9 +10,11 @@ const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildMessageReactions,
     GatewayIntentBits.MessageContent,
     GatewayIntentBits.GuildVoiceStates,
   ],
+  partials: [Partials.Message, Partials.Channel, Partials.Reaction],
 });
 
 const { checkLiveUpcoming } = require("./youtubeUpcomingChecker");
@@ -117,6 +119,24 @@ function logText(label, value) {
   console.log(value);
   console.log("===================");
 }
+
+// BOTが送信したメッセージに ✂️ または 🗑️ が付いたら削除
+client.on(Events.MessageReactionAdd, async (reaction, user) => {
+  if (user.bot) return;
+
+  try {
+    if (reaction.partial) await reaction.fetch();
+    if (reaction.message.partial) await reaction.message.fetch();
+
+    const emoji = reaction.emoji.name;
+    if (emoji !== "✂️" && emoji !== "🗑️" && emoji !== "🗑") return;
+    if (reaction.message.author?.id !== client.user.id) return;
+
+    await reaction.message.delete();
+  } catch (error) {
+    console.error("リアクションによるメッセージ削除エラー:", error);
+  }
+});
 
 client.on(Events.MessageCreate, async (message) => {
   if (message.author.bot) return;
