@@ -1013,12 +1013,16 @@ module.exports = [
 { pattern: /書庫の?精霊一覧|書庫の?全ての精霊|書庫の?全精霊/, 
   responses: ["こちらをご覧ください。（9-bit様より引用）", "https://9-bit.jp/skygold/013"], type: "static" },
   
-  { pattern: /AAA/,
-    responses: ["BBB"],
+  { pattern: /ドラえもん/,
+    responses: ["https://cdn.discordapp.com/attachments/1222143691570024530/1533539992348135505/IMG_9680.jpg?ex=6a70dbe9&is=6a6f8a69&hm=34df88825bdfd2f9998d59d5cb53eab262edfebff1bccbd34b26f3aaa73a20dc&"],
     type: "static"
   },
-  { pattern: /AAA/,
-    responses: ["BBB"],
+  { pattern: /ちゃんとしろ/,
+    responses: ["https://cdn.discordapp.com/attachments/1222143691570024530/1533539786575581354/3d69637ba5438d65.mov?ex=6a70dbb8&is=6a6f8a38&hm=a1e84febf5d7a0ec602e00d840bd912b42f4bd7250e13abcf9dac87892d44273&"],
+    type: "static"
+  },
+  { pattern: /しばくぞ/,
+    responses: ["https://cdn.discordapp.com/attachments/1222143691570024530/1533539862047752243/34870f89f7edaeda.mov?ex=6a70dbca&is=6a6f8a4a&hm=3807a03dcef625007fdf1b449298d45d7b88984b2a12771fd20f9ba0f7be76da&"],
     type: "static"
   },
   { pattern: /VC開始/,
